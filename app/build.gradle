@@ -1,0 +1,99 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'realm-android'
+
+def getClientSecret() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties.getProperty("client.secret");
+}
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.riningan.wowmount"
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        buildConfigField "String", "CLIENT_SECRET", getClientSecret()
+//        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+ext {
+    support_version = "27.1.1"
+    multidex_version = "2.0.0"
+    kodein_version = "5.3.0"
+    rxjava_version = "2.0.2"
+    rxlifecycle_version = "2.2.1"
+    retrofit_version = "2.4.0"
+    moxy_version = "1.5.5"
+    leakcanary_version = "1.5.4"
+    frarg_version = "0.9.1"
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    // support
+    implementation "com.android.support:appcompat-v7:$support_version"
+    implementation "com.android.support:cardview-v7:$support_version"
+    implementation "com.android.support:recyclerview-v7:$support_version"
+    implementation "com.android.support:design:$support_version"
+    implementation "com.android.support.constraint:constraint-layout:1.1.3"
+    // multidex
+    implementation "androidx.multidex:multidex:$multidex_version"
+//    // ktx
+//    implementation "androidx.core:core-ktx:1.0.1"
+    // di
+    implementation "org.kodein.di:kodein-di-generic-jvm:$kodein_version"
+    implementation "org.kodein.di:kodein-di-framework-android-core:$kodein_version"
+    implementation "org.kodein.di:kodein-di-framework-android-support:$kodein_version"
+    // mvp
+    implementation "com.arello-mobile:moxy:$moxy_version"
+    implementation "com.arello-mobile:moxy-app-compat:$moxy_version"
+    kapt "com.arello-mobile:moxy-compiler:$moxy_version"
+    // rxjava
+    implementation "io.reactivex.rxjava2:rxandroid:$rxjava_version"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+//    implementation "com.trello.rxlifecycle2:rxlifecycle:rxlifecycle_version"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-android:$rxlifecycle_version"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-components:$rxlifecycle_version"
+    // retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    // rxbinding
+    implementation "com.jakewharton.rxbinding2:rxbinding:2.1.1"
+    // шрифты
+    implementation 'io.github.inflationx:calligraphy3:3.0.0'
+    implementation 'io.github.inflationx:viewpump:1.0.0'
+    // navigation
+    implementation "ru.terrakok.cicerone:cicerone:3.0.0"
+    // memory leak check
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
+    // frarg
+    implementation "com.riningan.frarg:frarg:$frarg_version"
+    implementation "com.riningan.frarg:frarg-annotations:$frarg_version"
+    kapt "com.riningan.frarg:frarg-processor:$frarg_version"
+
+//    testImplementation 'junit:junit:4.12'
+//    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}

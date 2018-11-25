@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">WowMount</string>
+
+    <string name="authorization_realm">Realm</string>
+    <string name="authorization_character">Character name</string>
+    <string-array name="authorization_servers">
+        <item>eu</item>
+        <item>us</item>
+    </string-array>
+    <string name="authorization_login">Show mounts</string>
+    <string name="authorization_error_empty_server">Empty server</string>
+    <string name="authorization_error_empty_realm">Empty realm name</string>
+    <string name="authorization_error_empty_character_name">Empty character name</string>
+    <string name="authorization_error_request">Request failed: %s</string>
+
+</resources>
