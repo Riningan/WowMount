@@ -6,20 +6,25 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.arellomobile.mvp.MvpAppCompatFragment
+import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.PresenterType
 import com.riningan.frarg.FrargBinder
 import com.riningan.frarg.annotations.Argument
 import com.riningan.frarg.annotations.ArgumentedFragment
 import com.riningan.wowmount.R
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.support.closestKodein
+import org.kodein.di.generic.instance
 
 
 @ArgumentedFragment(alias = "MountsListFragment")
-class PageFragment : Fragment(), KodeinAware {
+class PageFragment : MvpAppCompatFragment() {
     @Argument
     private var mType: Int = 0
 
-    override val kodein by closestKodein()
+    @InjectPresenter(tag = MountsPresenter.TAG, type = PresenterType.WEAK)
+    lateinit var mPresenter: MountsPresenter
 
 
     override fun onAttach(context: Context?) {
@@ -37,6 +42,6 @@ class PageFragment : Fragment(), KodeinAware {
 
 
     enum class MountTypes {
-        NONE, GROUND, FLYING, AQUATIC
+        ALL, GROUND, FLYING, AQUATIC
     }
 }

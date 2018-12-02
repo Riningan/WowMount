@@ -22,8 +22,4 @@ data class MountResponse(
         @SerializedName("isAquatic")
         var isAquatic: Boolean,
         @SerializedName("isJumping")
-        var isJumping: Boolean) {
-    companion object {
-        val EMPTY = MountResponse("",0,0,0,0,"",false,false,false,false)
-    }
-}
+        var isJumping: Boolean)

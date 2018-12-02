@@ -6,31 +6,29 @@ class LocalPreferences constructor(context: Context) {
     private val mSharedPreferences = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
 
 
-    fun getServer() : String? = mSharedPreferences.getString(SERVER, null)
+    var server: String
+        get() = mSharedPreferences.getString(SERVER, "")!!
+        set(value) = mSharedPreferences.edit().putString(SERVER, value).apply()
 
-    fun setServer(server : String) {
-        mSharedPreferences.edit().putString(SERVER, server).apply()
-    }
+    var realmName: String
+        get() = mSharedPreferences.getString(REALM_NAME, "")!!
+        set(value) = mSharedPreferences.edit().putString(REALM_NAME, value).apply()
 
+    var characterName: String
+        get() = mSharedPreferences.getString(CHARACTER_NAME, "")!!
+        set(value) = mSharedPreferences.edit().putString(CHARACTER_NAME, value).apply()
 
-    fun getCharacterName() : String? = mSharedPreferences.getString(CHARACTER_NAME, null)
-
-    fun setCharacterName(characterName : String) {
-        mSharedPreferences.edit().putString(CHARACTER_NAME, characterName).apply()
-    }
-
-
-    fun getRealmName() : String? = mSharedPreferences.getString(REALM_NAME, null)
-
-    fun setRealmName(realm : String) {
-        mSharedPreferences.edit().putString(REALM_NAME, realm).apply()
-    }
+    var accessToken: String
+        get() = mSharedPreferences.getString(ACCESS_TOKEN, "")!!
+        set(value) = mSharedPreferences.edit().putString(ACCESS_TOKEN, value).apply()
 
 
-    fun getAccessToken() : String? = mSharedPreferences.getString(ACCESS_TOKEN, null)
-
-    fun setAccessToken(accessToken : String) {
-        mSharedPreferences.edit().putString(ACCESS_TOKEN, accessToken).apply()
+    fun clear() {
+        mSharedPreferences.edit().apply {
+            putString(SERVER, "")
+            putString(REALM_NAME, "")
+            putString(CHARACTER_NAME, "")
+        }.apply()
     }
 
 

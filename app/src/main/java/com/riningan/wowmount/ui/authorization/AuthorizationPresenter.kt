@@ -1,6 +1,7 @@
 package com.riningan.wowmount.ui.authorization
 
 import com.arellomobile.mvp.InjectViewState
+import com.riningan.wowmount.data.LocalPreferences
 import com.riningan.wowmount.interactors.CharacterInteractor
 import com.riningan.wowmount.ui.base.BasePresenter
 import com.riningan.wowmount.ui.mounts.MountsFragment
@@ -13,7 +14,8 @@ import ru.terrakok.cicerone.Router
 @InjectViewState
 class AuthorizationPresenter constructor(kodein: Kodein) : BasePresenter<AuthorizationView>() {
     private val mRouter: Router by kodein.instance()
-    private val mMountsInteractor: CharacterInteractor by kodein.instance()
+    private val mLocalPreferences: LocalPreferences by kodein.instance()
+    private val mCharacterInteractor: CharacterInteractor by kodein.instance()
 
 
     fun onShowClick(server: String, realmName: String, characterName: String) {
@@ -24,11 +26,17 @@ class AuthorizationPresenter constructor(kodein: Kodein) : BasePresenter<Authori
             characterName.isEmpty() -> viewState.showCharacterErrorDialog()
             else -> {
                 viewState.lockView()
-                mMountsInteractor
-                        .update(server, realmName, characterName)
+                mLocalPreferences.apply {
+                    this.server = server
+                    this.realmName = realmName
+                    this.characterName = characterName
+                }
+                mCharacterInteractor
+                        .get()
                         .subscribe({
                             mRouter.newRootScreen(MountsFragment::class.java.canonicalName)
                         }, {
+                            mLocalPreferences.clear()
                             viewState.unlockView()
                             viewState.showRequestErrorDialog(it.message!!)
                         })

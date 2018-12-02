@@ -15,7 +15,7 @@ class MountFragment :BaseFragment(), MountView {
     lateinit var mPresenter: MountPresenter
 
     @ProvidePresenter
-    fun provideDialogPresenter() = MountPresenter(kodein)
+    fun providePresenter() = MountPresenter(kodein)
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)

@@ -20,7 +20,7 @@ class SplashFragment:  BaseFragment(), SplashView {
     lateinit var mPresenter: SplashPresenter
 
     @ProvidePresenter
-    fun provideDialogPresenter() = SplashPresenter(kodein)
+    fun providePresenter() = SplashPresenter(kodein)
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

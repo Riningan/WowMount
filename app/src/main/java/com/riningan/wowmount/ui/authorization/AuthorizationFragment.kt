@@ -20,7 +20,7 @@ class AuthorizationFragment : BaseFragment(), AuthorizationView {
     lateinit var mPresenter: AuthorizationPresenter
 
     @ProvidePresenter
-    fun provideDialogPresenter() = AuthorizationPresenter(kodein)
+    fun providePresenter() = AuthorizationPresenter(kodein)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_authorization, container, false)

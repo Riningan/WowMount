@@ -4,7 +4,6 @@ import com.google.gson.GsonBuilder
 import com.riningan.wowmount.BuildConfig
 import com.riningan.wowmount.data.LocalPreferences
 import java.io.IOException
-import java.lang.Exception
 import java.util.concurrent.TimeUnit
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Credentials
@@ -45,16 +44,18 @@ class ApiClient constructor(private val mLocalPreferences: LocalPreferences) {
                 .connectTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
                 .addInterceptor { chain ->
                     val original = chain.request()
-                    if (mLocalPreferences.getAccessToken() == null) {
-                        mLocalPreferences.setAccessToken(requestAccessToken(original))
+                    if (mLocalPreferences.accessToken.isEmpty()) {
+                        mLocalPreferences.accessToken = requestAccessToken(original)
                     }
-                    try {
-                        chain.proceed(createNewRequest(original))
-                    } catch (e: Exception) {
-                        // request new access token
-                        mLocalPreferences.setAccessToken(requestAccessToken(original))
-                        chain.proceed(createNewRequest(original))
+                    var response = chain.proceed(createNewRequest(original))
+                    when (response.code()) {
+                        401 -> {
+                            // request new access token
+                            mLocalPreferences.accessToken = requestAccessToken(original)
+                            response = chain.proceed(createNewRequest(original))
+                        }
                     }
+                    response
                 }
                 .build()
         mBlizzardApi = Retrofit.Builder()
@@ -87,7 +88,7 @@ class ApiClient constructor(private val mLocalPreferences: LocalPreferences) {
 
     private fun createNewRequest(original: Request): Request {
         val requestBuilder = original.newBuilder()
-                .header("Authorization", "Bearer " + mLocalPreferences.getAccessToken())
+                .header("Authorization", "Bearer " + mLocalPreferences.accessToken)
                 .header("Content-Type", "application/json")
                 .method(original.method(), original.body())
         return requestBuilder.build()

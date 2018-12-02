@@ -11,11 +11,7 @@ import ru.terrakok.cicerone.Router
 class MountsPresenter constructor(kodein: Kodein): BasePresenter<MountsView>() {
     private val mRouter: Router by kodein.instance()
 
-    fun onStart() {
-        LogUtil.addDebug()
-    }
-
-    fun onStop() {
-        LogUtil.addDebug()
+    companion object {
+        const val TAG = "MountsPresenter"
     }
 }
