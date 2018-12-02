@@ -8,19 +8,22 @@ import com.riningan.wowmount.R
 import com.riningan.wowmount.data.model.Mount
 
 
-class ItemsAdapter constructor(private val mListener: OnListener) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
+class ItemsAdapter constructor(private val mListener: OnAdapterListener) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
+    private val mMounts = arrayListOf<Mount>()
 
 
-    override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getItemCount() = mMounts.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_mount, parent, false))
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_mount, parent, false))
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        holder.bind()
+        holder.bind(mMounts[position])
+    }
+
+
+    fun setMounts(mounts: List<Mount>) {
+        mMounts.clear()
+        mMounts.addAll(mounts)
     }
 
 
@@ -31,7 +34,7 @@ class ItemsAdapter constructor(private val mListener: OnListener) : RecyclerView
         init {
             view.setOnClickListener {
                 mMount?.let { mount ->
-                    mListener.onClickListener(mount)
+                    mListener.onClick(mount)
                 }
             }
         }
@@ -44,7 +47,7 @@ class ItemsAdapter constructor(private val mListener: OnListener) : RecyclerView
     }
 
 
-    interface OnListener {
-        fun onClickListener(mount: Mount)
+    interface OnAdapterListener {
+        fun onClick(mount: Mount)
     }
 }

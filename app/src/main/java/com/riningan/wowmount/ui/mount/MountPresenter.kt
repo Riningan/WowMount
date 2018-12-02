@@ -10,6 +10,7 @@ import org.kodein.di.Kodein
 import org.kodein.di.generic.instance
 import ru.terrakok.cicerone.Router
 
+
 @InjectViewState
 @ArgumentedFragment(fragmentClass = MountFragment::class)
 class MountPresenter constructor(kodein: Kodein): BasePresenter<MountView>() {

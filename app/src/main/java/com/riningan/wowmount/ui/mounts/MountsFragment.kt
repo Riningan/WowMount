@@ -9,6 +9,8 @@ import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.riningan.frarg.annotations.ArgumentedFragment
 import com.riningan.wowmount.R
+import com.riningan.wowmount.data.model.Character
+import com.riningan.wowmount.data.model.Mount
 import com.riningan.wowmount.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_mounts.*
 import org.kodein.di.generic.instance
@@ -43,5 +45,15 @@ class MountsFragment : BaseFragment(), MountsView {
     override fun onStop() {
         super.onStop()
         mPresenter.onStop()
+    }
+
+    override fun setCharacter(character: Character) {
+
+    }
+
+    override fun setMounts(mounts: List<Mount>) {
+        /**
+         * @see PageFragment
+         */
     }
 }

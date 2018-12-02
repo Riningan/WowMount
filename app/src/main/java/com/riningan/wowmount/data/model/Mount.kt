@@ -4,7 +4,7 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
 
-open class Mount: RealmObject() {
+open class Mount : RealmObject() {
     @PrimaryKey
     var itemId = 0
     var name = ""
