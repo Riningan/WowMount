@@ -1,14 +1,17 @@
 package com.riningan.wowmount.ui.mounts
 
+import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.riningan.wowmount.R
 import com.riningan.wowmount.data.model.Mount
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.item_mount.view.*
 
 
-class ItemsAdapter constructor(private val mListener: OnAdapterListener) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
+class ItemsAdapter constructor(private val mFragment: Fragment, private val mListener: OnAdapterListener) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
     private val mMounts = arrayListOf<Mount>()
 
 
@@ -42,7 +45,11 @@ class ItemsAdapter constructor(private val mListener: OnAdapterListener) : Recyc
 
         fun bind(mount: Mount) {
             mMount = mount
-
+            Picasso.get()
+                    .load(mount.icon)
+                    .into(itemView.ivMountIcon)
+            itemView.tvMountName.text = mount.name
+            itemView.tvMountDesc.text = ""
         }
     }
 

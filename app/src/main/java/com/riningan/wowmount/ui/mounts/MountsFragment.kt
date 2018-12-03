@@ -1,6 +1,7 @@
 package com.riningan.wowmount.ui.mounts
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.riningan.wowmount.R
 import com.riningan.wowmount.data.model.Character
 import com.riningan.wowmount.data.model.Mount
 import com.riningan.wowmount.ui.base.BaseFragment
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_mounts.*
 import org.kodein.di.generic.instance
 
@@ -39,15 +41,18 @@ class MountsFragment : BaseFragment(), MountsView {
 
     override fun onStart() {
         super.onStart()
-        mPresenter.onStart()
+        mPresenter.loadCharacter()
     }
 
     override fun onStop() {
         super.onStop()
-        mPresenter.onStop()
+        mPresenter.clearSubscriptions()
     }
 
     override fun setCharacter(character: Character) {
+        Picasso.get()
+                .load(character.thumbnail)
+                .into(ivCharacter)
 
     }
 
@@ -55,5 +60,10 @@ class MountsFragment : BaseFragment(), MountsView {
         /**
          * @see PageFragment
          */
+    }
+
+    override fun showErrorDialog(message: String) {
+        // called from presenter, view is exists
+        Snackbar.make(view!!, message, Snackbar.LENGTH_LONG)
     }
 }

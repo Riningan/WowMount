@@ -50,7 +50,7 @@ class PageFragment : MvpAppCompatFragment(), KodeinAware, MountsView, ItemsAdapt
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rvMounts.layoutManager = LinearLayoutManager(context)
-        rvMounts.adapter = ItemsAdapter(this)
+        rvMounts.adapter = ItemsAdapter(this, this)
     }
 
     override fun setCharacter(character: Character) {
@@ -68,6 +68,12 @@ class PageFragment : MvpAppCompatFragment(), KodeinAware, MountsView, ItemsAdapt
             MountTypes.AQUATIC -> mounts.filter { it.isAquatic }
         }
         (rvMounts.adapter as ItemsAdapter).setMounts(curMounts)
+    }
+
+    override fun showErrorDialog(message: String) {
+        /**
+         * @see MountsFragment
+         */
     }
 
     override fun onClick(mount: Mount) {

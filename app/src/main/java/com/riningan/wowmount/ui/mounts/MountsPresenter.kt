@@ -16,23 +16,21 @@ class MountsPresenter constructor(kodein: Kodein) : BasePresenter<MountsView>() 
     private val mCharacterInteractor: CharacterInteractor by kodein.instance()
 
 
-    fun onStart() {
+    fun loadCharacter() {
         LogUtil.addDebug()
         mCharacterInteractor
                 .get()
-                .subscribe({
+                .subscribe({(character, mounts) ->
                     LogUtil.addDebug(this@MountsPresenter)
+                    viewState.setCharacter(character)
+                    viewState.setMounts(mounts)
                 }, {
                     LogUtil.addError(this@MountsPresenter, it)
+                    viewState.showErrorDialog(it.localizedMessage)
                 }, {
                     LogUtil.addDebug(this@MountsPresenter)
                 })
                 .attach()
-    }
-
-    fun onStop() {
-        LogUtil.addDebug()
-        clearSubscriptions()
     }
 
     fun onMountClick(mount: Mount) {

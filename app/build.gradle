@@ -18,6 +18,7 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         buildConfigField "String", "CLIENT_SECRET", getClientSecret()
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -81,8 +82,8 @@ dependencies {
     // rxbinding
     implementation "com.jakewharton.rxbinding2:rxbinding:2.1.1"
     // шрифты
-    implementation 'io.github.inflationx:calligraphy3:3.0.0'
-    implementation 'io.github.inflationx:viewpump:1.0.0'
+    implementation "io.github.inflationx:calligraphy3:3.0.0"
+    implementation "io.github.inflationx:viewpump:1.0.0"
     // navigation
     implementation "ru.terrakok.cicerone:cicerone:3.0.0"
     // memory leak check
@@ -92,6 +93,8 @@ dependencies {
     implementation "com.riningan.frarg:frarg:$frarg_version"
     implementation "com.riningan.frarg:frarg-annotations:$frarg_version"
     kapt "com.riningan.frarg:frarg-processor:$frarg_version"
+    // image loader
+    implementation "com.squareup.picasso:picasso:2.71828"
 
 //    testImplementation 'junit:junit:4.12'
 //    androidTestImplementation 'com.android.support.test:runner:1.0.2'
