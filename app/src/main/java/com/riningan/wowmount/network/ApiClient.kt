@@ -1,6 +1,5 @@
 package com.riningan.wowmount.network
 
-import com.google.gson.GsonBuilder
 import com.riningan.wowmount.BuildConfig
 import com.riningan.wowmount.data.LocalPreferences
 import java.io.IOException
@@ -61,7 +60,7 @@ class ApiClient constructor(private val mLocalPreferences: LocalPreferences) {
         mBlizzardApi = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(blizzardHttpClient)
-                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()))
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .build()
                 .create(BlizzardApi::class.java)

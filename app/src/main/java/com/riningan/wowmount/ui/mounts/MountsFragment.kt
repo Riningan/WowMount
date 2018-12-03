@@ -20,14 +20,13 @@ import org.kodein.di.generic.instance
 
 @ArgumentedFragment
 class MountsFragment : BaseFragment(), MountsView {
+    private val presenter: MountsPresenter by instance()
+
     @InjectPresenter(tag = MountsPresenter.TAG, type = PresenterType.WEAK)
     lateinit var mPresenter: MountsPresenter
 
     @ProvidePresenter(tag = MountsPresenter.TAG, type = PresenterType.WEAK)
-    fun providePresenter(): MountsPresenter {
-        val presenter by kodein.instance<MountsPresenter>()
-        return presenter
-    }
+    fun providePresenter() = presenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_mounts, container, false)
@@ -51,9 +50,9 @@ class MountsFragment : BaseFragment(), MountsView {
 
     override fun setCharacter(character: Character) {
         Picasso.get()
-                .load(character.thumbnail)
+                .load(character.getMainUrl())
                 .into(ivCharacter)
-
+        tlbMounts.setTitle(character.name)
     }
 
     override fun setMounts(mounts: List<Mount>) {

@@ -8,4 +8,11 @@ open class Character: RealmObject() {
     var realm: String = ""
     var level: Int = 0
     var thumbnail: String = ""
+    var region: String = ""
+
+
+    fun getAvatarUrl() = "http://render-$region.worldofwarcraft.com/character/$thumbnail"
+
+
+    fun getMainUrl() = "http://render-$region.worldofwarcraft.com/character/${thumbnail.replace("-avatar.jpg", "-main.jpg")}"
 }

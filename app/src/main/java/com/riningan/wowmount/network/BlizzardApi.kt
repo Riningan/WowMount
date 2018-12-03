@@ -1,9 +1,10 @@
 package com.riningan.wowmount.network
 
 import com.riningan.wowmount.network.model.CharacterResponse
-import com.riningan.wowmount.network.model.MountResponse
+import com.riningan.wowmount.network.model.MountsResponse
 import io.reactivex.Observable
 import retrofit2.http.*
+
 
 interface BlizzardApi {
     @GET("https://{region}.api.blizzard.com/wow/character/{realm}/{characterName}")
@@ -13,7 +14,7 @@ interface BlizzardApi {
                   @Query("fields") fields: String,
                   @Query("locale") locale: String): Observable<CharacterResponse>
 
-    @GET("https://{region}.api.blizzard.com/wow/mount/{realm}/{characterName}")
+    @GET("https://{region}.api.blizzard.com/wow/mount/")
     fun getMounts(@Path("region") region: String,
-                  @Query("locale") locale: String): Observable<List<MountResponse>>
+                  @Query("locale") locale: String): Observable<MountsResponse>
 }

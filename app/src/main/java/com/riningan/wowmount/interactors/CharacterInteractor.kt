@@ -11,6 +11,11 @@ class CharacterInteractor constructor(executorThread: Scheduler, postExecutionTh
                                       private val mCharacterRepository: CharacterRepository) : BaseInteractor(executorThread, postExecutionThread) {
     fun get(): Observable<Pair<Character, List<Mount>>> = mCharacterRepository
             .get()
+            .map {(character, mounts)->
+                character?.let {
+                    Pair(it, mounts)
+                } ?: throw NullPointerException("Character is null")
+            }
             .execution()
 
     fun clear(): Observable<Boolean> = mCharacterRepository

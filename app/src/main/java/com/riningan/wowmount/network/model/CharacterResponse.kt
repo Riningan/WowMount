@@ -29,7 +29,7 @@ data class CharacterResponse(
         @SerializedName("faction")
         var faction: Int,
         @SerializedName("mounts")
-        var mounts: MountsResponse,
+        var mounts: CharacterMountsResponse,
         @SerializedName("totalHonorableKills")
         var totalHonorableKills: Int
 )

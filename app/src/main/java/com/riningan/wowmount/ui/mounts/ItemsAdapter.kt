@@ -46,7 +46,7 @@ class ItemsAdapter constructor(private val mFragment: Fragment, private val mLis
         fun bind(mount: Mount) {
             mMount = mount
             Picasso.get()
-                    .load(mount.icon)
+                    .load(mount.getIconUrl())
                     .into(itemView.ivMountIcon)
             itemView.tvMountName.text = mount.name
             itemView.tvMountDesc.text = ""

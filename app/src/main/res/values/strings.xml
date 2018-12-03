@@ -13,4 +13,11 @@
     <string name="authorization_error_empty_character_name">Empty character name</string>
     <string name="authorization_error_request">Request failed: %s</string>
 
+    <string-array name="mounts_groups">
+        <item>All</item>
+        <item>Ground</item>
+        <item>Flying</item>
+        <item>Aquatic</item>
+    </string-array>
+
 </resources>

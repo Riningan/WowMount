@@ -6,15 +6,18 @@ import android.view.View
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.riningan.wowmount.utils.LogUtil
 import org.kodein.di.KodeinAware
+import org.kodein.di.KodeinTrigger
 import org.kodein.di.android.support.closestKodein
 
 
 open class BaseFragment : MvpAppCompatFragment(), BaseView, KodeinAware {
     override val kodein by closestKodein()
+    override val kodeinTrigger = KodeinTrigger()
 
     override fun onAttach(context: Context?) {
         LogUtil.addDebug(this)
         super.onAttach(context)
+        kodeinTrigger.trigger()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

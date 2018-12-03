@@ -67,7 +67,10 @@ class PageFragment : MvpAppCompatFragment(), KodeinAware, MountsView, ItemsAdapt
             MountTypes.FLYING -> mounts.filter { it.isFlying }
             MountTypes.AQUATIC -> mounts.filter { it.isAquatic }
         }
-        (rvMounts.adapter as ItemsAdapter).setMounts(curMounts)
+        (rvMounts.adapter as ItemsAdapter).apply {
+            setMounts(curMounts)
+            notifyDataSetChanged()
+        }
     }
 
     override fun showErrorDialog(message: String) {
