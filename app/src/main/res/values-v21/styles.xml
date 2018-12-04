@@ -4,4 +4,38 @@
     <style name="AppTheme.Spinner" parent="Base.Widget.AppCompat.Spinner">
         <item name="android:backgroundTint">@color/colorPrimary</item>
     </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!--checkbox checked state-->
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <!--button pressed state-->
+        <item name="colorControlHighlight">@color/colorAccent</item>
+        <!--button default state-->
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <!--background-->
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <!--<item name="android:colorBackground">#185</item> don't use if using windowBackground-->
+        <item name="android:colorForeground">@color/colorAccent</item>
+
+        <item name="colorError">@color/colorError</item>
+
+        <item name="editTextStyle">@style/AppTheme.EditText</item>
+        <item name="android:editTextStyle">@style/AppTheme.EditText</item>
+
+        <item name="buttonStyle">@style/AppTheme.Button</item>
+        <item name="android:buttonStyle">@style/AppTheme.Button</item>
+
+        <item name="checkboxStyle">@style/AppTheme.CheckBox</item>
+        <item name="android:checkboxStyle">@style/AppTheme.CheckBox</item>
+
+        <item name="spinnerStyle">@style/AppTheme.Spinner</item>
+        <item name="android:spinnerStyle">@style/AppTheme.Spinner</item>
+
+        <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
+        <item name="android:toolbarStyle">@style/AppTheme.Toolbar</item>
+
+    </style>
 </resources>

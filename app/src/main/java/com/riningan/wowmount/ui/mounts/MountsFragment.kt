@@ -29,12 +29,18 @@ class MountsFragment : BaseFragment(), MountsView {
         return presenter
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_mounts, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_mounts, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        tlbMounts.inflateMenu(R.menu.menu_mounts)
+        tlbMounts.setOnMenuItemClickListener { menu ->
+            when (menu.itemId) {
+                R.id.miLogout -> mPresenter.onLogoutClick()
+            }
+            true
+        }
         tlMounts.setupWithViewPager(vpMounts)
         vpMounts.adapter = PagerAdapter(childFragmentManager)
     }

@@ -23,7 +23,7 @@ class Navigator constructor(activity: FragmentActivity, containerId: Int) : Supp
             SplashFragment::class.java.canonicalName -> FragmentBuilder.newSplashFragmentInstance()
             AuthorizationFragment::class.java.canonicalName -> FragmentBuilder.newAuthorizationFragmentInstance()
             MountsFragment::class.java.canonicalName -> FragmentBuilder.newMountsFragmentInstance()
-            MountFragment::class.java.canonicalName -> FragmentBuilder.newMountFragmentInstance(data as String)
+            MountFragment::class.java.canonicalName -> FragmentBuilder.newMountFragmentInstance(data as Int)
             else -> null
         }
     }

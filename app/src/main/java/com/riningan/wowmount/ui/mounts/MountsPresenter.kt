@@ -34,6 +34,10 @@ class MountsPresenter constructor(private val mRouter: Router,
         mRouter.navigateTo(MountFragment::class.java.canonicalName, mount.itemId)
     }
 
+    fun onLogoutClick() {
+        LogUtil.addDebug()
+    }
+
 
     companion object {
         const val TAG = "MountsPresenter"

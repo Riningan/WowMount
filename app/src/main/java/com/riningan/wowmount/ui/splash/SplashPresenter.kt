@@ -32,7 +32,7 @@ class SplashPresenter constructor(kodein: Kodein) : BasePresenter<SplashView>() 
                     }, {
                         viewState.showErrorDialog(it.localizedMessage)
                     }, {
-                        mRouter.navigateTo(MountsFragment::class.java.canonicalName)
+                        mRouter.newRootScreen(MountsFragment::class.java.canonicalName)
                     })
         } else {
             Observable

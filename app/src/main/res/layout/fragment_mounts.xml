@@ -15,8 +15,8 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Large">
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/ivCharacter"
@@ -30,12 +30,14 @@
                 android:id="@+id/tlbMounts"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:background="@null"
                 app:layout_collapseMode="pin" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tlMounts"
+            style="@style/AppTheme.TabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways" />
