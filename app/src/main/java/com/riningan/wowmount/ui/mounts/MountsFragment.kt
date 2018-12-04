@@ -20,13 +20,14 @@ import org.kodein.di.generic.instance
 
 @ArgumentedFragment
 class MountsFragment : BaseFragment(), MountsView {
-    private val presenter: MountsPresenter by instance()
-
     @InjectPresenter(tag = MountsPresenter.TAG, type = PresenterType.WEAK)
     lateinit var mPresenter: MountsPresenter
 
     @ProvidePresenter(tag = MountsPresenter.TAG, type = PresenterType.WEAK)
-    fun providePresenter() = presenter
+    fun providePresenter(): MountsPresenter {
+        val presenter by kodein.instance<MountsPresenter>()
+        return presenter
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_mounts, container, false)
@@ -52,7 +53,7 @@ class MountsFragment : BaseFragment(), MountsView {
         Picasso.get()
                 .load(character.getMainUrl())
                 .into(ivCharacter)
-        tlbMounts.setTitle(character.name)
+        tlbMounts.title = character.name
     }
 
     override fun setMounts(mounts: List<Mount>) {
@@ -62,7 +63,8 @@ class MountsFragment : BaseFragment(), MountsView {
     }
 
     override fun showErrorDialog(message: String) {
-        // called from presenter, view is exists
-        Snackbar.make(view!!, message, Snackbar.LENGTH_LONG)
+        view?.run {
+            Snackbar.make(this, message, Snackbar.LENGTH_LONG)
+        }
     }
 }

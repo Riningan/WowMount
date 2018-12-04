@@ -18,6 +18,10 @@ class CharacterInteractor constructor(executorThread: Scheduler, postExecutionTh
             }
             .execution()
 
+    fun getMountByItemId(itemId: Int): Observable<Mount> = mCharacterRepository
+            .getMountByItemId(itemId)
+            .execution()
+
     fun clear(): Observable<Boolean> = mCharacterRepository
             .clear()
             .execution()

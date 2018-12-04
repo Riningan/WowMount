@@ -25,7 +25,16 @@ class SplashPresenter constructor(kodein: Kodein) : BasePresenter<SplashView>() 
 
     fun onStart() {
         LogUtil.addDebug()
-        if (mLocalPreferences.characterName.isEmpty()) {
+        if (mLocalPreferences.isActivated) {
+            mCharacterInteractor
+                    .get()
+                    .subscribe({
+                    }, {
+                        viewState.showErrorDialog(it.localizedMessage)
+                    }, {
+                        mRouter.navigateTo(MountsFragment::class.java.canonicalName)
+                    })
+        } else {
             Observable
                     .timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
@@ -33,16 +42,6 @@ class SplashPresenter constructor(kodein: Kodein) : BasePresenter<SplashView>() 
                     .subscribe {
                         mRouter.navigateTo(AuthorizationFragment::class.java.canonicalName)
                     }
-        } else {
-            mCharacterInteractor
-                    .get()
-                    .subscribe({
-                    }, {
-
-                    } ,{
-
-                        mRouter.navigateTo(MountsFragment::class.java.canonicalName)
-                    })
         }.attach()
     }
 }

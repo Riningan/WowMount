@@ -6,16 +6,12 @@ import com.riningan.wowmount.interactors.CharacterInteractor
 import com.riningan.wowmount.ui.base.BasePresenter
 import com.riningan.wowmount.ui.mount.MountFragment
 import com.riningan.wowmount.utils.LogUtil
-import org.kodein.di.Kodein
-import org.kodein.di.generic.instance
 import ru.terrakok.cicerone.Router
 
 
 @InjectViewState
 class MountsPresenter constructor(private val mRouter: Router,
                                   private val mCharacterInteractor: CharacterInteractor) : BasePresenter<MountsView>() {
-
-
     fun loadCharacter() {
         LogUtil.addDebug()
         mCharacterInteractor
@@ -35,7 +31,7 @@ class MountsPresenter constructor(private val mRouter: Router,
 
     fun onMountClick(mount: Mount) {
         LogUtil.addDebug("mount", mount.name)
-//        mRouter.navigateTo(MountFragment::class.java.canonicalName)
+        mRouter.navigateTo(MountFragment::class.java.canonicalName, mount.itemId)
     }
 
 

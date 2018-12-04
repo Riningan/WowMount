@@ -37,6 +37,9 @@ abstract class BaseRepository<T> {
             }
 
 
+    protected fun getMemoryCache() = mCache
+
+
     protected abstract fun getFromRemoteDataSource(): Observable<T>
 
     protected abstract fun getFromLocalDataSource(): Observable<T>
@@ -48,9 +51,7 @@ abstract class BaseRepository<T> {
 
     private fun cacheIsDirty() = Date().time - mLastUpdateTime.time > updateIntervalInSeconds * 1000
 
-    private fun loadFromLocalDataSource() = getFromLocalDataSource()
-            .setToMemoryCache()
-
+    private fun loadFromLocalDataSource() = getFromLocalDataSource().setToMemoryCache()
 
     private fun Observable<T>.setToMemoryCache(): Observable<T> = doOnNext { mCache = it }
 }

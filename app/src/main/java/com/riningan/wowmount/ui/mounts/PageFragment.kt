@@ -50,7 +50,7 @@ class PageFragment : MvpAppCompatFragment(), KodeinAware, MountsView, ItemsAdapt
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rvMounts.layoutManager = LinearLayoutManager(context)
-        rvMounts.adapter = ItemsAdapter(this, this)
+        rvMounts.adapter = ItemsAdapter(this)
     }
 
     override fun setCharacter(character: Character) {

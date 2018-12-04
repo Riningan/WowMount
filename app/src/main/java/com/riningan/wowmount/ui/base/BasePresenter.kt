@@ -15,6 +15,7 @@ open class BasePresenter<T: BaseView> : MvpPresenter<T>() {
         compositeDisposable = null
     }
 
+
     protected fun Disposable.attach() {
         LogUtil.addDebug()
         if (compositeDisposable == null) {

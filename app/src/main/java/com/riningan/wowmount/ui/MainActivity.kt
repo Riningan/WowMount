@@ -4,7 +4,6 @@ import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.riningan.wowmount.R
-import com.riningan.wowmount.data.LocalPreferences
 import com.riningan.wowmount.route.Navigator
 import com.riningan.wowmount.ui.splash.SplashFragment
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
@@ -19,13 +18,11 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     override val kodein by closestKodein()
     private val mNavigatorHolder: NavigatorHolder by instance()
     private val mRouter: Router by instance()
-    private val mLocalPreferences: LocalPreferences by instance()
     private lateinit var mNavigator: Navigator
 
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
-        mLocalPreferences.clear()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

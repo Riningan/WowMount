@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_mount.view.*
 
 
-class ItemsAdapter constructor(private val mFragment: Fragment, private val mListener: OnAdapterListener) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
+class ItemsAdapter constructor(private val mListener: OnAdapterListener) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
     private val mMounts = arrayListOf<Mount>()
 
 
@@ -49,7 +49,6 @@ class ItemsAdapter constructor(private val mFragment: Fragment, private val mLis
                     .load(mount.getIconUrl())
                     .into(itemView.ivMountIcon)
             itemView.tvMountName.text = mount.name
-            itemView.tvMountDesc.text = ""
         }
     }
 

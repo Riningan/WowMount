@@ -2,9 +2,14 @@ package com.riningan.wowmount.data
 
 import android.content.Context
 
+
 class LocalPreferences constructor(context: Context) {
     private val mSharedPreferences = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
 
+
+    var isActivated: Boolean
+        get() = mSharedPreferences.getBoolean(IS_ACTIVATED, false)
+        set(value) = mSharedPreferences.edit().putBoolean(IS_ACTIVATED, value).apply()
 
     var server: String
         get() = mSharedPreferences.getString(SERVER, "")!!
@@ -25,6 +30,7 @@ class LocalPreferences constructor(context: Context) {
 
     fun clear() {
         mSharedPreferences.edit().apply {
+            putBoolean(IS_ACTIVATED, false)
             putString(SERVER, "")
             putString(REALM_NAME, "")
             putString(CHARACTER_NAME, "")
@@ -34,6 +40,7 @@ class LocalPreferences constructor(context: Context) {
 
     companion object {
         private const val PREFERENCES = "PREFERENCES"
+        private const val IS_ACTIVATED = "IS_ACTIVATED"
         private const val SERVER = "SERVER"
         private const val CHARACTER_NAME = "CHARACTER_NAME"
         private const val REALM_NAME = "REALM_NAME"

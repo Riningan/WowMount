@@ -2,6 +2,7 @@ package com.riningan.wowmount.ui.splash
 
 import android.os.Build
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +12,12 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.riningan.frarg.annotations.ArgumentedFragment
 import com.riningan.wowmount.R
 import com.riningan.wowmount.ui.base.BaseFragment
+import com.riningan.wowmount.utils.ColorUtil
 import kotlinx.android.synthetic.main.fragment_splash.*
 
 
 @ArgumentedFragment
-class SplashFragment:  BaseFragment(), SplashView {
+class SplashFragment : BaseFragment(), SplashView {
     @InjectPresenter
     lateinit var mPresenter: SplashPresenter
 
@@ -44,8 +46,17 @@ class SplashFragment:  BaseFragment(), SplashView {
         mPresenter.clearSubscriptions()
     }
 
+    override fun showErrorDialog(message: String) {
+        view?.let {
+            Snackbar.make(it, message, Snackbar.LENGTH_LONG).apply {
+                view.setBackgroundResource(R.color.colorError)
+                setActionTextColor(ColorUtil.getColor(R.color.colorOnError))
+            }.show()
+        }
+    }
 
-    fun getLogoForAnimation() : ImageView = ivLogo!!
+
+    fun getLogoForAnimation(): ImageView = ivLogo!!
 
 
     companion object {

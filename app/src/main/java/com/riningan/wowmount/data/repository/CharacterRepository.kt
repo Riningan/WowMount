@@ -80,4 +80,13 @@ class CharacterRepository constructor(private val mBlizzardApi: BlizzardApi,
                 }
                 true
             }
+
+    fun getMountByItemId(itemId: Int): Observable<Mount> =
+            if (getMemoryCache() == null) {
+                get()
+            } else {
+                Observable.just(getMemoryCache()!!)
+            }.map { (_, mounts) ->
+                mounts.find { it.itemId == itemId } ?: throw NullPointerException("No mount with itemId = $itemId")
+            }
 }

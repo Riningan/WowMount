@@ -2,6 +2,7 @@ package com.riningan.wowmount.ui.authorization
 
 import android.os.Build
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,9 @@ import com.riningan.frarg.annotations.ArgumentedFragment
 import com.riningan.wowmount.R
 import com.riningan.wowmount.ui.base.BaseFragment
 import com.riningan.wowmount.ui.splash.SplashFragment
+import com.riningan.wowmount.utils.ColorUtil
 import kotlinx.android.synthetic.main.fragment_authorization.*
+
 
 @ArgumentedFragment
 class AuthorizationFragment : BaseFragment(), AuthorizationView {
@@ -49,6 +52,12 @@ class AuthorizationFragment : BaseFragment(), AuthorizationView {
     }
 
     override fun showRequestErrorDialog(message: String) {
+        view?.let {
+            Snackbar.make(it, message, Snackbar.LENGTH_LONG).apply {
+                view.setBackgroundResource(R.color.colorError)
+                setActionTextColor(ColorUtil.getColor(R.color.colorOnError))
+            }.show()
+        }
     }
 
     override fun lockView() {

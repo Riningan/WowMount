@@ -34,6 +34,7 @@ class AuthorizationPresenter constructor(kodein: Kodein) : BasePresenter<Authori
                 mCharacterInteractor
                         .get()
                         .subscribe({
+                            mLocalPreferences.isActivated = true
                             mRouter.newRootScreen(MountsFragment::class.java.canonicalName)
                         }, {
                             mLocalPreferences.clear()
