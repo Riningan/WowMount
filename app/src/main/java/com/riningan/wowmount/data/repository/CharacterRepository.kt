@@ -41,6 +41,7 @@ class CharacterRepository constructor(private val mBlizzardApi: BlizzardApi,
             .flatMapIterable { it.mounts }
             .map {
                 Mount().apply {
+                    id = it.name + "/" + it.itemId + "/" + it.qualityId
                     itemId = it.itemId
                     name = it.name
                     qualityId = it.qualityId
@@ -52,7 +53,7 @@ class CharacterRepository constructor(private val mBlizzardApi: BlizzardApi,
             }
             .toList()
             .toObservable()
-            .flatMap({ _ ->
+            .flatMap({
                 mBlizzardApi.getCharacter(mLocalPreferences.server, mLocalPreferences.realmName, mLocalPreferences.characterName, "mounts", LocaleUtil.getLocale())
             }, { mounts, characterResponce ->
                 val character = Character().apply {
@@ -81,12 +82,9 @@ class CharacterRepository constructor(private val mBlizzardApi: BlizzardApi,
                 true
             }
 
-    fun getMountByItemId(itemId: Int): Observable<Mount> =
-            if (getMemoryCache() == null) {
-                get()
-            } else {
-                Observable.just(getMemoryCache()!!)
-            }.map { (_, mounts) ->
-                mounts.find { it.itemId == itemId } ?: throw NullPointerException("No mount with itemId = $itemId")
+    fun getMountById(mountId: String): Observable<Mount> = get()
+            .map { (_, mounts) ->
+                mounts.find { it.id == mountId }
+                        ?: throw NullPointerException("No mount with itemId = $mountId")
             }
 }

@@ -11,6 +11,7 @@ object LogUtil {
     private const val TYPE_DEBUG = "DEBUG: "
     private const val TYPE_ERROR = "ERROR: "
 
+
     private val mLogQueue = LinkedList<String>()
 
     @SuppressLint("SimpleDateFormat")
@@ -123,28 +124,28 @@ object LogUtil {
         val lenght = BuildConfig.APPLICATION_ID.length + 1
         val className = Thread.currentThread().stackTrace[4].className.substring(lenght)
         val methodName = Thread.currentThread().stackTrace[4].methodName
-        return className + "." + methodName.replace("lambda$", "")
+        return "$className.$methodName"
     }
 
     private fun getClassAndMethod(o: Any): String {
         val lenght = BuildConfig.APPLICATION_ID.length + 1
         val className = o.javaClass.name.substring(lenght)
         val methodName = Thread.currentThread().stackTrace[4].methodName
-        return className + "." + methodName.replace("lambda$", "")
+        return "$className.$methodName"
     }
 
 
     private fun debug(msg: String) {
-        val info = BuildConfig.VERSION_NAME
-        Log.d(TYPE_DEBUG + info, dateTime + ": " + android.os.Process.myPid() + ": " + Thread.currentThread().id + "\n" + msg)
+        val info = BuildConfig.VERSION_NAME + ": " + dateTime + ": " + android.os.Process.myPid() + ": " + Thread.currentThread().id
+        Log.d(TYPE_DEBUG + info, msg)
         if (!BuildConfig.DEBUG) {
             add("$TYPE_DEBUG$info: $msg")
         }
     }
 
     private fun error(msg: String) {
-        val info = BuildConfig.VERSION_NAME
-        Log.e(TYPE_ERROR + info, dateTime + ": " + android.os.Process.myPid() + ": " + Thread.currentThread().id + "\n" + msg)
+        val info = BuildConfig.VERSION_NAME + ": " + dateTime + ": " + android.os.Process.myPid() + ": " + Thread.currentThread().id
+        Log.e(TYPE_ERROR + info, msg)
         if (!BuildConfig.DEBUG) {
             add("$TYPE_ERROR$info: $msg")
         }

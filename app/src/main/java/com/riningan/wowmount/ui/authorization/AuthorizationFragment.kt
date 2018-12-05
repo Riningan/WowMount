@@ -1,6 +1,5 @@
 package com.riningan.wowmount.ui.authorization
 
-import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.riningan.frarg.annotations.ArgumentedFragment
 import com.riningan.wowmount.R
 import com.riningan.wowmount.ui.base.BaseFragment
-import com.riningan.wowmount.ui.splash.SplashFragment
 import com.riningan.wowmount.utils.ColorUtil
 import kotlinx.android.synthetic.main.fragment_authorization.*
 
@@ -29,9 +27,6 @@ class AuthorizationFragment : BaseFragment(), AuthorizationView {
             inflater.inflate(R.layout.fragment_authorization, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ivLogo.transitionName = SplashFragment.LOGO_TRANSITION
-        }
         cmbRegion.adapter = ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, resources.getStringArray(R.array.authorization_servers))
         btnShow.setOnClickListener { mPresenter.onShowClick(cmbRegion.selectedItem.toString(), etRealm.text.toString(), etCharacter.text.toString()) }
     }

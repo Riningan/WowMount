@@ -37,9 +37,6 @@ abstract class BaseRepository<T> {
             }
 
 
-    protected fun getMemoryCache() = mCache
-
-
     protected abstract fun getFromRemoteDataSource(): Observable<T>
 
     protected abstract fun getFromLocalDataSource(): Observable<T>

@@ -31,11 +31,20 @@ class MountsPresenter constructor(private val mRouter: Router,
 
     fun onMountClick(mount: Mount) {
         LogUtil.addDebug("mount", mount.name)
-        mRouter.navigateTo(MountFragment::class.java.canonicalName, mount.itemId)
+        mRouter.navigateTo(MountFragment::class.java.canonicalName, mount.id)
     }
 
     fun onLogoutClick() {
         LogUtil.addDebug()
+    }
+
+    fun onMountsStartScrolling() {
+        viewState.setPagerSwipeEnable(false)
+    }
+
+    fun onMountsStopScrolling() {
+        LogUtil.addDebug()
+        viewState.setPagerSwipeEnable(true)
     }
 
 

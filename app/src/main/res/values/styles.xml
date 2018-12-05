@@ -61,4 +61,12 @@
         <item name="tabTextColor">@color/colorOnTab</item>
     </style>
 
+    <style name="TextAppearance.CollapsingToolbarLayout.Collapsed" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/colorOnPrimary</item>
+    </style>
+
+    <style name="TextAppearance.CollapsingToolbarLayout.Expanded" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textColor">@color/colorOnPrimary</item>
+    </style>
+
 </resources>

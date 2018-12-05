@@ -16,9 +16,10 @@ import ru.terrakok.cicerone.Router
 
 class MainActivity : AppCompatActivity(), KodeinAware {
     override val kodein by closestKodein()
+
     private val mNavigatorHolder: NavigatorHolder by instance()
     private val mRouter: Router by instance()
-    private lateinit var mNavigator: Navigator
+    private var mNavigator: Navigator? = null
 
 
     override fun attachBaseContext(newBase: Context) {
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         super.onCreate(null)
         setContentView(R.layout.activity_main)
         mNavigator = Navigator(this, R.id.fl)
-        mRouter.newScreenChain(SplashFragment::class.java.canonicalName)
+        mRouter.newRootScreen(SplashFragment::class.java.canonicalName)
     }
 
     override fun onResume() {
@@ -40,5 +41,10 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     override fun onPause() {
         mNavigatorHolder.removeNavigator()
         super.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mNavigator = null
     }
 }

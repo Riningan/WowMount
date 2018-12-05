@@ -1,6 +1,6 @@
 package com.riningan.wowmount.ui.mounts
 
-import android.support.v4.app.Fragment
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -37,7 +37,7 @@ class ItemsAdapter constructor(private val mListener: OnAdapterListener) : Recyc
         init {
             view.setOnClickListener {
                 mMount?.let { mount ->
-                    mListener.onClick(mount)
+                    mListener.onClick(mount, itemView.ivMountIcon)
                 }
             }
         }
@@ -48,12 +48,13 @@ class ItemsAdapter constructor(private val mListener: OnAdapterListener) : Recyc
             Picasso.get()
                     .load(mount.getIconUrl())
                     .into(itemView.ivMountIcon)
+            ViewCompat.setTransitionName(itemView.ivMountIcon, mount.id)
             itemView.tvMountName.text = mount.name
         }
     }
 
 
     interface OnAdapterListener {
-        fun onClick(mount: Mount)
+        fun onClick(mount: Mount, view: View)
     }
 }

@@ -3,6 +3,7 @@ package com.riningan.wowmount.ui.mounts
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,7 @@ import org.kodein.di.generic.instance
 class PageFragment : MvpAppCompatFragment(), KodeinAware, MountsView, ItemsAdapter.OnAdapterListener {
     @Argument
     private var mType: Int = 0
+    private var mClickedIcon: View? = null
 
     @InjectPresenter(tag = MountsPresenter.TAG, type = PresenterType.WEAK)
     lateinit var mPresenter: MountsPresenter
@@ -51,6 +53,15 @@ class PageFragment : MvpAppCompatFragment(), KodeinAware, MountsView, ItemsAdapt
         super.onViewCreated(view, savedInstanceState)
         rvMounts.layoutManager = LinearLayoutManager(context)
         rvMounts.adapter = ItemsAdapter(this)
+        rvMounts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                when (newState) {
+                    RecyclerView.SCROLL_STATE_IDLE -> mPresenter.onMountsStopScrolling()
+                    else -> mPresenter.onMountsStartScrolling()
+                }
+            }
+        })
     }
 
     override fun setCharacter(character: Character) {
@@ -79,9 +90,19 @@ class PageFragment : MvpAppCompatFragment(), KodeinAware, MountsView, ItemsAdapt
          */
     }
 
-    override fun onClick(mount: Mount) {
+    override fun setPagerSwipeEnable(isEnabled: Boolean) {
+        /**
+         * @see MountsFragment
+         */
+    }
+
+    override fun onClick(mount: Mount, view: View) {
+        mClickedIcon = view
         mPresenter.onMountClick(mount)
     }
+
+
+    fun getIconView(): View? = mClickedIcon
 
 
     enum class MountTypes {

@@ -12,9 +12,11 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:padding="10dp"
+        android:transitionName="@string/splash_transition"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toTopOf="@id/cmbRegion"
-        app:srcCompat="@drawable/drawable_logo" />
+        app:srcCompat="@drawable/drawable_logo"
+        tools:ignore="UnusedAttribute" />
 
     <android.support.v7.widget.AppCompatSpinner
         android:id="@+id/cmbRegion"

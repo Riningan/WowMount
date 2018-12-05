@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">WowMount</string>
 
+    <string name="splash_transition">splash_transition</string>
+
     <string name="authorization_realm">Realm</string>
     <string name="authorization_character">Character name</string>
     <string-array name="authorization_servers">

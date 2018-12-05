@@ -13,6 +13,7 @@ import com.riningan.wowmount.R
 import com.riningan.wowmount.data.model.Character
 import com.riningan.wowmount.data.model.Mount
 import com.riningan.wowmount.ui.base.BaseFragment
+import com.riningan.wowmount.widget.ControlledViewPager
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_mounts.*
 import org.kodein.di.generic.instance
@@ -73,4 +74,12 @@ class MountsFragment : BaseFragment(), MountsView {
             Snackbar.make(this, message, Snackbar.LENGTH_LONG)
         }
     }
+
+    override fun setPagerSwipeEnable(isEnabled: Boolean) {
+        vpMounts.setAllowedSwipeDirection(if (isEnabled) ControlledViewPager.SwipeDirection.All else ControlledViewPager.SwipeDirection.NONE)
+    }
+
+
+    fun getIconForAnimation(): View? =
+            (childFragmentManager.findFragmentByTag("android:switcher:" + R.id.vpMounts + ":" + vpMounts.currentItem) as? PageFragment)?.getIconView()
 }

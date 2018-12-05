@@ -4,6 +4,7 @@ import io.realm.RealmObject
 
 
 open class Mount : RealmObject() {
+    var id = ""
     var name = ""
     var itemId = 0
     var qualityId = 0

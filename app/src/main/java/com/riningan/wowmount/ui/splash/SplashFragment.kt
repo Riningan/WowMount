@@ -1,6 +1,5 @@
 package com.riningan.wowmount.ui.splash
 
-import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
@@ -30,9 +29,6 @@ class SplashFragment : BaseFragment(), SplashView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ivLogo.transitionName = LOGO_TRANSITION
-        }
     }
 
     override fun onStart() {
@@ -55,10 +51,5 @@ class SplashFragment : BaseFragment(), SplashView {
     }
 
 
-    fun getLogoForAnimation(): ImageView = ivLogo!!
-
-
-    companion object {
-        const val LOGO_TRANSITION = "LOGO_TRANSITION"
-    }
+    fun getLogoForAnimation(): ImageView = ivLogo
 }
