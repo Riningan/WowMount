@@ -1,7 +1,6 @@
 package com.riningan.wowmount.ui.splash
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.riningan.frarg.annotations.ArgumentedFragment
 import com.riningan.wowmount.R
 import com.riningan.wowmount.ui.base.BaseFragment
-import com.riningan.wowmount.utils.ColorUtil
+import com.riningan.wowmount.utils.SnackbarUtil
 import kotlinx.android.synthetic.main.fragment_splash.*
 
 
@@ -27,10 +26,6 @@ class SplashFragment : BaseFragment(), SplashView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_splash, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
     override fun onStart() {
         super.onStart()
         mPresenter.onStart()
@@ -42,12 +37,7 @@ class SplashFragment : BaseFragment(), SplashView {
     }
 
     override fun showErrorDialog(message: String) {
-        view?.let {
-            Snackbar.make(it, message, Snackbar.LENGTH_LONG).apply {
-                view.setBackgroundResource(R.color.colorError)
-                setActionTextColor(ColorUtil.getColor(R.color.colorOnError))
-            }.show()
-        }
+        SnackbarUtil.showError(view, message)
     }
 
 

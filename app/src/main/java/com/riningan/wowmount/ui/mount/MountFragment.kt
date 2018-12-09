@@ -3,7 +3,6 @@ package com.riningan.wowmount.ui.mount
 import android.os.Build
 import android.os.Bundle
 import android.support.transition.TransitionInflater
-import android.support.v4.view.ViewCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +13,8 @@ import com.riningan.wowmount.data.model.Mount
 import com.riningan.wowmount.ui.base.BaseFragment
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_mount.*
 import java.lang.Exception
+import kotlinx.android.synthetic.main.fragment_mount.*
 
 
 class MountFragment : BaseFragment(), MountView {
@@ -37,6 +36,11 @@ class MountFragment : BaseFragment(), MountView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_mount, container, false)
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mPresenter.onViewCreated()
+    }
+
     override fun onStart() {
         super.onStart()
         mPresenter.onStart()
@@ -47,13 +51,16 @@ class MountFragment : BaseFragment(), MountView {
         mPresenter.clearSubscriptions()
     }
 
-    override fun setTransitionName(transitionName: String) {
-        ViewCompat.setTransitionName(ivMountIcon, transitionName)
+    override fun setTransition(transitionName: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ivMountIcon.transitionName = transitionName
+        }
     }
 
     override fun showMount(mount: Mount) {
         Picasso.get()
                 .load(mount.getIconUrl())
+                .noFade()
                 .into(ivMountIcon, object : Callback {
                     override fun onSuccess() {
                         startPostponedEnterTransition()

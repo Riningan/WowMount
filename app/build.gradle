@@ -7,18 +7,19 @@ apply plugin: 'realm-android'
 def getClientSecret() {
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    return properties.getProperty("client.secret");
+    return properties.getProperty("client.secret")
 }
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.riningan.wowmount"
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "CLIENT_SECRET", getClientSecret()
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -35,7 +36,7 @@ android {
 }
 
 ext {
-    support_version = "27.1.1"
+    support_version = "28.0.0"
     multidex_version = "2.0.0"
     kodein_version = "5.3.0"
     rxjava_version = "2.0.2"
@@ -95,6 +96,8 @@ dependencies {
     kapt "com.riningan.frarg:frarg-processor:$frarg_version"
     // image loader
     implementation "com.squareup.picasso:picasso:2.71828"
+    // custom viewpager
+    implementation "com.riningan.widget:controlledviewpager:1.0"
 
 //    testImplementation 'junit:junit:4.12'
 //    androidTestImplementation 'com.android.support.test:runner:1.0.2'

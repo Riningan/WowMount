@@ -17,18 +17,20 @@ abstract class BaseRepository<T> {
             if (mCache != null && !cacheIsDirty()) {
                 Observable.just(mCache!!)
             } else if (cacheIsDirty()) {
-                getFromRemoteDataSource()
-                        .setToMemoryCache()
-                        .doOnNext { mLastUpdateTime = Date() }
-                        .flatMap({ setToLocalDataSource(it) }, { it, _ -> it })
-                        .onErrorResumeNext { throwable: Throwable ->
-                            val localObservable = mCache?.let { Observable.just(it) }
-                                    ?: loadFromLocalDataSource()
-                            Observable.mergeDelayError(localObservable, Observable.error(throwable))
-                        }
+                update().onErrorResumeNext { throwable: Throwable ->
+                    val localObservable = mCache?.let { Observable.just(it) }
+                            ?: loadFromLocalDataSource()
+                    Observable.mergeDelayError(localObservable, Observable.error(throwable))
+                }
             } else {
                 loadFromLocalDataSource()
             }
+
+    fun update(): Observable<T> =
+            getFromRemoteDataSource()
+                    .setToMemoryCache()
+                    .doOnNext { mLastUpdateTime = Date() }
+                    .flatMap({ setToLocalDataSource(it) }, { it, _ -> it })
 
     fun clear(): Observable<Boolean> = clearLocalDataSource()
             .doOnNext {

@@ -10,7 +10,7 @@ open class BasePresenter<T: BaseView> : MvpPresenter<T>() {
     private var compositeDisposable: CompositeDisposable? = null
 
 
-    fun clearSubscriptions() {
+    open fun clearSubscriptions() {
         compositeDisposable?.dispose()
         compositeDisposable = null
     }

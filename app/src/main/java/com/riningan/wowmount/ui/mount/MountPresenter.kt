@@ -17,6 +17,8 @@ import ru.terrakok.cicerone.Router
 @ArgumentedFragment(fragmentClass = MountFragment::class)
 class MountPresenter constructor(kodein: Kodein) : BasePresenter<MountView>() {
     @Argument
+    private lateinit var mIconTransitionName: String
+    @Argument
     private lateinit var mMountId: String
     private val mRouter: Router by kodein.instance()
     private val mCharacterInteractor: CharacterInteractor by kodein.instance()
@@ -27,9 +29,13 @@ class MountPresenter constructor(kodein: Kodein) : BasePresenter<MountView>() {
         FrargBinder.bind(this, arguments)
     }
 
+    fun onViewCreated() {
+        LogUtil.addDebug()
+        viewState.setTransition(mIconTransitionName)
+    }
+
     fun onStart() {
         LogUtil.addDebug()
-        viewState.setTransitionName(mMountId)
         mCharacterInteractor
                 .getMountByItemId(mMountId)
                 .subscribe({

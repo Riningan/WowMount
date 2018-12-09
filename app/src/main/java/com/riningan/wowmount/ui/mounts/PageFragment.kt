@@ -1,6 +1,7 @@
 package com.riningan.wowmount.ui.mounts
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -21,6 +22,7 @@ import kotlinx.android.synthetic.main.page_mounts.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.support.closestKodein
 import org.kodein.di.generic.instance
+import android.support.v7.util.DiffUtil
 
 
 @ArgumentedFragment(alias = "MountsListFragment")
@@ -52,9 +54,9 @@ class PageFragment : MvpAppCompatFragment(), KodeinAware, MountsView, ItemsAdapt
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rvMounts.layoutManager = LinearLayoutManager(context)
-        rvMounts.adapter = ItemsAdapter(this)
+        rvMounts.adapter = ItemsAdapter(PageFragment.MountTypes.values()[mType], this)
         rvMounts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 when (newState) {
                     RecyclerView.SCROLL_STATE_IDLE -> mPresenter.onMountsStopScrolling()
@@ -71,16 +73,16 @@ class PageFragment : MvpAppCompatFragment(), KodeinAware, MountsView, ItemsAdapt
     }
 
     override fun setMounts(mounts: List<Mount>) {
-        val type = MountTypes.values()[mType]
-        val curMounts = when (type) {
-            MountTypes.ALL -> mounts
-            MountTypes.GROUND -> mounts.filter { it.isGround }
-            MountTypes.FLYING -> mounts.filter { it.isFlying }
-            MountTypes.AQUATIC -> mounts.filter { it.isAquatic }
-        }
         (rvMounts.adapter as ItemsAdapter).apply {
+            val curMounts = when (PageFragment.MountTypes.values()[mType]) {
+                MountTypes.ALL -> mounts
+                MountTypes.GROUND -> mounts.filter { it.isGround }
+                MountTypes.FLYING -> mounts.filter { it.isFlying }
+                MountTypes.AQUATIC -> mounts.filter { it.isAquatic }
+            }
+            val diffResult = DiffUtil.calculateDiff(MountDiffUtillCallback(getMounts(), curMounts))
             setMounts(curMounts)
-            notifyDataSetChanged()
+            diffResult.dispatchUpdatesTo(this)
         }
     }
 
@@ -98,7 +100,17 @@ class PageFragment : MvpAppCompatFragment(), KodeinAware, MountsView, ItemsAdapt
 
     override fun onClick(mount: Mount, view: View) {
         mClickedIcon = view
-        mPresenter.onMountClick(mount)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mPresenter.onMountClick(view.transitionName, mount)
+        } else {
+            mPresenter.onMountClick("", mount)
+        }
+    }
+
+    override fun stopRefresh() {
+        /**
+         * @see MountsFragment
+         */
     }
 
 

@@ -2,6 +2,7 @@ package com.riningan.wowmount.ui.mounts
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +10,12 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.riningan.frarg.annotations.ArgumentedFragment
+import com.riningan.widget.ControlledViewPager
 import com.riningan.wowmount.R
 import com.riningan.wowmount.data.model.Character
 import com.riningan.wowmount.data.model.Mount
 import com.riningan.wowmount.ui.base.BaseFragment
-import com.riningan.wowmount.widget.ControlledViewPager
+import com.riningan.wowmount.utils.onPageScrollStateChanged
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_mounts.*
 import org.kodein.di.generic.instance
@@ -30,6 +32,11 @@ class MountsFragment : BaseFragment(), MountsView {
         return presenter
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        postponeEnterTransition()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_mounts, container, false)
 
@@ -43,7 +50,15 @@ class MountsFragment : BaseFragment(), MountsView {
             true
         }
         tlMounts.setupWithViewPager(vpMounts)
+        srlMounts.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary, R.color.colorPrimary);
+        srlMounts.setOnRefreshListener { mPresenter.onRefresh() }
         vpMounts.adapter = PagerAdapter(childFragmentManager)
+        vpMounts.onPageScrollStateChanged { state ->
+            when (state) {
+                ViewPager.SCROLL_STATE_IDLE -> srlMounts.isEnabled = true
+                else -> srlMounts.isEnabled = false
+            }
+        }
     }
 
     override fun onStart() {
@@ -77,6 +92,10 @@ class MountsFragment : BaseFragment(), MountsView {
 
     override fun setPagerSwipeEnable(isEnabled: Boolean) {
         vpMounts.setAllowedSwipeDirection(if (isEnabled) ControlledViewPager.SwipeDirection.All else ControlledViewPager.SwipeDirection.NONE)
+    }
+
+    override fun stopRefresh() {
+        srlMounts.isRefreshing = false
     }
 
 

@@ -18,4 +18,7 @@ interface MountsView : BaseView {
 
     @StateStrategyType(SkipStrategy::class)
     fun setPagerSwipeEnable(isEnabled: Boolean)
+
+    @StateStrategyType(SkipStrategy::class)
+    fun stopRefresh()
 }

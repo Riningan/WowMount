@@ -13,5 +13,5 @@ class PagerAdapter constructor(fragmentManager: FragmentManager) : FragmentPager
 
     override fun getItem(position: Int): Fragment = FragmentBuilder.newMountsListFragmentInstance(position)
 
-    override fun getPageTitle(position: Int) = WowMountApp.getContext().resources.getStringArray(R.array.mounts_groups)[position]
+    override fun getPageTitle(position: Int): String = WowMountApp.getContext().resources.getStringArray(R.array.mounts_groups)[position]
 }

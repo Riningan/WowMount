@@ -11,13 +11,14 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_mount.view.*
 
 
-class ItemsAdapter constructor(private val mListener: OnAdapterListener) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
+class ItemsAdapter constructor(private val mType: PageFragment.MountTypes, private val mListener: OnAdapterListener) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
     private val mMounts = arrayListOf<Mount>()
 
 
     override fun getItemCount() = mMounts.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_mount, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+            ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_mount, parent, false))
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(mMounts[position])
@@ -29,13 +30,15 @@ class ItemsAdapter constructor(private val mListener: OnAdapterListener) : Recyc
         mMounts.addAll(mounts)
     }
 
+    fun getMounts() = mMounts
+
 
     inner class ViewHolder constructor(view: View) : RecyclerView.ViewHolder(view) {
         private var mMount: Mount? = null
 
 
         init {
-            view.setOnClickListener {
+            itemView.setOnClickListener {
                 mMount?.let { mount ->
                     mListener.onClick(mount, itemView.ivMountIcon)
                 }
@@ -45,10 +48,10 @@ class ItemsAdapter constructor(private val mListener: OnAdapterListener) : Recyc
 
         fun bind(mount: Mount) {
             mMount = mount
+            ViewCompat.setTransitionName(itemView.ivMountIcon, mType.name + "/" + mount.id)
             Picasso.get()
                     .load(mount.getIconUrl())
                     .into(itemView.ivMountIcon)
-            ViewCompat.setTransitionName(itemView.ivMountIcon, mount.id)
             itemView.tvMountName.text = mount.name
         }
     }

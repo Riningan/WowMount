@@ -3,7 +3,6 @@ package com.riningan.wowmount.route
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.support.transition.ChangeBounds
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentTransaction
@@ -26,7 +25,7 @@ class Navigator constructor(activity: FragmentActivity, containerId: Int) : Supp
             SplashFragment::class.java.canonicalName -> FragmentBuilder.newSplashFragmentInstance()
             AuthorizationFragment::class.java.canonicalName -> FragmentBuilder.newAuthorizationFragmentInstance()
             MountsFragment::class.java.canonicalName -> FragmentBuilder.newMountsFragmentInstance()
-            MountFragment::class.java.canonicalName -> FragmentBuilder.newMountFragmentInstance(data as String)
+            MountFragment::class.java.canonicalName -> FragmentBuilder.newMountFragmentInstance(data as MountFragmentArgs)
             else -> null
         }
     }
@@ -38,21 +37,12 @@ class Navigator constructor(activity: FragmentActivity, containerId: Int) : Supp
     override fun setupFragmentTransactionAnimation(command: Command?, currentFragment: Fragment?, nextFragment: Fragment?, fragmentTransaction: FragmentTransaction) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             if (command is Forward && currentFragment is SplashFragment && nextFragment is AuthorizationFragment) {
-                val changeBounds = ChangeBounds()
-                nextFragment.setSharedElementEnterTransition(changeBounds)
-                nextFragment.setSharedElementReturnTransition(changeBounds)
-                currentFragment.setSharedElementEnterTransition(changeBounds)
-                currentFragment.setSharedElementReturnTransition(changeBounds)
-                val view = currentFragment.getLogoForAnimation()
-                fragmentTransaction.addSharedElement(view, view.transitionName)
+                currentFragment.getLogoForAnimation().let {
+                    fragmentTransaction.addSharedElement(it, ViewCompat.getTransitionName(it)!!)
+                }
             } else if (command is Forward && currentFragment is MountsFragment && nextFragment is MountFragment) {
-//                val changeBounds = ChangeBounds()
-//                nextFragment.setSharedElementEnterTransition(changeBounds)
-//                nextFragment.setSharedElementReturnTransition(changeBounds)
-//                currentFragment.setSharedElementEnterTransition(changeBounds)
-//                currentFragment.setSharedElementReturnTransition(changeBounds)
                 currentFragment.getIconForAnimation()?.let {
-                    fragmentTransaction.addSharedElement(it, ViewCompat.getTransitionName(it))
+                    fragmentTransaction.addSharedElement(it, ViewCompat.getTransitionName(it)!!)
                 }
             }
         }

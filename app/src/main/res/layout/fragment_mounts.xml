@@ -19,7 +19,7 @@
             app:collapsedTitleTextAppearance="@style/TextAppearance.CollapsingToolbarLayout.Collapsed"
             app:contentScrim="@color/colorPrimary"
             app:expandedTitleTextAppearance="@style/TextAppearance.CollapsingToolbarLayout.Expanded"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap">
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/ivCharacter"
@@ -43,14 +43,21 @@
             style="@style/AppTheme.TabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|enterAlways" />
+            app:layout_scrollFlags="scroll|enterAlways|snap" />
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.riningan.wowmount.widget.ControlledViewPager
-        android:id="@+id/vpMounts"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srlMounts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.riningan.widget.ControlledViewPager
+            android:id="@+id/vpMounts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </android.support.design.widget.CoordinatorLayout>
