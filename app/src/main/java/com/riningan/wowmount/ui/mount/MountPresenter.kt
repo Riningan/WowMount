@@ -29,17 +29,17 @@ class MountPresenter constructor(kodein: Kodein) : BasePresenter<MountView>() {
         FrargBinder.bind(this, arguments)
     }
 
-    fun onViewCreated() {
+    fun setupTransitionView() {
         LogUtil.addDebug()
         viewState.setTransition(mIconTransitionName)
     }
 
-    fun onStart() {
+    fun setupMount() {
         LogUtil.addDebug()
         mCharacterInteractor
                 .getMountByItemId(mMountId)
                 .subscribe({
-                    viewState.showMount(it)
+                    viewState.setMount(it)
                 }, {
                     viewState.showError()
                 })

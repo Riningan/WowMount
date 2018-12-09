@@ -6,6 +6,7 @@
     <color name="colorSecondary">#43A047</color>
     <color name="colorBackground">#FFFFFF</color>
     <color name="colorSurface">#FFFFFF</color>
+    <color name="colorSurfacePressed">#e0e0e0</color>
     <color name="colorError">#D50000</color>
     <color name="colorOnPrimary">#FFFFFF</color>
     <color name="colorOnSecondary">#000000</color>

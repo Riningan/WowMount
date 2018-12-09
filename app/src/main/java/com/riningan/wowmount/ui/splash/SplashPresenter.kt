@@ -27,7 +27,7 @@ class SplashPresenter constructor(kodein: Kodein) : BasePresenter<SplashView>() 
         LogUtil.addDebug()
         if (mLocalPreferences.isActivated) {
             mCharacterInteractor
-                    .get()
+                    .update()
                     .subscribe({
                     }, {
                         viewState.showErrorDialog(it.localizedMessage)

@@ -9,6 +9,6 @@ import com.riningan.wowmount.ui.base.BaseView
 @StateStrategyType(SingleStateStrategy::class)
 interface MountView : BaseView {
     fun setTransition(transitionName: String)
-    fun showMount(mount: Mount)
+    fun setMount(mount: Mount)
     fun showError()
 }

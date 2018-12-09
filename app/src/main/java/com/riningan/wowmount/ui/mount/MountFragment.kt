@@ -38,12 +38,13 @@ class MountFragment : BaseFragment(), MountView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mPresenter.onViewCreated()
+        tlbMount.setNavigationOnClickListener { mPresenter.onBackClick() }
+        mPresenter.setupTransitionView()
     }
 
     override fun onStart() {
         super.onStart()
-        mPresenter.onStart()
+        mPresenter.setupMount()
     }
 
     override fun onStop() {
@@ -57,7 +58,7 @@ class MountFragment : BaseFragment(), MountView {
         }
     }
 
-    override fun showMount(mount: Mount) {
+    override fun setMount(mount: Mount) {
         Picasso.get()
                 .load(mount.getIconUrl())
                 .noFade()
@@ -70,6 +71,7 @@ class MountFragment : BaseFragment(), MountView {
                         startPostponedEnterTransition()
                     }
                 })
+        tvMountName.text = mount.name
     }
 
     override fun showError() {

@@ -3,9 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_listitem"
+    android:clickable="true"
+    android:focusable="true">
 
-    <android.support.v7.widget.AppCompatImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivMountIcon"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -13,6 +16,8 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
+        app:civ_border_color="@color/colorOnSurface"
+        app:civ_border_width="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,8 +30,7 @@
         android:layout_marginLeft="16dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textSize="16sp"
-        app:fontFamily="@font/raleway_medium"
+        android:textAppearance="@style/TextAppearance.MountName"
         app:layout_constraintBottom_toBottomOf="@+id/ivMountIcon"
         app:layout_constraintEnd_toStartOf="@id/ivMountNavigation"
         app:layout_constraintHorizontal_bias="0"

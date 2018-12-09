@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="AppTheme.Spinner" parent="Base.Widget.AppCompat.Spinner">
-        <item name="android:backgroundTint">@color/colorPrimary</item>
-    </style>
-
+    <!-- Base application theme for v21. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!--background-->
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <!--<item name="android:colorBackground">#185</item> don't use if using windowBackground-->
+        <item name="android:colorForeground">@color/colorAccent</item>
         <!--checkbox checked state-->
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="colorControlNormal">@color/colorAccent</item>
@@ -15,10 +15,6 @@
         <item name="colorControlHighlight">@color/colorAccent</item>
         <!--button default state-->
         <item name="colorButtonNormal">@color/colorPrimary</item>
-        <!--background-->
-        <item name="android:windowBackground">@color/colorBackground</item>
-        <!--<item name="android:colorBackground">#185</item> don't use if using windowBackground-->
-        <item name="android:colorForeground">@color/colorAccent</item>
 
         <item name="colorError">@color/colorError</item>
 
@@ -36,6 +32,10 @@
 
         <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
         <item name="android:toolbarStyle">@style/AppTheme.Toolbar</item>
+    </style>
 
+    <style name="AppTheme.Spinner" parent="Base.Widget.AppCompat.Spinner">
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
     </style>
 </resources>

@@ -13,18 +13,17 @@ import io.realm.Realm
 class CharacterRepository constructor(private val mBlizzardApi: BlizzardApi,
                                       private val mLocalPreferences: LocalPreferences) : BaseRepository<Pair<Character?, List<Mount>>>() {
     override fun getFromLocalDataSource(): Observable<Pair<Character?, List<Mount>>> = Observable
-            .just(Realm.getDefaultInstance())
-            .map { realm ->
+            .fromCallable {
+                val realm = Realm.getDefaultInstance()
                 val character = realm.where(Character::class.java).findFirst()
-                val mounts = realm.where(Mount::class.java).findAll()
+                val mounts = realm.where(Mount::class.java).findAll().toList()
                 realm.close()
-                Pair(character, mounts.toList())
+                Pair(character, mounts)
             }
 
     override fun setToLocalDataSource(cache: Pair<Character?, List<Mount>>): Observable<Boolean> = Observable
-            .just(Realm.getDefaultInstance())
-            .map {
-                it.apply {
+            .fromCallable {
+                Realm.getDefaultInstance().apply {
                     beginTransaction()
                     delete(Character::class.java)
                     copyToRealm(cache.first!!)
@@ -70,9 +69,8 @@ class CharacterRepository constructor(private val mBlizzardApi: BlizzardApi,
             })
 
     override fun clearLocalDataSource(): Observable<Boolean> = Observable
-            .just(Realm.getDefaultInstance())
-            .map {
-                it.apply {
+            .fromCallable {
+                Realm.getDefaultInstance().apply {
                     beginTransaction()
                     delete(Character::class.java)
                     delete(Mount::class.java)

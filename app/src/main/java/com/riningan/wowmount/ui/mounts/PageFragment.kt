@@ -3,6 +3,7 @@ package com.riningan.wowmount.ui.mounts
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -22,7 +23,6 @@ import kotlinx.android.synthetic.main.page_mounts.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.support.closestKodein
 import org.kodein.di.generic.instance
-import android.support.v7.util.DiffUtil
 
 
 @ArgumentedFragment(alias = "MountsListFragment")

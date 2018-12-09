@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -31,7 +30,6 @@
         <item name="android:spinnerStyle">@style/AppTheme.Spinner</item>
 
         <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
-
     </style>
 
     <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored"></style>
@@ -67,6 +65,12 @@
 
     <style name="TextAppearance.CollapsingToolbarLayout.Expanded" parent="TextAppearance.AppCompat.Large">
         <item name="android:textColor">@color/colorOnPrimary</item>
+    </style>
+
+    <style name="TextAppearance.MountName" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/colorOnSurface</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/raleway_medium</item>
     </style>
 
 </resources>

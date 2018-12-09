@@ -96,6 +96,8 @@ dependencies {
     kapt "com.riningan.frarg:frarg-processor:$frarg_version"
     // image loader
     implementation "com.squareup.picasso:picasso:2.71828"
+    // circle imageview
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
     // custom viewpager
     implementation "com.riningan.widget:controlledviewpager:1.0"
 

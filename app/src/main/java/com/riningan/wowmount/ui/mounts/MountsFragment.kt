@@ -1,7 +1,6 @@
 package com.riningan.wowmount.ui.mounts
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +14,7 @@ import com.riningan.wowmount.R
 import com.riningan.wowmount.data.model.Character
 import com.riningan.wowmount.data.model.Mount
 import com.riningan.wowmount.ui.base.BaseFragment
+import com.riningan.wowmount.utils.SnackbarUtil
 import com.riningan.wowmount.utils.onPageScrollStateChanged
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_mounts.*
@@ -85,9 +85,7 @@ class MountsFragment : BaseFragment(), MountsView {
     }
 
     override fun showErrorDialog(message: String) {
-        view?.run {
-            Snackbar.make(this, message, Snackbar.LENGTH_LONG)
-        }
+        SnackbarUtil.showError(view, message)
     }
 
     override fun setPagerSwipeEnable(isEnabled: Boolean) {

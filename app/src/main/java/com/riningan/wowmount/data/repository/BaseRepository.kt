@@ -10,25 +10,25 @@ abstract class BaseRepository<T> {
 
 
     private val updateIntervalInSeconds: Int
-        get() = 60
+        get() = 4
 
 
     fun get(): Observable<T> =
             if (mCache != null && !cacheIsDirty()) {
-                Observable.just(mCache!!)
+                getFromMemoryDataSource()
             } else if (cacheIsDirty()) {
-                update().onErrorResumeNext { throwable: Throwable ->
-                    val localObservable = mCache?.let { Observable.just(it) }
-                            ?: loadFromLocalDataSource()
-                    Observable.mergeDelayError(localObservable, Observable.error(throwable))
-                }
+                val local = if (mCache == null) loadFromLocalDataSource() else getFromMemoryDataSource()
+                val remote = update()
+                Observable
+                        .mergeDelayError(local, remote)
             } else {
+                // no cache
                 loadFromLocalDataSource()
             }
 
     fun update(): Observable<T> =
             getFromRemoteDataSource()
-                    .setToMemoryCache()
+                    .setToMemoryDataSource()
                     .doOnNext { mLastUpdateTime = Date() }
                     .flatMap({ setToLocalDataSource(it) }, { it, _ -> it })
 
@@ -39,18 +39,22 @@ abstract class BaseRepository<T> {
             }
 
 
-    protected abstract fun getFromRemoteDataSource(): Observable<T>
+    private fun getFromMemoryDataSource(): Observable<T> = Observable.just(mCache!!)
 
     protected abstract fun getFromLocalDataSource(): Observable<T>
 
+    protected abstract fun getFromRemoteDataSource(): Observable<T>
+
+
+    private fun Observable<T>.setToMemoryDataSource(): Observable<T> = doOnNext { mCache = it }
+
     protected abstract fun setToLocalDataSource(cache: T): Observable<Boolean>
+
 
     protected abstract fun clearLocalDataSource(): Observable<Boolean>
 
 
     private fun cacheIsDirty() = Date().time - mLastUpdateTime.time > updateIntervalInSeconds * 1000
 
-    private fun loadFromLocalDataSource() = getFromLocalDataSource().setToMemoryCache()
-
-    private fun Observable<T>.setToMemoryCache(): Observable<T> = doOnNext { mCache = it }
+    private fun loadFromLocalDataSource() = getFromLocalDataSource().setToMemoryDataSource()
 }

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -7,11 +9,28 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/tlbMount"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize" />
+        android:layout_height="?attr/actionBarSize"
+        app:contentInsetStartWithNavigation="0dp"
+        app:navigationIcon="@drawable/ic_arrow_back">
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/ivMountIcon"
-        android:layout_width="40dp"
-        android:layout_height="40dp" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivMountIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:civ_border_color="@color/colorOnPrimary"
+            app:civ_border_width="1dp" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tvMountName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.MountName"
+            android:textColor="@color/colorOnPrimary" />
+
+    </android.support.v7.widget.Toolbar>
 
 </LinearLayout>

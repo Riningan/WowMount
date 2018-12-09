@@ -27,8 +27,6 @@ class MountsPresenter constructor(private val mRouter: Router,
                     setData(character, mounts)
                 }, {
                     viewState.showErrorDialog(it.localizedMessage)
-                }, {
-                    LogUtil.addDebug(this@MountsPresenter)
                 })
                 .attach()
     }
