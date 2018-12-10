@@ -11,7 +11,7 @@ import com.riningan.wowmount.app.WowMountApp
 class PagerAdapter constructor(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
     override fun getCount() = 4
 
-    override fun getItem(position: Int): Fragment = FragmentBuilder.newMountsListFragmentInstance(position)
+    override fun getItem(position: Int): Fragment = FragmentBuilder.newMountsListFragmentInstance(PageFragment.MountTypes.values()[position])
 
     override fun getPageTitle(position: Int): String = WowMountApp.getContext().resources.getStringArray(R.array.mounts_groups)[position]
 }

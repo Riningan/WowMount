@@ -44,7 +44,7 @@ ext {
     retrofit_version = "2.4.0"
     moxy_version = "1.5.5"
     leakcanary_version = "1.5.4"
-    frarg_version = "0.9.1"
+    frarg_version = "1.0"
 }
 
 dependencies {

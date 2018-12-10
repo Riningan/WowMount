@@ -4,15 +4,20 @@ import com.riningan.wowmount.data.LocalPreferences
 import com.riningan.wowmount.data.model.Character
 import com.riningan.wowmount.data.model.Mount
 import com.riningan.wowmount.network.BlizzardApi
+import com.riningan.wowmount.network.model.CharacterResponse
+import com.riningan.wowmount.network.model.MountsResponse
 import com.riningan.wowmount.utils.LocaleUtil
 import com.riningan.wowmount.utils.isContain
-import io.reactivex.Observable
+import io.reactivex.Completable
+import io.reactivex.Flowable
+import io.reactivex.Single
+import io.reactivex.functions.BiFunction
 import io.realm.Realm
 
 
 class CharacterRepository constructor(private val mBlizzardApi: BlizzardApi,
                                       private val mLocalPreferences: LocalPreferences) : BaseRepository<Pair<Character?, List<Mount>>>() {
-    override fun getFromLocalDataSource(): Observable<Pair<Character?, List<Mount>>> = Observable
+    override fun getFromLocalDataSource(): Single<Pair<Character?, List<Mount>>> = Single
             .fromCallable {
                 val realm = Realm.getDefaultInstance()
                 val character = realm.where(Character::class.java).findFirst()
@@ -21,7 +26,7 @@ class CharacterRepository constructor(private val mBlizzardApi: BlizzardApi,
                 Pair(character, mounts)
             }
 
-    override fun setToLocalDataSource(cache: Pair<Character?, List<Mount>>): Observable<Boolean> = Observable
+    override fun setToLocalDataSource(cache: Pair<Character?, List<Mount>>): Completable = Completable
             .fromCallable {
                 Realm.getDefaultInstance().apply {
                     beginTransaction()
@@ -32,43 +37,43 @@ class CharacterRepository constructor(private val mBlizzardApi: BlizzardApi,
                     commitTransaction()
                     close()
                 }
-                true
             }
 
-    override fun getFromRemoteDataSource(): Observable<Pair<Character?, List<Mount>>> = mBlizzardApi
-            .getMounts(mLocalPreferences.server, LocaleUtil.getLocale())
-            .flatMapIterable { it.mounts }
-            .map {
-                Mount().apply {
-                    id = it.name + "/" + it.itemId + "/" + it.qualityId
-                    itemId = it.itemId
-                    name = it.name
-                    qualityId = it.qualityId
-                    icon = it.icon
-                    isGround = it.isGround
-                    isFlying = it.isFlying
-                    isAquatic = it.isAquatic
+    override fun getFromRemoteDataSource(): Single<Pair<Character?, List<Mount>>> = Single
+            .zip(mBlizzardApi.getMounts(mLocalPreferences.server, LocaleUtil.getLocale()),
+                    mBlizzardApi.getCharacter(mLocalPreferences.server, mLocalPreferences.realmName, mLocalPreferences.characterName, "mounts", LocaleUtil.getLocale()),
+                    BiFunction<MountsResponse, CharacterResponse, Pair<MountsResponse, CharacterResponse>> { mounts: MountsResponse, character: CharacterResponse ->
+                        Pair(mounts, character)
+                    })
+            .map { (mountsResponse, characterResponse) ->
+                val mounts = arrayListOf<Mount>()
+                for (mount in mountsResponse.mounts) {
+                    mounts.add(Mount().apply {
+                        id = mount.name + "/" + mount.itemId + "/" + mount.qualityId
+                        itemId = mount.itemId
+                        name = mount.name
+                        qualityId = mount.qualityId
+                        icon = mount.icon
+                        isGround = mount.isGround
+                        isFlying = mount.isFlying
+                        isAquatic = mount.isAquatic
+                    })
                 }
-            }
-            .toList()
-            .toObservable()
-            .flatMap({
-                mBlizzardApi.getCharacter(mLocalPreferences.server, mLocalPreferences.realmName, mLocalPreferences.characterName, "mounts", LocaleUtil.getLocale())
-            }, { mounts, characterResponce ->
                 val character = Character().apply {
-                    name = characterResponce.name
-                    realm = characterResponce.realm
-                    level = characterResponce.level
-                    thumbnail = characterResponce.thumbnail
+                    name = characterResponse.name
+                    realm = characterResponse.realm
+                    level = characterResponse.level
+                    thumbnail = characterResponse.thumbnail
                     region = mLocalPreferences.server
                 }
                 mounts.forEach { mount ->
-                    mount.isCollected = characterResponce.mounts.collected.isContain { it.itemId == mount.itemId }
+                    mount.isCollected = characterResponse.mounts.collected.isContain { it.itemId == mount.itemId }
                 }
                 Pair(character, mounts)
-            })
+            }
 
-    override fun clearLocalDataSource(): Observable<Boolean> = Observable
+
+    override fun clearLocalDataSource(): Completable = Completable
             .fromCallable {
                 Realm.getDefaultInstance().apply {
                     beginTransaction()
@@ -77,12 +82,16 @@ class CharacterRepository constructor(private val mBlizzardApi: BlizzardApi,
                     commitTransaction()
                     close()
                 }
-                true
             }
 
-    fun getMountById(mountId: String): Observable<Mount> = get()
+    fun getMountById(mountId: String): Flowable<Mount> = get()
             .map { (_, mounts) ->
                 mounts.find { it.id == mountId }
                         ?: throw NullPointerException("No mount with itemId = $mountId")
             }
+
+    override fun getHashKey(t: Pair<Character?, List<Mount>>): Any {
+        // todo hash
+        return t.second.size
+    }
 }

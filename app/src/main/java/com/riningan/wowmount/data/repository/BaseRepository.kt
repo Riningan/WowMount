@@ -1,7 +1,9 @@
 package com.riningan.wowmount.data.repository
 
 import java.util.*
-import io.reactivex.Observable
+import io.reactivex.Completable
+import io.reactivex.Flowable
+import io.reactivex.Single
 
 
 abstract class BaseRepository<T> {
@@ -13,48 +15,52 @@ abstract class BaseRepository<T> {
         get() = 4
 
 
-    fun get(): Observable<T> =
-            if (mCache != null && !cacheIsDirty()) {
-                getFromMemoryDataSource()
-            } else if (cacheIsDirty()) {
-                val local = if (mCache == null) loadFromLocalDataSource() else getFromMemoryDataSource()
-                val remote = update()
-                Observable
-                        .mergeDelayError(local, remote)
-            } else {
-                // no cache
-                loadFromLocalDataSource()
-            }
+    fun get(): Flowable<T> {
+        val local = if (mCache == null) {
+            getFromLocalDataSource().doOnSuccess { mCache = it }
+        } else {
+            getFromMemoryDataSource()
+        }.toFlowable()
+        return if (cacheIsDirty()) {
+            val remote = update().toFlowable()
+            Flowable
+                    .mergeDelayError(local, remote)
+                    .distinct { getHashKey(it) }
+        } else {
+            local
+        }
+    }
 
-    fun update(): Observable<T> =
+    fun update(): Single<T> =
             getFromRemoteDataSource()
-                    .setToMemoryDataSource()
-                    .doOnNext { mLastUpdateTime = Date() }
-                    .flatMap({ setToLocalDataSource(it) }, { it, _ -> it })
+                    .doOnSuccess {
+                        mCache = it
+                        mLastUpdateTime = Date()
+                    }
+                    .flatMap { setToLocalDataSource(it).toSingle { it } }
 
-    fun clear(): Observable<Boolean> = clearLocalDataSource()
-            .doOnNext {
+    fun clear(): Completable = clearLocalDataSource()
+            .doOnComplete {
                 mLastUpdateTime = Date(1)
                 mCache = null
             }
 
 
-    private fun getFromMemoryDataSource(): Observable<T> = Observable.just(mCache!!)
+    private fun getFromMemoryDataSource(): Single<T> = Single.just(mCache!!)
 
-    protected abstract fun getFromLocalDataSource(): Observable<T>
+    protected abstract fun getFromLocalDataSource(): Single<T>
 
-    protected abstract fun getFromRemoteDataSource(): Observable<T>
-
-
-    private fun Observable<T>.setToMemoryDataSource(): Observable<T> = doOnNext { mCache = it }
-
-    protected abstract fun setToLocalDataSource(cache: T): Observable<Boolean>
+    protected abstract fun getFromRemoteDataSource(): Single<T>
 
 
-    protected abstract fun clearLocalDataSource(): Observable<Boolean>
+    protected abstract fun setToLocalDataSource(cache: T): Completable
+
+
+    protected abstract fun clearLocalDataSource(): Completable
+
+
+    protected abstract fun getHashKey(t: T): Any
 
 
     private fun cacheIsDirty() = Date().time - mLastUpdateTime.time > updateIntervalInSeconds * 1000
-
-    private fun loadFromLocalDataSource() = getFromLocalDataSource().setToMemoryDataSource()
 }

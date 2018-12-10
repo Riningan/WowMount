@@ -42,6 +42,8 @@ class MountPresenter constructor(kodein: Kodein) : BasePresenter<MountView>() {
                     viewState.setMount(it)
                 }, {
                     viewState.showError()
+                }, {
+                    LogUtil.addDebug()
                 })
                 .attach()
     }

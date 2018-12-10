@@ -28,7 +28,7 @@ import org.kodein.di.generic.instance
 @ArgumentedFragment(alias = "MountsListFragment")
 class PageFragment : MvpAppCompatFragment(), KodeinAware, MountsView, ItemsAdapter.OnAdapterListener {
     @Argument
-    private var mType: Int = 0
+    private lateinit var mType: MountTypes
     private var mClickedIcon: View? = null
 
     @InjectPresenter(tag = MountsPresenter.TAG, type = PresenterType.WEAK)
@@ -54,7 +54,7 @@ class PageFragment : MvpAppCompatFragment(), KodeinAware, MountsView, ItemsAdapt
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rvMounts.layoutManager = LinearLayoutManager(context)
-        rvMounts.adapter = ItemsAdapter(PageFragment.MountTypes.values()[mType], this)
+        rvMounts.adapter = ItemsAdapter(mType, this)
         rvMounts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -74,7 +74,7 @@ class PageFragment : MvpAppCompatFragment(), KodeinAware, MountsView, ItemsAdapt
 
     override fun setMounts(mounts: List<Mount>) {
         (rvMounts.adapter as ItemsAdapter).apply {
-            val curMounts = when (PageFragment.MountTypes.values()[mType]) {
+            val curMounts = when (mType) {
                 MountTypes.ALL -> mounts
                 MountTypes.GROUND -> mounts.filter { it.isGround }
                 MountTypes.FLYING -> mounts.filter { it.isFlying }
