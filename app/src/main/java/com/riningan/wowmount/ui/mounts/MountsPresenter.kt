@@ -2,9 +2,11 @@ package com.riningan.wowmount.ui.mounts
 
 import com.arellomobile.mvp.InjectViewState
 import com.riningan.frarg.processor.MountFragmentArgs
+import com.riningan.wowmount.data.LocalPreferences
 import com.riningan.wowmount.data.model.Character
 import com.riningan.wowmount.data.model.Mount
 import com.riningan.wowmount.interactors.CharacterInteractor
+import com.riningan.wowmount.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.ui.base.BasePresenter
 import com.riningan.wowmount.ui.mount.MountFragment
 import com.riningan.wowmount.utils.LogUtil
@@ -13,7 +15,8 @@ import ru.terrakok.cicerone.Router
 
 @InjectViewState
 class MountsPresenter constructor(private val mRouter: Router,
-                                  private val mCharacterInteractor: CharacterInteractor) : BasePresenter<MountsView>() {
+                                  private val mCharacterInteractor: CharacterInteractor,
+                                  private val mLocalPreferences: LocalPreferences) : BasePresenter<MountsView>() {
     override fun clearSubscriptions() {
         super.clearSubscriptions()
         viewState.stopRefresh()
@@ -38,9 +41,19 @@ class MountsPresenter constructor(private val mRouter: Router,
 
     fun onLogoutClick() {
         LogUtil.addDebug()
+        mCharacterInteractor
+                .clear()
+                .subscribe({
+                    mLocalPreferences.clear()
+                    mRouter.newRootScreen(AuthorizationFragment::class.java.canonicalName)
+                }, {
+                    viewState.showErrorDialog(it.localizedMessage)
+                })
+                .attach()
     }
 
     fun onMountsStartScrolling() {
+//        LogUtil.addDebug() much calls
         viewState.setPagerSwipeEnable(false)
     }
 

@@ -90,8 +90,11 @@ class CharacterRepository constructor(private val mBlizzardApi: BlizzardApi,
                         ?: throw NullPointerException("No mount with itemId = $mountId")
             }
 
-    override fun getHashKey(t: Pair<Character?, List<Mount>>): Any {
-        // todo hash
-        return t.second.size
+    override fun calculateHashCode(t: Pair<Character?, List<Mount>>): Any {
+        var result = t.first?.hashCode() ?: 0
+        for (mount in t.second) {
+            result = result * 31 + mount.hashCode()
+        }
+        return result
     }
 }

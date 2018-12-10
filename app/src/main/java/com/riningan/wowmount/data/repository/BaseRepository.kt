@@ -25,7 +25,7 @@ abstract class BaseRepository<T> {
             val remote = update().toFlowable()
             Flowable
                     .mergeDelayError(local, remote)
-                    .distinct { getHashKey(it) }
+                    .distinct { calculateHashCode(it) }
         } else {
             local
         }
@@ -59,7 +59,7 @@ abstract class BaseRepository<T> {
     protected abstract fun clearLocalDataSource(): Completable
 
 
-    protected abstract fun getHashKey(t: T): Any
+    protected abstract fun calculateHashCode(t: T): Any
 
 
     private fun cacheIsDirty() = Date().time - mLastUpdateTime.time > updateIntervalInSeconds * 1000

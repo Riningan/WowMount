@@ -8,5 +8,5 @@ import org.kodein.di.generic.singleton
 
 
 val presentersModule = Kodein.Module(name = "Presenters") {
-    bind<MountsPresenter>() with singleton { MountsPresenter(instance(), instance()) }
+    bind<MountsPresenter>() with singleton { MountsPresenter(instance(), instance(), instance()) }
 }
