@@ -44,7 +44,7 @@ ext {
     retrofit_version = "2.4.0"
     moxy_version = "1.5.5"
     leakcanary_version = "1.5.4"
-    frarg_version = "1.0"
+    frarg_version = "1.1"
 }
 
 dependencies {
@@ -100,6 +100,8 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     // custom viewpager
     implementation "com.riningan.widget:extendedviewpager:1.1"
+    //
+    implementation "com.riningan.util:logger:0.1"
 
 //    testImplementation 'junit:junit:4.12'
 //    androidTestImplementation 'com.android.support.test:runner:1.0.2'

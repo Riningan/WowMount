@@ -3,6 +3,8 @@ package com.riningan.wowmount.app
 import android.content.Context
 import androidx.multidex.BuildConfig
 import androidx.multidex.MultiDexApplication
+import com.riningan.util.Logger
+import com.riningan.util.MessageType
 import com.riningan.wowmount.di.*
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
@@ -12,6 +14,9 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.singleton
 import io.realm.RealmConfiguration
+import com.riningan.util.OnMessageListener
+
+
 
 
 
@@ -20,6 +25,10 @@ class WowMountApp : MultiDexApplication(), KodeinAware {
     override fun onCreate() {
         super.onCreate()
         mInstance = this
+        // Logger
+        Logger.Config
+                .removeApplicationId(BuildConfig.APPLICATION_ID)
+                .addPreffix(BuildConfig.VERSION_NAME)
         // LeakCanary
         if (BuildConfig.DEBUG) {
             if (!LeakCanary.isInAnalyzerProcess(this)) {
