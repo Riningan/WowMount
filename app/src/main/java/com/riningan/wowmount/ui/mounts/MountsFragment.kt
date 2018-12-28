@@ -9,7 +9,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.riningan.frarg.annotations.ArgumentedFragment
-import com.riningan.widget.ControlledViewPager
+import com.riningan.widget.ExtendedViewPager
 import com.riningan.wowmount.R
 import com.riningan.wowmount.data.model.Character
 import com.riningan.wowmount.data.model.Mount
@@ -50,7 +50,7 @@ class MountsFragment : BaseFragment(), MountsView {
             true
         }
         tlMounts.setupWithViewPager(vpMounts)
-        srlMounts.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary, R.color.colorPrimary);
+        srlMounts.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary, R.color.colorPrimary)
         srlMounts.setOnRefreshListener { mPresenter.onRefresh() }
         vpMounts.adapter = PagerAdapter(childFragmentManager)
         vpMounts.onPageScrollStateChanged { state ->
@@ -89,7 +89,7 @@ class MountsFragment : BaseFragment(), MountsView {
     }
 
     override fun setPagerSwipeEnable(isEnabled: Boolean) {
-        vpMounts.setAllowedSwipeDirection(if (isEnabled) ControlledViewPager.SwipeDirection.All else ControlledViewPager.SwipeDirection.NONE)
+        vpMounts.setAllowedSwipeDirection(if (isEnabled) ExtendedViewPager.SwipeDirection.All else ExtendedViewPager.SwipeDirection.NONE)
     }
 
     override fun stopRefresh() {

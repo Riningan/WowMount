@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.View
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.riningan.util.Logger
+import com.riningan.wowmount.BuildConfig
+import com.riningan.wowmount.app.WowMountApp
 import com.riningan.wowmount.utils.LogUtil
 import org.kodein.di.KodeinAware
 import org.kodein.di.KodeinTrigger
@@ -67,6 +69,10 @@ open class BaseFragment : MvpAppCompatFragment(), BaseView, KodeinAware {
     override fun onDestroy() {
         Logger.forThis(this).debug()
         LogUtil.addDebug(this)
+        // LeakCanary
+        if (BuildConfig.DEBUG) {
+            activity?.let { WowMountApp.getRefWatcher().watch(this) }
+        }
         super.onDestroy()
     }
 }

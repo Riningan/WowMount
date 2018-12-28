@@ -1,30 +1,30 @@
 package com.riningan.wowmount.data.repository
 
+import com.riningan.wowmount.data.storage.local.BaseLocalStorage
+import com.riningan.wowmount.data.storage.remote.BaseRemoteStorage
 import java.util.*
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 
 
-abstract class BaseRepository<T> {
+abstract class BaseRepository<T>(private val mLocalStorage: BaseLocalStorage<T>, private val mRemoteStorage: BaseRemoteStorage<T>) {
     private var mLastUpdateTime = Date(1)
     private var mCache: T? = null
 
 
     private val updateIntervalInSeconds: Int
-        get() = 4
+        get() = 60
 
 
     fun get(): Flowable<T> {
         val local = if (mCache == null) {
-            getFromLocalDataSource().doOnSuccess { mCache = it }
+            mLocalStorage.get().doOnSuccess { mCache = it }
         } else {
-            getFromMemoryDataSource()
+            Single.just(mCache!!)
         }.toFlowable()
         return if (cacheIsDirty()) {
-            val remote = update().toFlowable()
-            Flowable
-                    .mergeDelayError(local, remote)
+            Flowable.mergeDelayError(local, update().toFlowable())
                     .distinct { calculateHashCode(it) }
         } else {
             local
@@ -32,31 +32,18 @@ abstract class BaseRepository<T> {
     }
 
     fun update(): Single<T> =
-            getFromRemoteDataSource()
+            mRemoteStorage.get()
                     .doOnSuccess {
                         mCache = it
                         mLastUpdateTime = Date()
                     }
-                    .flatMap { setToLocalDataSource(it).toSingle { it } }
+                    .flatMap { mLocalStorage.set(it).toSingle { it } }
 
-    fun clear(): Completable = clearLocalDataSource()
+    fun clear(): Completable = mLocalStorage.clear()
             .doOnComplete {
                 mLastUpdateTime = Date(1)
                 mCache = null
             }
-
-
-    private fun getFromMemoryDataSource(): Single<T> = Single.just(mCache!!)
-
-    protected abstract fun getFromLocalDataSource(): Single<T>
-
-    protected abstract fun getFromRemoteDataSource(): Single<T>
-
-
-    protected abstract fun setToLocalDataSource(cache: T): Completable
-
-
-    protected abstract fun clearLocalDataSource(): Completable
 
 
     protected abstract fun calculateHashCode(t: T): Any

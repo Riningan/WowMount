@@ -4,21 +4,15 @@ import android.content.Context
 import androidx.multidex.BuildConfig
 import androidx.multidex.MultiDexApplication
 import com.riningan.util.Logger
-import com.riningan.util.MessageType
 import com.riningan.wowmount.di.*
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import io.realm.Realm
+import io.realm.RealmConfiguration
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.singleton
-import io.realm.RealmConfiguration
-import com.riningan.util.OnMessageListener
-
-
-
-
 
 
 class WowMountApp : MultiDexApplication(), KodeinAware {
@@ -35,12 +29,12 @@ class WowMountApp : MultiDexApplication(), KodeinAware {
                 mRefWatcher = LeakCanary.install(this)
             }
         }
-        // Initialize Realm
+        // Realm
         Realm.init(this)
-        val config = RealmConfiguration.Builder().
-                name("wowmount.realm").
-                schemaVersion(1).
-                build()
+        val config = RealmConfiguration.Builder()
+                .name("wowmount.realm")
+                .schemaVersion(1)
+                .build()
         Realm.setDefaultConfiguration(config)
     }
 
