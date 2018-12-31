@@ -2,9 +2,9 @@ package com.riningan.wowmount
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
-import com.riningan.wowmount.data.model.Character
-import com.riningan.wowmount.data.model.Mount
-import com.riningan.wowmount.data.storage.local.CharacterLocalStorage
+import com.riningan.wowmount.data.db.model.CharacterEntity
+import com.riningan.wowmount.data.db.model.MountEntity
+import com.riningan.wowmount.data.repository.storage.local.CharacterLocalStorage
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import org.junit.Test
@@ -15,14 +15,14 @@ import org.junit.Before
 @RunWith(AndroidJUnit4::class)
 class CharacterLocalStorageTest {
     private lateinit var mCharacterLocalStorage: CharacterLocalStorage
-    private val mTestCharacter = Character().apply {
+    private val mTestCharacter = CharacterEntity().apply {
         name = "test"
     }
     private val mTestMounts = listOf(
-            Mount().apply {
+            MountEntity().apply {
                 name = "test mount 1"
             },
-            Mount().apply {
+            MountEntity().apply {
                 name = "test mount 2"
             })
 

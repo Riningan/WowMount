@@ -1,16 +1,12 @@
-package com.riningan.wowmount.data.model
-
-import io.realm.RealmObject
+package com.riningan.wowmount.data.repository.model
 
 
-open class Character : RealmObject() {
-    var name: String = ""
-    var realm: String = ""
-    var level: Int = 0
-    var thumbnail: String = ""
-    var region: String = ""
-
-
+data class Character(
+        var name: String = "",
+        var realm: String = "",
+        var level: Int = 0,
+        var thumbnail: String = "",
+        var region: String = "") {
     /**
      * generated
      */

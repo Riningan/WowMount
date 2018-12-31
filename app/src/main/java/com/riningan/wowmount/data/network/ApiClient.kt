@@ -1,4 +1,4 @@
-package com.riningan.wowmount.network
+package com.riningan.wowmount.data.network
 
 import com.riningan.wowmount.BuildConfig
 import com.riningan.wowmount.data.LocalPreferences
@@ -16,6 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ApiClient constructor(private val mLocalPreferences: LocalPreferences) {
     private var mBlizzardApi: BlizzardApi
     private var mBattleNetApi: BattleNetApi
+
 
     init {
         val authHttpClient = OkHttpClient().newBuilder()

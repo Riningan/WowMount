@@ -1,11 +1,11 @@
-package com.riningan.wowmount.data.storage.remote
+package com.riningan.wowmount.data.repository.storage.remote
 
 import com.riningan.wowmount.data.LocalPreferences
-import com.riningan.wowmount.data.model.Character
-import com.riningan.wowmount.data.model.Mount
-import com.riningan.wowmount.network.BlizzardApi
-import com.riningan.wowmount.network.model.CharacterResponse
-import com.riningan.wowmount.network.model.MountsResponse
+import com.riningan.wowmount.data.network.BlizzardApi
+import com.riningan.wowmount.data.network.model.CharacterResponse
+import com.riningan.wowmount.data.network.model.MountsResponse
+import com.riningan.wowmount.data.repository.model.Character
+import com.riningan.wowmount.data.repository.model.Mount
 import com.riningan.wowmount.utils.LocaleUtil
 import com.riningan.wowmount.utils.isContain
 import io.reactivex.Single

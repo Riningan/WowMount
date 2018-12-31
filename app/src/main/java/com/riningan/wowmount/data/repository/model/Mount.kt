@@ -1,20 +1,16 @@
-package com.riningan.wowmount.data.model
-
-import io.realm.RealmObject
+package com.riningan.wowmount.data.repository.model
 
 
-open class Mount : RealmObject() {
-    var id = ""
-    var name = ""
-    var itemId = 0
-    var qualityId = 0
-    var icon: String? = null
-    var isGround = false
-    var isFlying = false
-    var isAquatic = false
-    var isCollected = false
-
-
+data class Mount(
+        var id: String = "",
+        var name: String = "",
+        var itemId: Int = 0,
+        var qualityId: Int = 0,
+        var icon: String? = null,
+        var isGround: Boolean = false,
+        var isFlying: Boolean = false,
+        var isAquatic: Boolean = false,
+        var isCollected: Boolean = false) {
     /**
      * generated
      */

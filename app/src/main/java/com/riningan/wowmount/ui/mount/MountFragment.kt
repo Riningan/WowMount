@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.riningan.wowmount.R
-import com.riningan.wowmount.data.model.Mount
+import com.riningan.wowmount.data.repository.model.Mount
 import com.riningan.wowmount.ui.base.BaseFragment
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso

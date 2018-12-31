@@ -41,9 +41,10 @@ class WowMountApp : MultiDexApplication(), KodeinAware {
     override val kodein = Kodein.lazy {
         bind<Context>() with singleton { this@WowMountApp }
         import(networkModule)
-        import(routeModule)
+        import(dbModule)
         import(dataModule)
         import(interactorsModule)
+        import(routeModule)
         import(presentersModule)
     }
 

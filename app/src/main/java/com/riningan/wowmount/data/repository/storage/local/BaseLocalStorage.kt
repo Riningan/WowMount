@@ -1,4 +1,4 @@
-package com.riningan.wowmount.data.storage.local
+package com.riningan.wowmount.data.repository.storage.local
 
 import io.reactivex.Completable
 import io.reactivex.Single

@@ -1,7 +1,7 @@
-package com.riningan.wowmount.network
+package com.riningan.wowmount.data.network
 
-import com.riningan.wowmount.network.model.CharacterResponse
-import com.riningan.wowmount.network.model.MountsResponse
+import com.riningan.wowmount.data.network.model.CharacterResponse
+import com.riningan.wowmount.data.network.model.MountsResponse
 import io.reactivex.Single
 import retrofit2.http.*
 

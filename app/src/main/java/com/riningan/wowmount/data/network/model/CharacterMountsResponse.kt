@@ -1,6 +1,7 @@
-package com.riningan.wowmount.network.model
+package com.riningan.wowmount.data.network.model
 
 import com.google.gson.annotations.SerializedName
+
 
 data class CharacterMountsResponse(
         @SerializedName("numCollected")

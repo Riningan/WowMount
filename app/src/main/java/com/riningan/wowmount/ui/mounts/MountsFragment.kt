@@ -11,8 +11,8 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.riningan.frarg.annotations.ArgumentedFragment
 import com.riningan.widget.ExtendedViewPager
 import com.riningan.wowmount.R
-import com.riningan.wowmount.data.model.Character
-import com.riningan.wowmount.data.model.Mount
+import com.riningan.wowmount.data.repository.model.Character
+import com.riningan.wowmount.data.repository.model.Mount
 import com.riningan.wowmount.ui.base.BaseFragment
 import com.riningan.wowmount.utils.SnackbarUtil
 import com.riningan.wowmount.utils.onPageScrollStateChanged

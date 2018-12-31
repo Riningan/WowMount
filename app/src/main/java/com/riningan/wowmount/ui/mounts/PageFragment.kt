@@ -17,8 +17,8 @@ import com.riningan.frarg.FrargBinder
 import com.riningan.frarg.annotations.Argument
 import com.riningan.frarg.annotations.ArgumentedFragment
 import com.riningan.wowmount.R
-import com.riningan.wowmount.data.model.Character
-import com.riningan.wowmount.data.model.Mount
+import com.riningan.wowmount.data.repository.model.Character
+import com.riningan.wowmount.data.repository.model.Mount
 import kotlinx.android.synthetic.main.page_mounts.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.support.closestKodein

@@ -1,8 +1,9 @@
-package com.riningan.wowmount.network
+package com.riningan.wowmount.data.network
 
-import com.riningan.wowmount.network.model.AccessTokenResponse
+import com.riningan.wowmount.data.network.model.AccessTokenResponse
 import retrofit2.Call
 import retrofit2.http.*
+
 
 interface BattleNetApi {
     @POST("https://{region}.battle.net/oauth/token")

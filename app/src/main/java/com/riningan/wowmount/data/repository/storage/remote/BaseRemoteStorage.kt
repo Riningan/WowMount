@@ -1,4 +1,4 @@
-package com.riningan.wowmount.data.storage.remote
+package com.riningan.wowmount.data.repository.storage.remote
 
 import io.reactivex.Single
 

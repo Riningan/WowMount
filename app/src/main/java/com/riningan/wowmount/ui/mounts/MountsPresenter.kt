@@ -3,8 +3,8 @@ package com.riningan.wowmount.ui.mounts
 import com.arellomobile.mvp.InjectViewState
 import com.riningan.frarg.processor.MountFragmentArgs
 import com.riningan.wowmount.data.LocalPreferences
-import com.riningan.wowmount.data.model.Character
-import com.riningan.wowmount.data.model.Mount
+import com.riningan.wowmount.data.repository.model.Character
+import com.riningan.wowmount.data.repository.model.Mount
 import com.riningan.wowmount.interactors.CharacterInteractor
 import com.riningan.wowmount.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.ui.base.BasePresenter

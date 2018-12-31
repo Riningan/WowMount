@@ -1,7 +1,7 @@
 package com.riningan.wowmount.ui.mounts
 
 import android.support.v7.util.DiffUtil
-import com.riningan.wowmount.data.model.Mount
+import com.riningan.wowmount.data.repository.model.Mount
 
 
 class MountDiffUtillCallback constructor(private val mOld: List<Mount>, private val mNew: List<Mount>) : DiffUtil.Callback() {

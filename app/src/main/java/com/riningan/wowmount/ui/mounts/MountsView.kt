@@ -3,8 +3,8 @@ package com.riningan.wowmount.ui.mounts
 import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
-import com.riningan.wowmount.data.model.Character
-import com.riningan.wowmount.data.model.Mount
+import com.riningan.wowmount.data.repository.model.Character
+import com.riningan.wowmount.data.repository.model.Mount
 import com.riningan.wowmount.ui.base.BaseView
 
 

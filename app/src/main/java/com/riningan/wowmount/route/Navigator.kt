@@ -19,7 +19,6 @@ import ru.terrakok.cicerone.commands.Forward
 
 
 class Navigator constructor(activity: FragmentActivity, containerId: Int) : SupportAppNavigator(activity, containerId) {
-
     override fun createFragment(screenKey: String, data: Any?): Fragment? {
         return when (screenKey) {
             SplashFragment::class.java.canonicalName -> FragmentBuilder.newSplashFragmentInstance()

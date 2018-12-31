@@ -8,6 +8,7 @@ import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 
+
 val routeModule = Kodein.Module(name = "Route") {
     bind<Router>() with singleton { Router() }
     bind<Cicerone<Router>>() with singleton { Cicerone.create<Router>(instance()) }

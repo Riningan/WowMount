@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.riningan.wowmount.R
-import com.riningan.wowmount.data.model.Mount
+import com.riningan.wowmount.data.repository.model.Mount
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_mount.view.*
 
@@ -33,6 +33,11 @@ class ItemsAdapter constructor(private val mType: PageFragment.MountTypes, priva
     fun getMounts() = mMounts
 
 
+    interface OnAdapterListener {
+        fun onClick(mount: Mount, view: View)
+    }
+
+
     inner class ViewHolder constructor(view: View) : RecyclerView.ViewHolder(view) {
         private var mMount: Mount? = null
 
@@ -54,10 +59,5 @@ class ItemsAdapter constructor(private val mType: PageFragment.MountTypes, priva
                     .into(itemView.ivMountIcon)
             itemView.tvMountName.text = mount.name
         }
-    }
-
-
-    interface OnAdapterListener {
-        fun onClick(mount: Mount, view: View)
     }
 }
