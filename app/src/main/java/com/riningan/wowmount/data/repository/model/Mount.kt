@@ -52,6 +52,5 @@ data class Mount(
 
     fun getIconUrl() = if (icon != null) "https://render-us.worldofwarcraft.com/icons/56/$icon.jpg" else null
 
-
     fun getImageUrl() = if (clientId != 0) "https://render-us.worldofwarcraft.com/npcs/zoom/creature-display-$clientId.jpg" else null
 }
