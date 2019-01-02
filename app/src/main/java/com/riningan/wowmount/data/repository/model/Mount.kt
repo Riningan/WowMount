@@ -6,6 +6,7 @@ data class Mount(
         var name: String = "",
         var itemId: Int = 0,
         var qualityId: Int = 0,
+        var clientId: Int = 0,
         var icon: String? = null,
         var isGround: Boolean = false,
         var isFlying: Boolean = false,
@@ -22,6 +23,7 @@ data class Mount(
         if (name != other.name) return false
         if (itemId != other.itemId) return false
         if (qualityId != other.qualityId) return false
+        if (clientId != other.clientId) return false
         if (icon != other.icon) return false
         if (isGround != other.isGround) return false
         if (isFlying != other.isFlying) return false
@@ -38,6 +40,7 @@ data class Mount(
         result = 31 * result + name.hashCode()
         result = 31 * result + itemId
         result = 31 * result + qualityId
+        result = 31 * result + clientId
         result = 31 * result + (icon?.hashCode() ?: 0)
         result = 31 * result + isGround.hashCode()
         result = 31 * result + isFlying.hashCode()

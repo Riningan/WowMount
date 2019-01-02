@@ -8,6 +8,7 @@ open class MountEntity : RealmObject() {
     var name = ""
     var itemId = 0
     var qualityId = 0
+    var clientId = 0
     var icon: String? = null
     var isGround = false
     var isFlying = false
