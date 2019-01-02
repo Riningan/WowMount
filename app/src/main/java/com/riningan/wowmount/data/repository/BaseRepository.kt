@@ -2,10 +2,10 @@ package com.riningan.wowmount.data.repository
 
 import com.riningan.wowmount.data.repository.storage.local.BaseLocalStorage
 import com.riningan.wowmount.data.repository.storage.remote.BaseRemoteStorage
-import java.util.*
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
+import java.util.*
 
 
 abstract class BaseRepository<T>(private val mLocalStorage: BaseLocalStorage<T>, private val mRemoteStorage: BaseRemoteStorage<T>) {

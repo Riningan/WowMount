@@ -1,19 +1,19 @@
 package com.riningan.wowmount.ui.splash
 
 import com.arellomobile.mvp.InjectViewState
-import com.riningan.wowmount.data.LocalPreferences
+import com.riningan.wowmount.data.preferences.LocalPreferences
 import com.riningan.wowmount.interactors.CharacterInteractor
 import com.riningan.wowmount.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.ui.base.BasePresenter
 import com.riningan.wowmount.ui.mounts.MountsFragment
 import com.riningan.wowmount.utils.LogUtil
-import java.util.concurrent.TimeUnit
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.kodein.di.Kodein
 import org.kodein.di.generic.instance
 import ru.terrakok.cicerone.Router
+import java.util.concurrent.TimeUnit
 
 
 @InjectViewState

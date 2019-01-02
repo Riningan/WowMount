@@ -13,7 +13,6 @@ import com.riningan.wowmount.data.repository.model.Mount
 import com.riningan.wowmount.ui.base.BaseFragment
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import java.lang.Exception
 import kotlinx.android.synthetic.main.fragment_mount.*
 
 

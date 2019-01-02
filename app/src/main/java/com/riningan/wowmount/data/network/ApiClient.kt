@@ -1,9 +1,8 @@
 package com.riningan.wowmount.data.network
 
 import com.riningan.wowmount.BuildConfig
-import com.riningan.wowmount.data.LocalPreferences
-import java.io.IOException
-import java.util.concurrent.TimeUnit
+import com.riningan.wowmount.data.preferences.AppPreferences
+import info.nukoneko.java.lib.retrofit.CsvConverterFactory
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
@@ -11,11 +10,14 @@ import okhttp3.Request
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 
-class ApiClient constructor(private val mLocalPreferences: LocalPreferences) {
-    private var mBlizzardApi: BlizzardApi
-    private var mBattleNetApi: BattleNetApi
+class ApiClient constructor(private val mLocalPreferences: AppPreferences) {
+    private val mBlizzardApi: BlizzardApi
+    private val mBattleNetApi: BattleNetApi
+    private val mSpreadsheetApi: SpreadsheetApi
 
 
     init {
@@ -33,7 +35,7 @@ class ApiClient constructor(private val mLocalPreferences: LocalPreferences) {
                 }
                 .build()
         mBattleNetApi = Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(EMPTY_URL)
                 .client(authHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
@@ -59,16 +61,30 @@ class ApiClient constructor(private val mLocalPreferences: LocalPreferences) {
                 }
                 .build()
         mBlizzardApi = Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(EMPTY_URL)
                 .client(blizzardHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .build()
                 .create(BlizzardApi::class.java)
+
+        val spreadsheetHttpClient = OkHttpClient().newBuilder()
+                .readTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
+                .connectTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
+                .build()
+        mSpreadsheetApi = Retrofit.Builder()
+                .baseUrl(DOCS_URL)
+                .client(spreadsheetHttpClient)
+                .addConverterFactory(CsvConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .build()
+                .create(SpreadsheetApi::class.java)
     }
 
 
     fun getBlizzardApi() = mBlizzardApi
+
+    fun getSpreadsheetApi() = mSpreadsheetApi
 
 
     private fun requestAccessToken(original: Request): String {
@@ -98,7 +114,8 @@ class ApiClient constructor(private val mLocalPreferences: LocalPreferences) {
     companion object {
         private const val TIMEOUT = 30000L
         private const val CLIENT_ID = "9dbd799cb01a4ce194705b6cbf652875"
-        private const val BASE_URL = "http://worldofwarcraft.com"
+        private const val EMPTY_URL = "http://this.is.not.valid.url"
+        private const val DOCS_URL = "https://docs.google.com"
         private val REGEX = "(\\w\\w)\\.api\\.blizzard\\.com".toRegex()
     }
 }

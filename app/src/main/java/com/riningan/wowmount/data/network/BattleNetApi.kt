@@ -2,7 +2,10 @@ package com.riningan.wowmount.data.network
 
 import com.riningan.wowmount.data.network.model.AccessTokenResponse
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.FieldMap
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
+import retrofit2.http.Path
 
 
 interface BattleNetApi {

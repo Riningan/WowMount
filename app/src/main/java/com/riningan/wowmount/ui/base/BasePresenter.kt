@@ -7,7 +7,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 
-open class BasePresenter<T: BaseView> : MvpPresenter<T>() {
+open class BasePresenter<T : BaseView> : MvpPresenter<T>() {
     private var compositeDisposable: CompositeDisposable? = null
 
 

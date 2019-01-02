@@ -80,6 +80,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation "com.github.Atsumi3:converter-csv:0.0.1"
     // rxbinding
     implementation "com.jakewharton.rxbinding2:rxbinding:2.1.1"
     // шрифты
@@ -102,6 +103,7 @@ dependencies {
     implementation "com.riningan.widget:extendedviewpager:1.1"
     //
     implementation "com.riningan.util:logger:0.1"
+    //
     testImplementation 'junit:junit:4.12'
     testImplementation "org.mockito:mockito-core:2.23.4"
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

@@ -5,4 +5,5 @@ import com.google.gson.annotations.SerializedName
 
 data class MountsResponse(
         @SerializedName("mounts")
-        var mounts: List<MountResponse>)
+        var mounts: List<MountResponse>
+)

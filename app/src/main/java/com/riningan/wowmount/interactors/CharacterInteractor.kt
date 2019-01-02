@@ -1,8 +1,8 @@
 package com.riningan.wowmount.interactors
 
+import com.riningan.wowmount.data.repository.CharacterRepository
 import com.riningan.wowmount.data.repository.model.Character
 import com.riningan.wowmount.data.repository.model.Mount
-import com.riningan.wowmount.data.repository.CharacterRepository
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler

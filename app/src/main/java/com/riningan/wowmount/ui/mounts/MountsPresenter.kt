@@ -2,7 +2,7 @@ package com.riningan.wowmount.ui.mounts
 
 import com.arellomobile.mvp.InjectViewState
 import com.riningan.frarg.processor.MountFragmentArgs
-import com.riningan.wowmount.data.LocalPreferences
+import com.riningan.wowmount.data.preferences.LocalPreferences
 import com.riningan.wowmount.data.repository.model.Character
 import com.riningan.wowmount.data.repository.model.Mount
 import com.riningan.wowmount.interactors.CharacterInteractor

@@ -1,7 +1,7 @@
 package com.riningan.wowmount.ui.authorization
 
 import com.arellomobile.mvp.InjectViewState
-import com.riningan.wowmount.data.LocalPreferences
+import com.riningan.wowmount.data.preferences.LocalPreferences
 import com.riningan.wowmount.interactors.CharacterInteractor
 import com.riningan.wowmount.ui.base.BasePresenter
 import com.riningan.wowmount.ui.mounts.MountsFragment

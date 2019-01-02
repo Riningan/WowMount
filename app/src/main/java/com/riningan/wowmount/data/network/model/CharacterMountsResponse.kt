@@ -9,4 +9,5 @@ data class CharacterMountsResponse(
         @SerializedName("numNotCollected")
         var numNotCollected: Int,
         @SerializedName("collected")
-        var collected: List<MountResponse>)
+        var collected: List<MountResponse>
+)

@@ -23,4 +23,5 @@ data class MountResponse(
         @SerializedName("isAquatic")
         var isAquatic: Boolean,
         @SerializedName("isJumping")
-        var isJumping: Boolean)
+        var isJumping: Boolean
+)

@@ -1,34 +1,34 @@
-package com.riningan.wowmount.data
+package com.riningan.wowmount.data.preferences
 
 import android.content.Context
 
 
-class LocalPreferences constructor(context: Context) {
+class AppPreferences constructor(context: Context) : LocalPreferences {
     private val mSharedPreferences = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
 
 
-    var isActivated: Boolean
+    override var isActivated: Boolean
         get() = mSharedPreferences.getBoolean(IS_ACTIVATED, false)
         set(value) = mSharedPreferences.edit().putBoolean(IS_ACTIVATED, value).apply()
 
-    var server: String
+    override var server: String
         get() = mSharedPreferences.getString(SERVER, "")!!
         set(value) = mSharedPreferences.edit().putString(SERVER, value).apply()
 
-    var realmName: String
+    override var realmName: String
         get() = mSharedPreferences.getString(REALM_NAME, "")!!
         set(value) = mSharedPreferences.edit().putString(REALM_NAME, value).apply()
 
-    var characterName: String
+    override var characterName: String
         get() = mSharedPreferences.getString(CHARACTER_NAME, "")!!
         set(value) = mSharedPreferences.edit().putString(CHARACTER_NAME, value).apply()
 
-    var accessToken: String
+    override var accessToken: String
         get() = mSharedPreferences.getString(ACCESS_TOKEN, "")!!
         set(value) = mSharedPreferences.edit().putString(ACCESS_TOKEN, value).apply()
 
 
-    fun clear() {
+    override fun clear() {
         mSharedPreferences.edit().apply {
             putBoolean(IS_ACTIVATED, false)
             putString(SERVER, "")

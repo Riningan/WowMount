@@ -1,6 +1,6 @@
 package com.riningan.wowmount
 
-import com.riningan.wowmount.data.LocalPreferences
+import com.riningan.wowmount.data.preferences.AppPreferences
 import com.riningan.wowmount.data.repository.storage.remote.CharacterRemoteStorage
 import com.riningan.wowmount.data.network.BlizzardApi
 import com.riningan.wowmount.data.network.model.CharacterMountsResponse
@@ -23,7 +23,7 @@ class CharacterRemoteStorageTest {
     @Mock
     lateinit var mBlizzardApi: BlizzardApi
     @Mock
-    lateinit var mLocalPreferences: LocalPreferences
+    lateinit var mLocalPreferences: AppPreferences
     private lateinit var mCharacterRemoteStorage: CharacterRemoteStorage
 
 
