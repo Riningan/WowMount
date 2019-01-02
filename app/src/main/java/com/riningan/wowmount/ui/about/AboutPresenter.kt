@@ -7,7 +7,7 @@ import org.kodein.di.generic.instance
 import ru.terrakok.cicerone.Router
 
 
-class AboutPresenter constructor(private val kodein: Kodein) : BasePresenter<AboutView>() {
+class AboutPresenter constructor(kodein: Kodein) : BasePresenter<AboutView>() {
     private val mRouter: Router by kodein.instance()
 
 

@@ -32,9 +32,9 @@
         <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
     </style>
 
-    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored"></style>
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored" />
 
-    <style name="AppTheme.CheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox"></style>
+    <style name="AppTheme.CheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox" />
 
     <style name="AppTheme.EditText" parent="Widget.AppCompat.EditText">
         <item name="android:textColor">@color/colorOnBackground</item>
