@@ -6,6 +6,7 @@ import com.riningan.wowmount.data.preferences.LocalPreferences
 import com.riningan.wowmount.data.repository.model.Character
 import com.riningan.wowmount.data.repository.model.Mount
 import com.riningan.wowmount.interactors.CharacterInteractor
+import com.riningan.wowmount.ui.about.AboutFragment
 import com.riningan.wowmount.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.ui.base.BasePresenter
 import com.riningan.wowmount.ui.mount.MountFragment
@@ -37,6 +38,11 @@ class MountsPresenter constructor(private val mRouter: Router,
     fun onMountClick(iconTransitionName: String, mount: Mount) {
         LogUtil.addDebug("mount", mount.name)
         mRouter.navigateTo(MountFragment::class.java.canonicalName, MountFragmentArgs(iconTransitionName, mount.id))
+    }
+
+    fun onAboutClick() {
+        LogUtil.addDebug()
+        mRouter.navigateTo(AboutFragment::class.java.canonicalName)
     }
 
     fun onLogoutClick() {

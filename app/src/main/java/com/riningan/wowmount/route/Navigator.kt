@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.ViewCompat
 import com.riningan.frarg.processor.FragmentBuilder
 import com.riningan.frarg.processor.MountFragmentArgs
+import com.riningan.wowmount.ui.about.AboutFragment
 import com.riningan.wowmount.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.ui.mount.MountFragment
 import com.riningan.wowmount.ui.mounts.MountsFragment
@@ -25,6 +26,7 @@ class Navigator constructor(activity: FragmentActivity, containerId: Int) : Supp
             AuthorizationFragment::class.java.canonicalName -> FragmentBuilder.newAuthorizationFragmentInstance()
             MountsFragment::class.java.canonicalName -> FragmentBuilder.newMountsFragmentInstance()
             MountFragment::class.java.canonicalName -> FragmentBuilder.newMountFragmentInstance(data as MountFragmentArgs)
+            AboutFragment::class.java.canonicalName -> FragmentBuilder.newAboutFragmentInstance()
             else -> null
         }
     }

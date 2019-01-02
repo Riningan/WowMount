@@ -45,6 +45,7 @@ class MountsFragment : BaseFragment(), MountsView {
         tlbMounts.inflateMenu(R.menu.menu_mounts)
         tlbMounts.setOnMenuItemClickListener { menu ->
             when (menu.itemId) {
+                R.id.miAbout -> mPresenter.onAboutClick()
                 R.id.miLogout -> mPresenter.onLogoutClick()
             }
             true
@@ -74,7 +75,7 @@ class MountsFragment : BaseFragment(), MountsView {
     override fun setCharacter(character: Character) {
         Picasso.get()
                 .load(character.getMainUrl())
-                .into(ivCharacter)
+                .into(ivMountsCharacter)
         tlbMounts.title = character.name
     }
 

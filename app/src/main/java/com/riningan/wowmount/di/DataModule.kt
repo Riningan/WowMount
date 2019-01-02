@@ -11,6 +11,6 @@ import org.kodein.di.generic.singleton
 
 val dataModule = Kodein.Module(name = "Data") {
     bind<CharacterLocalStorage>() with singleton { CharacterLocalStorage(instance()) }
-    bind<CharacterRemoteStorage>() with singleton { CharacterRemoteStorage(instance(), instance()) }
+    bind<CharacterRemoteStorage>() with singleton { CharacterRemoteStorage(instance(), instance(), instance()) }
     bind<CharacterRepository>() with singleton { CharacterRepository(instance(), instance()) }
 }

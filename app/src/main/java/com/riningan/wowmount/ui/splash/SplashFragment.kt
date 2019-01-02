@@ -41,5 +41,5 @@ class SplashFragment : BaseFragment(), SplashView {
     }
 
 
-    fun getLogoForAnimation(): ImageView = ivLogo
+    fun getLogoForAnimation(): ImageView = ivSplashLogo
 }

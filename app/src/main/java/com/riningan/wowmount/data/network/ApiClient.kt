@@ -1,7 +1,7 @@
 package com.riningan.wowmount.data.network
 
 import com.riningan.wowmount.BuildConfig
-import com.riningan.wowmount.data.preferences.AppPreferences
+import com.riningan.wowmount.data.preferences.LocalPreferences
 import info.nukoneko.java.lib.retrofit.CsvConverterFactory
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Credentials
@@ -14,7 +14,7 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 
-class ApiClient constructor(private val mLocalPreferences: AppPreferences) {
+class ApiClient constructor(private val mLocalPreferences: LocalPreferences) {
     private val mBlizzardApi: BlizzardApi
     private val mBattleNetApi: BattleNetApi
     private val mSpreadsheetApi: SpreadsheetApi

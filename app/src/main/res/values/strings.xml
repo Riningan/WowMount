@@ -14,13 +14,16 @@
     <string name="authorization_error_empty_realm">Empty realm name</string>
     <string name="authorization_error_empty_character_name">Empty character name</string>
     <string name="authorization_error_request">Request failed: %s</string>
-    <string name="mounts_menu_logout">Logout</string>
 
+    <string name="mounts_menu_logout">Logout</string>
+    <string name="mounts_menu_about">About</string>
     <string-array name="mounts_groups">
         <item>All</item>
         <item>Ground</item>
         <item>Flying</item>
         <item>Aquatic</item>
     </string-array>
+
+    <string name="about_title">About</string>
 
 </resources>

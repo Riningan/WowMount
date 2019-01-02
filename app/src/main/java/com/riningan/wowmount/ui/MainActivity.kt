@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(null)
         setContentView(R.layout.activity_main)
-        mNavigator = Navigator(this, R.id.fl)
+        mNavigator = Navigator(this, R.id.flMain)
         mRouter.newRootScreen(SplashFragment::class.java.canonicalName)
     }
 

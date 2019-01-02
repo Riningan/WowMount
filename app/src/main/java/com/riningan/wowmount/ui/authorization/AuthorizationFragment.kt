@@ -36,8 +36,13 @@ class AuthorizationFragment : BaseFragment(), AuthorizationView {
             inflater.inflate(R.layout.fragment_authorization, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        cmbRegion.adapter = ArrayAdapter<String>(context!!, android.R.layout.simple_dropdown_item_1line, resources.getStringArray(R.array.authorization_servers))
-        btnShow.setOnClickListener { mPresenter.onShowClick(cmbRegion.selectedItem.toString(), etRealm.text.toString(), etCharacter.text.toString()) }
+        cmbAuthorizationRegion.adapter = ArrayAdapter(context!!, android.R.layout.simple_dropdown_item_1line, resources.getStringArray(R.array.authorization_servers))
+        btnAuthorizationShow.setOnClickListener {
+            mPresenter.onShowClick(
+                    cmbAuthorizationRegion.selectedItem.toString(),
+                    etAuthorizationRealm.text.toString(),
+                    etAuthorizationCharacter.text.toString())
+        }
     }
 
     override fun onStop() {
@@ -71,9 +76,9 @@ class AuthorizationFragment : BaseFragment(), AuthorizationView {
 
 
     private fun setViewState(isEnabled: Boolean) {
-        cmbRegion.isEnabled = isEnabled
-        etRealm.isEnabled = isEnabled
-        etCharacter.isEnabled = isEnabled
-        btnShow.isEnabled = isEnabled
+        cmbAuthorizationRegion.isEnabled = isEnabled
+        etAuthorizationRealm.isEnabled = isEnabled
+        etAuthorizationCharacter.isEnabled = isEnabled
+        btnAuthorizationShow.isEnabled = isEnabled
     }
 }

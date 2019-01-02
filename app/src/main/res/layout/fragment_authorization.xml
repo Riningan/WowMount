@@ -7,32 +7,32 @@
     android:padding="14dp">
 
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/ivLogo"
+        android:id="@+id/ivAuthorizationLogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:padding="10dp"
         android:transitionName="@string/splash_transition"
         android:scaleType="centerInside"
-        app:layout_constraintBottom_toTopOf="@id/cmbRegion"
+        app:layout_constraintBottom_toTopOf="@id/cmbAuthorizationRegion"
         app:srcCompat="@drawable/drawable_logo"
         tools:ignore="UnusedAttribute" />
 
     <android.support.v7.widget.AppCompatSpinner
-        android:id="@+id/cmbRegion"
+        android:id="@+id/cmbAuthorizationRegion"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/tilRealm" />
+        app:layout_constraintBottom_toTopOf="@+id/tilAuthorizationRealm" />
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilRealm"
+        android:id="@+id/tilAuthorizationRealm"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/etRealm"
+            android:id="@+id/etAuthorizationRealm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/authorization_realm"
@@ -46,13 +46,13 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilCharacter"
+        android:id="@+id/tilAuthorizationCharacter"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        app:layout_constraintTop_toBottomOf="@+id/tilRealm">
+        app:layout_constraintTop_toBottomOf="@+id/tilAuthorizationRealm">
 
         <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/etCharacter"
+            android:id="@+id/etAuthorizationCharacter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/authorization_character"
@@ -66,7 +66,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/btnShow"
+        android:id="@+id/btnAuthorizationShow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -77,6 +77,6 @@
         android:text="@string/authorization_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilCharacter" />
+        app:layout_constraintTop_toBottomOf="@+id/tilAuthorizationCharacter" />
 
 </android.support.constraint.ConstraintLayout>
