@@ -4,7 +4,13 @@ import android.content.Context
 import androidx.multidex.BuildConfig
 import androidx.multidex.MultiDexApplication
 import com.riningan.util.Logger
-import com.riningan.wowmount.di.*
+import com.riningan.wowmount.di.dataModule
+import com.riningan.wowmount.di.dbModule
+import com.riningan.wowmount.di.interactorsModule
+import com.riningan.wowmount.di.networkModule
+import com.riningan.wowmount.di.preferencesModule
+import com.riningan.wowmount.di.presentersModule
+import com.riningan.wowmount.di.routeModule
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import io.realm.Realm

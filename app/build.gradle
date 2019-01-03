@@ -1,13 +1,13 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'realm-android'
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
+apply plugin: "realm-android"
 
 def getClientSecret() {
     Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    return properties.getProperty("client.secret")
+    properties.load(project.rootProject.file("local.properties").newDataInputStream())
+    return "\"" + properties.getProperty("client.secret") + "\""
 }
 
 android {
@@ -24,9 +24,13 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
     compileOptions {
@@ -39,16 +43,15 @@ ext {
     support_version = "28.0.0"
     multidex_version = "2.0.1"
     kodein_version = "5.3.0"
+    frarg_version = "1.1"
+    moxy_version = "1.5.5"
     rxjava_version = "2.1.0"
     rxlifecycle_version = "2.2.1"
     retrofit_version = "2.4.0"
-    moxy_version = "1.5.5"
     leakcanary_version = "1.5.4"
-    frarg_version = "1.1"
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     // kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
@@ -66,46 +69,47 @@ dependencies {
     implementation "org.kodein.di:kodein-di-generic-jvm:$kodein_version"
     implementation "org.kodein.di:kodein-di-framework-android-core:$kodein_version"
     implementation "org.kodein.di:kodein-di-framework-android-support:$kodein_version"
+    // navigation
+    implementation "ru.terrakok.cicerone:cicerone:3.0.0"
+    // frarg
+    implementation "com.riningan.frarg:frarg:$frarg_version"
+    implementation "com.riningan.frarg:frarg-annotations:$frarg_version"
+    kapt "com.riningan.frarg:frarg-processor:$frarg_version"
     // mvp
     implementation "com.arello-mobile:moxy:$moxy_version"
     implementation "com.arello-mobile:moxy-app-compat:$moxy_version"
     kapt "com.arello-mobile:moxy-compiler:$moxy_version"
     // rxjava
-    implementation "io.reactivex.rxjava2:rxandroid:$rxjava_version"
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxjava_version"
+    // rxlifecycle
 //    implementation "com.trello.rxlifecycle2:rxlifecycle:rxlifecycle_version"
     implementation "com.trello.rxlifecycle2:rxlifecycle-android:$rxlifecycle_version"
     implementation "com.trello.rxlifecycle2:rxlifecycle-components:$rxlifecycle_version"
+    // rxbinding
+    implementation "com.jakewharton.rxbinding2:rxbinding:2.1.1"
     // retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     implementation "com.github.Atsumi3:converter-csv:0.0.1"
-    // rxbinding
-    implementation "com.jakewharton.rxbinding2:rxbinding:2.1.1"
-    // шрифты
+    // fonts
     implementation "io.github.inflationx:calligraphy3:3.0.0"
     implementation "io.github.inflationx:viewpump:1.0.0"
-    // navigation
-    implementation "ru.terrakok.cicerone:cicerone:3.0.0"
     // memory leak check
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
-    // frarg
-    implementation "com.riningan.frarg:frarg:$frarg_version"
-    implementation "com.riningan.frarg:frarg-annotations:$frarg_version"
-    kapt "com.riningan.frarg:frarg-processor:$frarg_version"
     // image loader
     implementation "com.squareup.picasso:picasso:2.71828"
     // circle imageview
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation "de.hdodenhof:circleimageview:2.2.0"
     // custom viewpager
     implementation "com.riningan.widget:extendedviewpager:1.1"
-    //
+    // logger
     implementation "com.riningan.util:logger:0.1"
-    //
-    testImplementation 'junit:junit:4.12'
+    // tests
+    testImplementation "junit:junit:4.12"
     testImplementation "org.mockito:mockito-core:2.23.4"
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation "com.android.support.test:runner:1.0.2"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:3.0.2"
 }

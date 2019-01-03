@@ -1,12 +1,12 @@
 package com.riningan.wowmount.ui.splash
 
 import com.arellomobile.mvp.InjectViewState
+import com.riningan.util.Logger
 import com.riningan.wowmount.data.preferences.LocalPreferences
 import com.riningan.wowmount.interactors.CharacterInteractor
 import com.riningan.wowmount.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.ui.base.BasePresenter
 import com.riningan.wowmount.ui.mounts.MountsFragment
-import com.riningan.wowmount.utils.LogUtil
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -24,7 +24,7 @@ class SplashPresenter constructor(kodein: Kodein) : BasePresenter<SplashView>() 
 
 
     fun onStart() {
-        LogUtil.addDebug()
+        Logger.debug()
         if (mLocalPreferences.isActivated) {
             mCharacterInteractor
                     .update()

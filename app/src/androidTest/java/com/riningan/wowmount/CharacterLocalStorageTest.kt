@@ -7,9 +7,9 @@ import com.riningan.wowmount.data.db.model.MountEntity
 import com.riningan.wowmount.data.repository.storage.local.CharacterLocalStorage
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.Before
 
 
 @RunWith(AndroidJUnit4::class)

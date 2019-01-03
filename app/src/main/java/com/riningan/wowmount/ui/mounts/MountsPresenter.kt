@@ -2,6 +2,7 @@ package com.riningan.wowmount.ui.mounts
 
 import com.arellomobile.mvp.InjectViewState
 import com.riningan.frarg.processor.MountFragmentArgs
+import com.riningan.util.Logger
 import com.riningan.wowmount.data.preferences.LocalPreferences
 import com.riningan.wowmount.data.repository.model.Character
 import com.riningan.wowmount.data.repository.model.Mount
@@ -10,7 +11,6 @@ import com.riningan.wowmount.ui.about.AboutFragment
 import com.riningan.wowmount.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.ui.base.BasePresenter
 import com.riningan.wowmount.ui.mount.MountFragment
-import com.riningan.wowmount.utils.LogUtil
 import ru.terrakok.cicerone.Router
 
 
@@ -24,7 +24,7 @@ class MountsPresenter constructor(private val mRouter: Router,
     }
 
     fun loadCharacter() {
-        LogUtil.addDebug()
+        Logger.debug()
         mCharacterInteractor
                 .get()
                 .subscribe({ (character, mounts) ->
@@ -36,17 +36,17 @@ class MountsPresenter constructor(private val mRouter: Router,
     }
 
     fun onMountClick(iconTransitionName: String, mount: Mount) {
-        LogUtil.addDebug("mount", mount.name)
+        Logger.debug("mount", mount.name)
         mRouter.navigateTo(MountFragment::class.java.canonicalName, MountFragmentArgs(iconTransitionName, mount.id))
     }
 
     fun onAboutClick() {
-        LogUtil.addDebug()
+        Logger.debug()
         mRouter.navigateTo(AboutFragment::class.java.canonicalName)
     }
 
     fun onLogoutClick() {
-        LogUtil.addDebug()
+        Logger.debug()
         mCharacterInteractor
                 .clear()
                 .subscribe({
@@ -59,17 +59,17 @@ class MountsPresenter constructor(private val mRouter: Router,
     }
 
     fun onMountsStartScrolling() {
-//        LogUtil.addDebug() much calls
+//         Logger.debug() much calls
         viewState.setPagerSwipeEnable(false)
     }
 
     fun onMountsStopScrolling() {
-        LogUtil.addDebug()
+        Logger.debug()
         viewState.setPagerSwipeEnable(true)
     }
 
     fun onRefresh() {
-        LogUtil.addDebug()
+        Logger.debug()
         mCharacterInteractor
                 .update()
                 .subscribe({ (character, mounts) ->
@@ -78,7 +78,7 @@ class MountsPresenter constructor(private val mRouter: Router,
                     viewState.stopRefresh()
                     viewState.showErrorDialog(it.localizedMessage)
                 }, {
-                    LogUtil.addDebug(this@MountsPresenter)
+                    Logger.forThis(this@MountsPresenter).debug()
                     viewState.stopRefresh()
                 })
                 .attach()
@@ -86,7 +86,7 @@ class MountsPresenter constructor(private val mRouter: Router,
 
 
     private fun setData(character: Character, mounts: List<Mount>) {
-        LogUtil.addDebug()
+        Logger.debug()
         viewState.setCharacter(character)
         viewState.setMounts(mounts)
     }

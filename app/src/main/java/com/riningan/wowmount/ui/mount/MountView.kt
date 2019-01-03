@@ -10,5 +10,5 @@ import com.riningan.wowmount.ui.base.BaseView
 interface MountView : BaseView {
     fun setTransition(transitionName: String)
     fun setMount(mount: Mount)
-    fun showError()
+    fun showError(message: String)
 }

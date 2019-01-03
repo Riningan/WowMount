@@ -1,7 +1,7 @@
 package com.riningan.wowmount.ui.about
 
+import com.riningan.util.Logger
 import com.riningan.wowmount.ui.base.BasePresenter
-import com.riningan.wowmount.utils.LogUtil
 import org.kodein.di.Kodein
 import org.kodein.di.generic.instance
 import ru.terrakok.cicerone.Router
@@ -12,7 +12,7 @@ class AboutPresenter constructor(kodein: Kodein) : BasePresenter<AboutView>() {
 
 
     fun onBackClick() {
-        LogUtil.addDebug()
+        Logger.debug()
         mRouter.exit()
     }
 }

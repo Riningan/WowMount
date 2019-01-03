@@ -1,7 +1,6 @@
 package com.riningan.wowmount.interactors
 
 import com.riningan.util.Logger
-import com.riningan.wowmount.utils.LogUtil
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
@@ -13,7 +12,6 @@ abstract class BaseInteractor constructor(private val mExecutorThread: Scheduler
             .observeOn(mPostExecutionThread, true)
             .doOnError {
                 Logger.forThis(this@BaseInteractor).error(it)
-                LogUtil.addError(this@BaseInteractor, it)
             }
 
     protected fun Completable.execution(): Completable = this
@@ -21,6 +19,5 @@ abstract class BaseInteractor constructor(private val mExecutorThread: Scheduler
             .observeOn(mPostExecutionThread)
             .doOnError {
                 Logger.forThis(this@BaseInteractor).error(it)
-                LogUtil.addError(this@BaseInteractor, it)
             }
 }

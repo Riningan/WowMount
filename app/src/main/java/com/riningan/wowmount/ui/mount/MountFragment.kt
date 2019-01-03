@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.riningan.frarg.FrargBinder
 import com.riningan.wowmount.R
 import com.riningan.wowmount.data.repository.model.Mount
 import com.riningan.wowmount.ui.base.BaseFragment
+import com.riningan.wowmount.utils.SnackbarUtil
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_mount.*
@@ -25,7 +27,7 @@ class MountFragment : BaseFragment(), MountView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mPresenter.bind(arguments!!)
+        FrargBinder.bind(mPresenter, arguments!!)
         postponeEnterTransition()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
@@ -71,8 +73,12 @@ class MountFragment : BaseFragment(), MountView {
                     }
                 })
         tvMountName.text = mount.name
+        Picasso.get()
+                .load(mount.getImageUrl())
+                .into(ivMount)
     }
 
-    override fun showError() {
+    override fun showError(message: String) {
+        SnackbarUtil.showError(view, message)
     }
 }

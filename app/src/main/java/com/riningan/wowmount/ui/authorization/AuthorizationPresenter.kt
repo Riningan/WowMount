@@ -1,11 +1,11 @@
 package com.riningan.wowmount.ui.authorization
 
 import com.arellomobile.mvp.InjectViewState
+import com.riningan.util.Logger
 import com.riningan.wowmount.data.preferences.LocalPreferences
 import com.riningan.wowmount.interactors.CharacterInteractor
 import com.riningan.wowmount.ui.base.BasePresenter
 import com.riningan.wowmount.ui.mounts.MountsFragment
-import com.riningan.wowmount.utils.LogUtil
 import org.kodein.di.Kodein
 import org.kodein.di.generic.instance
 import ru.terrakok.cicerone.Router
@@ -19,7 +19,7 @@ class AuthorizationPresenter constructor(kodein: Kodein) : BasePresenter<Authori
 
 
     fun onShowClick(server: String, realmName: String, characterName: String) {
-        LogUtil.addDebug("server", server, "realmName", realmName, "characterName", characterName)
+        Logger.debug("server", server, "realmName", realmName, "characterName", characterName)
         when {
             server.isEmpty() -> viewState.showServerErrorDialog()
             realmName.isEmpty() -> viewState.showRealmErrorDialog()
