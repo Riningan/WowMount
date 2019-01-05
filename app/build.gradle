@@ -92,6 +92,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation project(":csv")
     implementation "com.github.Atsumi3:converter-csv:0.0.1"
     // fonts
     implementation "io.github.inflationx:calligraphy3:3.0.0"

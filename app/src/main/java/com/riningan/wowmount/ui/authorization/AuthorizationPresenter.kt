@@ -32,7 +32,7 @@ class AuthorizationPresenter constructor(kodein: Kodein) : BasePresenter<Authori
                     this.characterName = characterName
                 }
                 mCharacterInteractor
-                        .get()
+                        .update()
                         .subscribe({
                             mLocalPreferences.isActivated = true
                             mRouter.newRootScreen(MountsFragment::class.java.canonicalName)

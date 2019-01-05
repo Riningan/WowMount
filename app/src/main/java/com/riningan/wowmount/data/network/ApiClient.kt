@@ -1,8 +1,8 @@
 package com.riningan.wowmount.data.network
 
+import com.riningan.retrofit2.CsvConverterFactory
 import com.riningan.wowmount.BuildConfig
 import com.riningan.wowmount.data.preferences.LocalPreferences
-import info.nukoneko.java.lib.retrofit.CsvConverterFactory
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Credentials
 import okhttp3.OkHttpClient

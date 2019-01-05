@@ -1,9 +1,9 @@
 package com.riningan.wowmount.app
 
 import android.content.Context
-import androidx.multidex.BuildConfig
 import androidx.multidex.MultiDexApplication
 import com.riningan.util.Logger
+import com.riningan.wowmount.BuildConfig
 import com.riningan.wowmount.di.dataModule
 import com.riningan.wowmount.di.dbModule
 import com.riningan.wowmount.di.interactorsModule
