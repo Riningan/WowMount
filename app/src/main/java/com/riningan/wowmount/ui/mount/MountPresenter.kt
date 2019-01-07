@@ -34,9 +34,8 @@ class MountPresenter constructor(kodein: Kodein) : BasePresenter<MountView>() {
                 .subscribe({
                     viewState.setMount(it)
                 }, {
+                    // todo
                     viewState.showError(it.localizedMessage)
-                }, {
-                    Logger.forThis(this@MountPresenter).debug()
                 })
                 .attach()
     }

@@ -43,6 +43,7 @@ class FilterPresenter constructor(kodein: Kodein) : BasePresenter<FilterView>() 
                 .subscribe({
                     viewState.showButton(it.size)
                 }, {
+                    // todo
                     viewState.showError(it.localizedMessage)
                 })
                 .attach()

@@ -30,10 +30,10 @@ class SplashPresenter constructor(kodein: Kodein) : BasePresenter<SplashView>() 
             mCharacterInteractor
                     .update()
                     .subscribe({
-                    }, {
-                        viewState.showErrorDialog(it.localizedMessage)
-                    }, {
                         mRouter.newRootScreen(MountsFragment::class.java.canonicalName, MountsFragmentArgs(mLocalPreferences.showAll))
+                    }, {
+                        // todo
+                        viewState.showErrorDialog(it.localizedMessage)
                     })
         } else {
             Observable

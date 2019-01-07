@@ -41,6 +41,7 @@ class MountsPresenter constructor(private val mRouter: Router,
                 .subscribe({ (character, mounts) ->
                     setData(character, mounts)
                 }, {
+                    // todo
                     viewState.showErrorDialog(it.localizedMessage)
                 })
                 .attach()
@@ -69,6 +70,7 @@ class MountsPresenter constructor(private val mRouter: Router,
                     mLocalPreferences.clear()
                     mRouter.newRootScreen(AuthorizationFragment::class.java.canonicalName)
                 }, {
+                    // todo
                     viewState.showErrorDialog(it.localizedMessage)
                 })
                 .attach()
@@ -91,6 +93,7 @@ class MountsPresenter constructor(private val mRouter: Router,
                 .subscribe({ (character, mounts) ->
                     setData(character, mounts)
                 }, {
+                    // todo
                     viewState.stopRefresh()
                     viewState.showErrorDialog(it.localizedMessage)
                 }, {

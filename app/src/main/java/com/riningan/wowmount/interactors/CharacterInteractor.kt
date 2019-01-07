@@ -17,6 +17,7 @@ class CharacterInteractor constructor(executorThread: Scheduler, postExecutionTh
                         ?: throw NullPointerException("Character is null")
             }
             .toObservable()
+            .errorCast()
             .execution()
 
     fun update(): Observable<Pair<Character, List<Mount>>> = mCharacterRepository
@@ -26,11 +27,13 @@ class CharacterInteractor constructor(executorThread: Scheduler, postExecutionTh
                         ?: throw NullPointerException("Character is null")
             }
             .toObservable()
+            .errorCast()
             .execution()
 
     fun getMountByItemId(mountId: String): Observable<Mount> = mCharacterRepository
             .getMountById(mountId)
             .toObservable()
+            .errorCast()
             .execution()
 
     fun clear(): Completable = mCharacterRepository
