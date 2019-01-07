@@ -35,7 +35,7 @@ data class Character(
     }
 
 
-    fun getAvatarUrl() = "http://render-$region.worldofwarcraft.com/character/$thumbnail"
+//    fun getAvatarUrl() = "http://render-$region.worldofwarcraft.com/character/$thumbnail"
 
     fun getMainUrl() = "http://render-$region.worldofwarcraft.com/character/${thumbnail.replace("-avatar.jpg", "-main.jpg")}"
 }
