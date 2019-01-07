@@ -3,15 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/base_padding">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/ivAuthorizationLogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:padding="10dp"
+        android:padding="26dp"
         android:transitionName="@string/splash_transition"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toTopOf="@id/cmbAuthorizationRegion"
@@ -20,6 +19,7 @@
 
     <android.support.v7.widget.AppCompatSpinner
         android:id="@+id/cmbAuthorizationRegion"
+        style="@style/LayoutStyle_Base"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         app:layout_constraintBottom_toTopOf="@+id/tilAuthorizationRealm" />
@@ -27,6 +27,7 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilAuthorizationRealm"
         android:layout_width="match_parent"
+        style="@style/LayoutStyle_Base"
         android:layout_height="52dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -48,6 +49,7 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilAuthorizationCharacter"
         android:layout_width="match_parent"
+        style="@style/LayoutStyle_Base"
         android:layout_height="52dp"
         app:layout_constraintTop_toBottomOf="@+id/tilAuthorizationRealm">
 
@@ -67,13 +69,8 @@
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btnAuthorizationShow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        style="@style/LayoutStyle_Button"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:text="@string/authorization_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

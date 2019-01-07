@@ -7,6 +7,7 @@ interface LocalPreferences {
     var realmName: String
     var characterName: String
     var accessToken: String
+    var showAll: Boolean
 
     fun clear()
 }

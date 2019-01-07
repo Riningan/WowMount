@@ -7,10 +7,13 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.ViewCompat
+import com.riningan.frarg.processor.FilterFragmentArgs
 import com.riningan.frarg.processor.FragmentBuilder
 import com.riningan.frarg.processor.MountFragmentArgs
+import com.riningan.frarg.processor.MountsFragmentArgs
 import com.riningan.wowmount.ui.about.AboutFragment
 import com.riningan.wowmount.ui.authorization.AuthorizationFragment
+import com.riningan.wowmount.ui.filter.FilterFragment
 import com.riningan.wowmount.ui.mount.MountFragment
 import com.riningan.wowmount.ui.mounts.MountsFragment
 import com.riningan.wowmount.ui.splash.SplashFragment
@@ -24,9 +27,10 @@ class Navigator constructor(activity: FragmentActivity, containerId: Int) : Supp
         return when (screenKey) {
             SplashFragment::class.java.canonicalName -> FragmentBuilder.newSplashFragmentInstance()
             AuthorizationFragment::class.java.canonicalName -> FragmentBuilder.newAuthorizationFragmentInstance()
-            MountsFragment::class.java.canonicalName -> FragmentBuilder.newMountsFragmentInstance()
+            MountsFragment::class.java.canonicalName -> FragmentBuilder.newMountsFragmentInstance(data as MountsFragmentArgs)
             MountFragment::class.java.canonicalName -> FragmentBuilder.newMountFragmentInstance(data as MountFragmentArgs)
             AboutFragment::class.java.canonicalName -> FragmentBuilder.newAboutFragmentInstance()
+            FilterFragment::class.java.canonicalName -> FragmentBuilder.newFilterFragmentInstance(data as FilterFragmentArgs)
             else -> null
         }
     }

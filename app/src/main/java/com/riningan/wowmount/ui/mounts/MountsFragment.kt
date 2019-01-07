@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
-import com.riningan.frarg.annotations.ArgumentedFragment
+import com.riningan.frarg.FrargBinder
 import com.riningan.widget.ExtendedViewPager
 import com.riningan.wowmount.R
 import com.riningan.wowmount.data.repository.model.Character
@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.fragment_mounts.*
 import org.kodein.di.generic.instance
 
 
-@ArgumentedFragment
 class MountsFragment : BaseFragment(), MountsView {
     @InjectPresenter(tag = MountsPresenter.TAG, type = PresenterType.WEAK)
     lateinit var mPresenter: MountsPresenter
@@ -34,6 +33,7 @@ class MountsFragment : BaseFragment(), MountsView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FrargBinder.bind(mPresenter, arguments!!)
         postponeEnterTransition()
     }
 
@@ -47,6 +47,7 @@ class MountsFragment : BaseFragment(), MountsView {
             when (menu.itemId) {
                 R.id.miAbout -> mPresenter.onAboutClick()
                 R.id.miLogout -> mPresenter.onLogoutClick()
+                R.id.miFilter -> mPresenter.onFilterClick()
             }
             true
         }

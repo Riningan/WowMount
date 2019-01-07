@@ -1,6 +1,9 @@
 package com.riningan.wowmount.ui.mounts
 
 import com.arellomobile.mvp.InjectViewState
+import com.riningan.frarg.annotations.Argument
+import com.riningan.frarg.annotations.ArgumentedFragment
+import com.riningan.frarg.processor.FilterFragmentArgs
 import com.riningan.frarg.processor.MountFragmentArgs
 import com.riningan.util.Logger
 import com.riningan.wowmount.data.preferences.LocalPreferences
@@ -10,14 +13,20 @@ import com.riningan.wowmount.interactors.CharacterInteractor
 import com.riningan.wowmount.ui.about.AboutFragment
 import com.riningan.wowmount.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.ui.base.BasePresenter
+import com.riningan.wowmount.ui.filter.FilterFragment
 import com.riningan.wowmount.ui.mount.MountFragment
 import ru.terrakok.cicerone.Router
 
 
 @InjectViewState
+@ArgumentedFragment(fragmentClass = MountsFragment::class)
 class MountsPresenter constructor(private val mRouter: Router,
                                   private val mCharacterInteractor: CharacterInteractor,
                                   private val mLocalPreferences: LocalPreferences) : BasePresenter<MountsView>() {
+    @Argument
+    private var mShowAll: Boolean = true
+
+
     override fun clearSubscriptions() {
         super.clearSubscriptions()
         viewState.stopRefresh()
@@ -27,6 +36,13 @@ class MountsPresenter constructor(private val mRouter: Router,
         Logger.debug()
         mCharacterInteractor
                 .get()
+                .map { pair ->
+                    if (mShowAll) {
+                        pair
+                    } else {
+                        Pair(pair.first, pair.second.filter { it.isCollected })
+                    }
+                }
                 .subscribe({ (character, mounts) ->
                     setData(character, mounts)
                 }, {
@@ -43,6 +59,11 @@ class MountsPresenter constructor(private val mRouter: Router,
     fun onAboutClick() {
         Logger.debug()
         mRouter.navigateTo(AboutFragment::class.java.canonicalName)
+    }
+
+    fun onFilterClick() {
+        Logger.debug()
+        mRouter.navigateTo(FilterFragment::class.java.canonicalName, FilterFragmentArgs(mShowAll))
     }
 
     fun onLogoutClick() {

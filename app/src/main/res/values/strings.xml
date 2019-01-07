@@ -31,4 +31,9 @@
     <string name="about_author_email">Vadim.akhmarov@gmail.com</string>
     <string name="about_code">Code source:\n</string>
     <string name="about_code_url">https://github.com/Riningan/WowMount</string>
+
+    <string name="filter_title">Filter</string>
+    <string name="filter_show_all">Show all mounts</string>
+    <string name="filter_show_with_count">Show %d</string>
+    <string name="filter_show_without_count">Show</string>
 </resources>

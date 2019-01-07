@@ -32,7 +32,9 @@
         <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
     </style>
 
-    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored" />
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textSize">14sp</item>
+    </style>
 
     <style name="AppTheme.CheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox" />
 
@@ -71,5 +73,17 @@
         <item name="android:textColor">@color/color_surface</item>
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/raleway_medium</item>
+    </style>
+
+    <style name="LayoutStyle_Base">
+        <item name="android:layout_marginLeft">@dimen/base_margin_left</item>
+        <item name="android:layout_marginStart">@dimen/base_margin_left</item>
+        <item name="android:layout_marginEnd">@dimen/base_margin_right</item>
+        <item name="android:layout_marginRight">@dimen/base_margin_right</item>
+    </style>
+
+    <style name="LayoutStyle_Button" parent="LayoutStyle_Base">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 </resources>

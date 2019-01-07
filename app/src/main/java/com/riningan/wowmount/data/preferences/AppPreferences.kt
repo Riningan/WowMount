@@ -27,6 +27,10 @@ class AppPreferences constructor(context: Context) : LocalPreferences {
         get() = mSharedPreferences.getString(ACCESS_TOKEN, "")!!
         set(value) = mSharedPreferences.edit().putString(ACCESS_TOKEN, value).apply()
 
+    override var showAll: Boolean
+        get() = mSharedPreferences.getBoolean(SHOW_ALL, true)
+        set(value) = mSharedPreferences.edit().putBoolean(SHOW_ALL, value).apply()
+
 
     override fun clear() {
         mSharedPreferences.edit().apply {
@@ -45,5 +49,6 @@ class AppPreferences constructor(context: Context) : LocalPreferences {
         private const val CHARACTER_NAME = "CHARACTER_NAME"
         private const val REALM_NAME = "REALM_NAME"
         private const val ACCESS_TOKEN = "ACCESS_TOKEN"
+        private const val SHOW_ALL = "SHOW_ALL"
     }
 }

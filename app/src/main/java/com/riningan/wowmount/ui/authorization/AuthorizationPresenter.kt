@@ -1,6 +1,7 @@
 package com.riningan.wowmount.ui.authorization
 
 import com.arellomobile.mvp.InjectViewState
+import com.riningan.frarg.processor.MountsFragmentArgs
 import com.riningan.util.Logger
 import com.riningan.wowmount.data.preferences.LocalPreferences
 import com.riningan.wowmount.interactors.CharacterInteractor
@@ -35,7 +36,7 @@ class AuthorizationPresenter constructor(kodein: Kodein) : BasePresenter<Authori
                         .update()
                         .subscribe({
                             mLocalPreferences.isActivated = true
-                            mRouter.newRootScreen(MountsFragment::class.java.canonicalName)
+                            mRouter.newRootScreen(MountsFragment::class.java.canonicalName, MountsFragmentArgs(mLocalPreferences.showAll))
                         }, {
                             mLocalPreferences.clear()
                             viewState.unlockView()
