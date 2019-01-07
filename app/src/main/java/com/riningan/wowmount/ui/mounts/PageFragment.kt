@@ -53,17 +53,20 @@ class PageFragment : MvpAppCompatFragment(), KodeinAware, MountsView, ItemsAdapt
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rvMounts.layoutManager = LinearLayoutManager(context)
-        rvMounts.adapter = ItemsAdapter(mType, this)
-        rvMounts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                when (newState) {
-                    RecyclerView.SCROLL_STATE_IDLE -> mPresenter.onMountsStopScrolling()
-                    else -> mPresenter.onMountsStartScrolling()
+        rvMounts.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = ItemsAdapter(mType, this@PageFragment)
+            addItemDecoration(MountsDecorator())
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    when (newState) {
+                        RecyclerView.SCROLL_STATE_IDLE -> mPresenter.onMountsStopScrolling()
+                        else -> mPresenter.onMountsStartScrolling()
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     override fun setCharacter(character: Character) {

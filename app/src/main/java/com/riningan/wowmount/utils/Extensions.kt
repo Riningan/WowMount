@@ -1,11 +1,18 @@
 package com.riningan.wowmount.utils
 
 import android.support.v4.view.ViewPager
+import android.util.TypedValue
+import com.riningan.wowmount.app.WowMountApp
 
 
 fun Int.isZero() = this == 0
 
 fun Int.isNotZero() = this != 0
+
+
+fun Int.fromDpToPx(): Int {
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), WowMountApp.getContext().resources.displayMetrics).toInt()
+}
 
 
 inline fun <T> Iterable<T>.isContain(predicate: (T) -> Boolean): Boolean {

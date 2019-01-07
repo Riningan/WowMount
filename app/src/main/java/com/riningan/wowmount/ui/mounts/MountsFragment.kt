@@ -42,23 +42,29 @@ class MountsFragment : BaseFragment(), MountsView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tlbMounts.inflateMenu(R.menu.menu_mounts)
-        tlbMounts.setOnMenuItemClickListener { menu ->
-            when (menu.itemId) {
-                R.id.miAbout -> mPresenter.onAboutClick()
-                R.id.miLogout -> mPresenter.onLogoutClick()
-                R.id.miFilter -> mPresenter.onFilterClick()
+        tlbMounts.apply {
+            inflateMenu(R.menu.menu_mounts)
+            setOnMenuItemClickListener { menu ->
+                when (menu.itemId) {
+                    R.id.miAbout -> mPresenter.onAboutClick()
+                    R.id.miLogout -> mPresenter.onLogoutClick()
+                    R.id.miFilter -> mPresenter.onFilterClick()
+                }
+                true
             }
-            true
         }
         tlMounts.setupWithViewPager(vpMounts)
-        srlMounts.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary, R.color.colorPrimary)
-        srlMounts.setOnRefreshListener { mPresenter.onRefresh() }
-        vpMounts.adapter = PagerAdapter(childFragmentManager)
-        vpMounts.onPageScrollStateChanged { state ->
-            when (state) {
-                ViewPager.SCROLL_STATE_IDLE -> srlMounts.isEnabled = true
-                else -> srlMounts.isEnabled = false
+        srlMounts.apply {
+            setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary, R.color.colorPrimary)
+            setOnRefreshListener { mPresenter.onRefresh() }
+        }
+        vpMounts.apply {
+            adapter = PagerAdapter(childFragmentManager)
+            onPageScrollStateChanged { state ->
+                when (state) {
+                    ViewPager.SCROLL_STATE_IDLE -> srlMounts.isEnabled = true
+                    else -> srlMounts.isEnabled = false
+                }
             }
         }
     }

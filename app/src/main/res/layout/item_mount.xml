@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/selector_listitem"
-    android:clickable="true"
-    android:focusable="true">
+    android:background="@drawable/selector_listitem">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivMountIcon"

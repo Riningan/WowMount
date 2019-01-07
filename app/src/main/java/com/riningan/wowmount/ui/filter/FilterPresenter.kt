@@ -39,13 +39,7 @@ class FilterPresenter constructor(kodein: Kodein) : BasePresenter<FilterView>() 
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .flatMap { mCharacterInteractor.get() }
                 .map { it.second }
-                .map { mounts ->
-                    if (mShowAll) {
-                        mounts
-                    } else {
-                        mounts.filter { it.isCollected }
-                    }
-                }
+                .map { mounts -> if (mShowAll) mounts else mounts.filter { it.isCollected } }
                 .subscribe({
                     viewState.showButton(it.size)
                 }, {
