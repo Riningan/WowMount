@@ -89,7 +89,13 @@ class PageFragment : MvpAppCompatFragment(), KodeinAware, MountsView, ItemsAdapt
         }
     }
 
-    override fun showErrorDialog(message: String) {
+    override fun showRequestErrorDialog(message: String) {
+        /**
+         * @see MountsFragment
+         */
+    }
+
+    override fun showLogoutErrorDialog() {
         /**
          * @see MountsFragment
          */

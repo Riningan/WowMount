@@ -3,9 +3,12 @@ package com.riningan.wowmount.ui.mount
 import com.arellomobile.mvp.InjectViewState
 import com.riningan.frarg.annotations.Argument
 import com.riningan.frarg.annotations.ArgumentedFragment
+import com.riningan.frarg.processor.SplashFragmentArgs
 import com.riningan.util.Logger
 import com.riningan.wowmount.interactors.CharacterInteractor
+import com.riningan.wowmount.interactors.WowMountExceptions
 import com.riningan.wowmount.ui.base.BasePresenter
+import com.riningan.wowmount.ui.splash.SplashFragment
 import org.kodein.di.Kodein
 import org.kodein.di.generic.instance
 import ru.terrakok.cicerone.Router
@@ -34,8 +37,10 @@ class MountPresenter constructor(kodein: Kodein) : BasePresenter<MountView>() {
                 .subscribe({
                     viewState.setMount(it)
                 }, {
-                    // todo
                     viewState.showError(it.localizedMessage)
+                    if (it is WowMountExceptions.AuthorizedException) {
+                        mRouter.newRootScreen(SplashFragment::class.java.canonicalName, SplashFragmentArgs(true))
+                    }
                 })
                 .attach()
     }

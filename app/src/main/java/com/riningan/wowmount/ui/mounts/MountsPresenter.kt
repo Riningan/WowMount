@@ -5,16 +5,19 @@ import com.riningan.frarg.annotations.Argument
 import com.riningan.frarg.annotations.ArgumentedFragment
 import com.riningan.frarg.processor.FilterFragmentArgs
 import com.riningan.frarg.processor.MountFragmentArgs
+import com.riningan.frarg.processor.SplashFragmentArgs
 import com.riningan.util.Logger
 import com.riningan.wowmount.data.preferences.LocalPreferences
 import com.riningan.wowmount.data.repository.model.Character
 import com.riningan.wowmount.data.repository.model.Mount
 import com.riningan.wowmount.interactors.CharacterInteractor
+import com.riningan.wowmount.interactors.WowMountExceptions
 import com.riningan.wowmount.ui.about.AboutFragment
 import com.riningan.wowmount.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.ui.base.BasePresenter
 import com.riningan.wowmount.ui.filter.FilterFragment
 import com.riningan.wowmount.ui.mount.MountFragment
+import com.riningan.wowmount.ui.splash.SplashFragment
 import ru.terrakok.cicerone.Router
 
 
@@ -41,8 +44,10 @@ class MountsPresenter constructor(private val mRouter: Router,
                 .subscribe({ (character, mounts) ->
                     setData(character, mounts)
                 }, {
-                    // todo
-                    viewState.showErrorDialog(it.localizedMessage)
+                    viewState.showRequestErrorDialog(it.localizedMessage)
+                    if (it is WowMountExceptions.AuthorizedException) {
+                        mRouter.newRootScreen(SplashFragment::class.java.canonicalName, SplashFragmentArgs(true))
+                    }
                 })
                 .attach()
     }
@@ -70,8 +75,7 @@ class MountsPresenter constructor(private val mRouter: Router,
                     mLocalPreferences.clear()
                     mRouter.newRootScreen(AuthorizationFragment::class.java.canonicalName)
                 }, {
-                    // todo
-                    viewState.showErrorDialog(it.localizedMessage)
+                    viewState.showLogoutErrorDialog()
                 })
                 .attach()
     }
@@ -93,9 +97,11 @@ class MountsPresenter constructor(private val mRouter: Router,
                 .subscribe({ (character, mounts) ->
                     setData(character, mounts)
                 }, {
-                    // todo
                     viewState.stopRefresh()
-                    viewState.showErrorDialog(it.localizedMessage)
+                    viewState.showRequestErrorDialog(it.localizedMessage)
+                    if (it is WowMountExceptions.AuthorizedException) {
+                        mRouter.newRootScreen(SplashFragment::class.java.canonicalName, SplashFragmentArgs(true))
+                    }
                 }, {
                     viewState.stopRefresh()
                 })

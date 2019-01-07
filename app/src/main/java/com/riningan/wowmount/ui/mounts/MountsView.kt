@@ -14,7 +14,10 @@ interface MountsView : BaseView {
     fun setMounts(mounts: List<Mount>)
 
     @StateStrategyType(SkipStrategy::class)
-    fun showErrorDialog(message: String)
+    fun showRequestErrorDialog(message: String)
+
+    @StateStrategyType(SkipStrategy::class)
+    fun showLogoutErrorDialog()
 
     @StateStrategyType(SkipStrategy::class)
     fun setPagerSwipeEnable(isEnabled: Boolean)

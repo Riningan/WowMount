@@ -51,19 +51,19 @@ class AuthorizationFragment : BaseFragment(), AuthorizationView {
     }
 
     override fun showServerErrorDialog() {
-        SnackbarUtil.showError(view, R.string.authorization_error_empty_server)
+        SnackbarUtil.showError(activity, R.string.authorization_error_empty_server)
     }
 
     override fun showRealmErrorDialog() {
-        SnackbarUtil.showError(view, R.string.authorization_error_empty_realm)
+        SnackbarUtil.showError(activity, R.string.authorization_error_empty_realm)
     }
 
     override fun showCharacterErrorDialog() {
-        SnackbarUtil.showError(view, R.string.authorization_error_empty_character_name)
+        SnackbarUtil.showError(activity, R.string.authorization_error_empty_character_name)
     }
 
     override fun showRequestErrorDialog(message: String) {
-        SnackbarUtil.showError(view, message)
+        SnackbarUtil.showError(activity, message)
     }
 
     override fun lockView() {

@@ -11,6 +11,7 @@ import com.riningan.frarg.processor.FilterFragmentArgs
 import com.riningan.frarg.processor.FragmentBuilder
 import com.riningan.frarg.processor.MountFragmentArgs
 import com.riningan.frarg.processor.MountsFragmentArgs
+import com.riningan.frarg.processor.SplashFragmentArgs
 import com.riningan.wowmount.ui.about.AboutFragment
 import com.riningan.wowmount.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.ui.filter.FilterFragment
@@ -25,7 +26,7 @@ import ru.terrakok.cicerone.commands.Forward
 class Navigator constructor(activity: FragmentActivity, containerId: Int) : SupportAppNavigator(activity, containerId) {
     override fun createFragment(screenKey: String, data: Any?): Fragment? {
         return when (screenKey) {
-            SplashFragment::class.java.canonicalName -> FragmentBuilder.newSplashFragmentInstance()
+            SplashFragment::class.java.canonicalName -> FragmentBuilder.newSplashFragmentInstance(if (data == null) SplashFragmentArgs() else data as SplashFragmentArgs)
             AuthorizationFragment::class.java.canonicalName -> FragmentBuilder.newAuthorizationFragmentInstance()
             MountsFragment::class.java.canonicalName -> FragmentBuilder.newMountsFragmentInstance(data as MountsFragmentArgs)
             MountFragment::class.java.canonicalName -> FragmentBuilder.newMountFragmentInstance(data as MountFragmentArgs)

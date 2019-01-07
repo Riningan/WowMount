@@ -3,6 +3,11 @@
 
     <string name="splash_transition">splash_transition</string>
 
+    <string name="error_character_io">Can\'t update mounts list, server error</string>
+    <string name="error_character_no_internet">Can\'t update mounts list, no internet</string>
+    <string name="error_character_application">Can\'t update mounts list, application error</string>
+    <string name="error_authorized">Authorization error, please authorize again</string>
+
     <string name="authorization_realm">Realm</string>
     <string name="authorization_character">Character name</string>
     <string-array name="authorization_servers">
@@ -13,7 +18,6 @@
     <string name="authorization_error_empty_server">Empty server</string>
     <string name="authorization_error_empty_realm">Empty realm name</string>
     <string name="authorization_error_empty_character_name">Empty character name</string>
-    <string name="authorization_error_request">Request failed: %s</string>
 
     <string name="mounts_menu_logout">Logout</string>
     <string name="mounts_menu_about">About</string>
@@ -24,6 +28,7 @@
         <item>Flying</item>
         <item>Aquatic</item>
     </string-array>
+    <string name="mounts_logout_error">Can\'t logout</string>
 
     <string name="about_title">About</string>
     <string name="about_version">Application version: %s</string>

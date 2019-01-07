@@ -90,6 +90,6 @@ class MountFragment : BaseFragment(), MountView {
     }
 
     override fun showError(message: String) {
-        SnackbarUtil.showError(view, message)
+        SnackbarUtil.showError(activity, message)
     }
 }

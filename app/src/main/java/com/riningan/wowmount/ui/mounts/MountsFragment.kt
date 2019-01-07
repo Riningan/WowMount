@@ -92,8 +92,12 @@ class MountsFragment : BaseFragment(), MountsView {
          */
     }
 
-    override fun showErrorDialog(message: String) {
-        SnackbarUtil.showError(view, message)
+    override fun showRequestErrorDialog(message: String) {
+        SnackbarUtil.showError(activity, message)
+    }
+
+    override fun showLogoutErrorDialog() {
+        SnackbarUtil.showError(activity, R.string.mounts_logout_error)
     }
 
     override fun setPagerSwipeEnable(isEnabled: Boolean) {

@@ -38,10 +38,9 @@ class AuthorizationPresenter constructor(kodein: Kodein) : BasePresenter<Authori
                             mLocalPreferences.isActivated = true
                             mRouter.newRootScreen(MountsFragment::class.java.canonicalName, MountsFragmentArgs(mLocalPreferences.showAll))
                         }, {
-                            // todo
                             mLocalPreferences.clear()
                             viewState.unlockView()
-                            viewState.showRequestErrorDialog(it.message!!)
+                            viewState.showRequestErrorDialog(it.localizedMessage)
                         })
                         .attach()
             }

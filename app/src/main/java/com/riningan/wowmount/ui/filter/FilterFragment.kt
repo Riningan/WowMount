@@ -72,7 +72,7 @@ class FilterFragment : BaseFragment(), FilterView, CompoundButton.OnCheckedChang
     }
 
     override fun showError(message: String) {
-        SnackbarUtil.showError(view, message)
+        SnackbarUtil.showError(activity, message)
         pbFilter.visibility = View.INVISIBLE
         btnFilterShow.apply {
             visibility = View.VISIBLE
