@@ -3,6 +3,11 @@ package com.riningan.wowmount.utils
 import android.support.v4.view.ViewPager
 
 
+fun Int.isZero() = this == 0
+
+fun Int.isNotZero() = this != 0
+
+
 inline fun <T> Iterable<T>.isContain(predicate: (T) -> Boolean): Boolean {
     return firstOrNull(predicate) != null
 }

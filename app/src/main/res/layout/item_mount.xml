@@ -12,22 +12,23 @@
         android:id="@+id/ivMountIcon"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="@dimen/base_margin_left"
+        android:layout_marginLeft="@dimen/base_margin_left"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         app:civ_border_color="@color/colorOnSurface"
         app:civ_border_width="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tvMountName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="@dimen/base_margin_left"
+        android:layout_marginLeft="@dimen/base_margin_left"
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.MountName"
@@ -36,14 +37,14 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@+id/ivMountIcon"
         app:layout_constraintTop_toTopOf="@+id/ivMountIcon"
-        tools:text="fsf9j fs9fjs9efj0ejef ef 3f wfw3f wfw 3f9f9" />
+        tools:text="@tools:sample/full_names" />
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/ivMountNavigation"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="@dimen/base_margin_right"
+        android:layout_marginRight="@dimen/base_margin_right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

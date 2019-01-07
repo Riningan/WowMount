@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/tlbAbout"
@@ -11,5 +12,42 @@
         app:contentInsetStartWithNavigation="0dp"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:title="@string/about_title" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvAboutVersion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_margin_left"
+        android:layout_marginLeft="@dimen/base_margin_left"
+        android:layout_marginTop="@dimen/base_margin_top"
+        android:layout_marginEnd="@dimen/base_margin_right"
+        android:layout_marginRight="@dimen/base_margin_right"
+        android:text="@string/about_version"
+        android:textAppearance="@style/TextAppearance.MountName" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvAboutAuthor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_margin_left"
+        android:layout_marginLeft="@dimen/base_margin_left"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="@dimen/base_margin_right"
+        android:layout_marginRight="@dimen/base_margin_right"
+        android:text="@string/about_author"
+        android:textAppearance="@style/TextAppearance.MountName" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvAboutCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_margin_left"
+        android:layout_marginLeft="@dimen/base_margin_left"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="@dimen/base_margin_right"
+        android:layout_marginRight="@dimen/base_margin_right"
+        android:autoLink="web"
+        android:text="@string/about_code"
+        android:textAppearance="@style/TextAppearance.MountName" />
 
 </LinearLayout>

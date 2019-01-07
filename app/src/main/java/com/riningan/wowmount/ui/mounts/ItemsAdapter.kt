@@ -57,7 +57,10 @@ class ItemsAdapter constructor(private val mType: PageFragment.MountTypes, priva
             Picasso.get()
                     .load(mount.getIconUrl())
                     .into(itemView.ivMountIcon)
-            itemView.tvMountName.text = mount.name
+            itemView.tvMountName.apply {
+                text = mount.name
+                isEnabled = mount.isCollected
+            }
         }
     }
 }

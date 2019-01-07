@@ -12,6 +12,7 @@
     <color name="colorOnSecondary">#000000</color>
     <color name="colorOnBackground">#263238</color>
     <color name="colorOnSurface">#263238</color>
+    <color name="colorOnSurfaceInactive">#90263238</color>
     <color name="colorOnError">#FFFFFF</color>
     <color name="colorOnTab">#CCFFFFFF</color>
 </resources>

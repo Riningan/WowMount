@@ -1,6 +1,6 @@
 package com.riningan.wowmount.data.network
 
-import com.riningan.retrofit2.CsvConverterFactory
+import com.riningan.retrofit2.converter.csv.CsvConverterFactory
 import com.riningan.wowmount.BuildConfig
 import com.riningan.wowmount.data.preferences.LocalPreferences
 import io.reactivex.schedulers.Schedulers

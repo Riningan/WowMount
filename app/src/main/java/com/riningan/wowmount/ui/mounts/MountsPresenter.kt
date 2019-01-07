@@ -78,7 +78,6 @@ class MountsPresenter constructor(private val mRouter: Router,
                     viewState.stopRefresh()
                     viewState.showErrorDialog(it.localizedMessage)
                 }, {
-                    Logger.forThis(this@MountsPresenter).debug()
                     viewState.stopRefresh()
                 })
                 .attach()

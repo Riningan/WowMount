@@ -9,6 +9,7 @@ import com.riningan.wowmount.data.preferences.LocalPreferences
 import com.riningan.wowmount.data.repository.model.Character
 import com.riningan.wowmount.data.repository.model.Mount
 import com.riningan.wowmount.utils.isContain
+import com.riningan.wowmount.utils.isNotZero
 import io.reactivex.Single
 import io.reactivex.functions.Function3
 
@@ -32,6 +33,7 @@ class CharacterRemoteStorage(private val mBlizzardApi: BlizzardApi,
                     region = mLocalPreferences.server
                 }
                 val mounts = mountsResponse.mounts
+                        .filter { it.itemId.isNotZero() && it.qualityId.isNotZero() && it.spellId.isNotZero() }
                         .map { mount ->
                             Mount(
                                     "${mount.name}/${mount.itemId}/${mount.qualityId}",

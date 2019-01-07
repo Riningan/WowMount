@@ -28,7 +28,9 @@ class MountFragment : BaseFragment(), MountView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FrargBinder.bind(mPresenter, arguments!!)
-        postponeEnterTransition()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            postponeEnterTransition()
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         }
@@ -65,17 +67,26 @@ class MountFragment : BaseFragment(), MountView {
                 .noFade()
                 .into(ivMountIcon, object : Callback {
                     override fun onSuccess() {
-                        startPostponedEnterTransition()
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            startPostponedEnterTransition()
+                        }
                     }
 
                     override fun onError(e: Exception?) {
-                        startPostponedEnterTransition()
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            startPostponedEnterTransition()
+                        }
                     }
                 })
         tvMountName.text = mount.name
-        Picasso.get()
-                .load(mount.getImageUrl())
-                .into(ivMount)
+        if (mount.getImageUrl() == null) {
+            ivMount.setImageResource(R.drawable.ic_no_image)
+        } else {
+            Picasso.get()
+                    .load(mount.getImageUrl())
+                    .error(R.drawable.ic_no_image)
+                    .into(ivMount)
+        }
     }
 
     override fun showError(message: String) {

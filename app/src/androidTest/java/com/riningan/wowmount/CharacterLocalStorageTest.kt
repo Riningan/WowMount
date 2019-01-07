@@ -1,7 +1,7 @@
 package com.riningan.wowmount
 
-import android.support.test.InstrumentationRegistry
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.InstrumentationRegistry
+import androidx.test.runner.AndroidJUnit4
 import com.riningan.wowmount.data.db.model.CharacterEntity
 import com.riningan.wowmount.data.db.model.MountEntity
 import com.riningan.wowmount.data.repository.storage.local.CharacterLocalStorage
