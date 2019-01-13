@@ -3,6 +3,7 @@ package com.riningan.wowmount.data.repository.storage.remote
 import com.riningan.wowmount.data.network.BlizzardApi
 import com.riningan.wowmount.data.network.SpreadsheetApi
 import com.riningan.wowmount.data.network.model.CharacterResponse
+import com.riningan.wowmount.data.network.model.MountResponse
 import com.riningan.wowmount.data.network.model.MountsResponse
 import com.riningan.wowmount.data.network.model.SpreadsheetCSVResponse
 import com.riningan.wowmount.data.preferences.LocalPreferences
@@ -34,21 +35,26 @@ class CharacterRemoteStorage(private val mBlizzardApi: BlizzardApi,
                 }
                 val mounts = mountsResponse.mounts
                         .filter { it.itemId.isNotZero() && it.qualityId.isNotZero() && it.spellId.isNotZero() }
-                        .map { mount ->
+                        .map { mountResponse ->
                             Mount(
-                                    "${mount.name}/${mount.itemId}/${mount.qualityId}",
-                                    mount.name,
-                                    mount.itemId,
-                                    mount.qualityId,
+                                    createId(mountResponse),
+                                    mountResponse.name,
+                                    mountResponse.itemId,
+                                    mountResponse.qualityId,
                                     spreadsheetCSVRows.find {
-                                        it.itemId == mount.itemId && it.spellId == mount.spellId
+                                        it.itemId == mountResponse.itemId && it.creatureId == mountResponse.creatureId && it.spellId == mountResponse.spellId
                                     }?.clientId ?: 0,
-                                    mount.icon,
-                                    mount.isGround,
-                                    mount.isFlying,
-                                    mount.isAquatic,
-                                    characterResponse.mounts.collected.isContain { it.itemId == mount.itemId })
+                                    mountResponse.icon,
+                                    mountResponse.isGround,
+                                    mountResponse.isFlying,
+                                    mountResponse.isAquatic,
+                                    characterResponse.mounts.collected.isContain { it.itemId == mountResponse.itemId })
                         }
                 Pair(character, mounts)
             }
+
+
+    companion object {
+        fun createId(mountResponse: MountResponse) = "${mountResponse.name}/${mountResponse.itemId}/${mountResponse.qualityId}"
+    }
 }
