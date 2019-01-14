@@ -22,6 +22,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "CLIENT_SECRET", getClientSecret()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner "org.robolectric.RobolectricTestRunner"
     }
     buildTypes {
         debug {
@@ -36,6 +37,11 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 }
 
@@ -111,7 +117,7 @@ dependencies {
     // tests
     testImplementation "junit:junit:4.12"
     testImplementation "org.mockito:mockito-core:$mockito_version"
-    testImplementation "org.mockito:mockito-inline:$mockito_version"
+    testImplementation "org.robolectric:robolectric:4.1"
     androidTestImplementation "com.android.support.test:rules:1.0.2"
     androidTestImplementation "com.android.support.test:runner:1.0.2"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:3.0.2"

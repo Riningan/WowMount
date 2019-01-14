@@ -38,10 +38,10 @@ class CharacterResponseRule : TestRule {
 
 
     companion object {
-        const val NAME = "name"
-        const val REALM = "realm"
-        const val LEVEL = 1
-        const val THUMBNAIL = "thumbnail"
+        const val NAME = "Квентис"
+        const val REALM = "Гордунни"
+        const val LEVEL = 120
+        const val THUMBNAIL = "http://url"
         val COLLECTED_MOUNT_LIST = arrayListOf(MountsResponseRule.MOUNT_1, MountsResponseRule.MOUNT_2)
     }
 }

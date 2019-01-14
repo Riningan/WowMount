@@ -9,26 +9,24 @@ import com.riningan.wowmount.rule.MountsResponseRule
 import com.riningan.wowmount.rule.SpreadsheetRowsResponseRule
 import com.riningan.wowmount.utils.isContain
 import io.reactivex.Single
+import org.junit.AfterClass
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.ClassRule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.junit.MockitoJUnitRunner
 
 
 class CharacterRemoteStorageTest {
     companion object {
-        @ClassRule
         @JvmField
+        @ClassRule
         val mMountsResponseRule = MountsResponseRule()
-        @ClassRule
         @JvmField
+        @ClassRule
         val mCharacterResponseRule = CharacterResponseRule()
-        @ClassRule
         @JvmField
+        @ClassRule
         val mSpreadsheetRowsResponseRule = SpreadsheetRowsResponseRule()
 
         private val mBlizzardApi = Mockito.mock(BlizzardApi::class.java)
@@ -36,23 +34,28 @@ class CharacterRemoteStorageTest {
         private val mLocalPreferences = Mockito.mock(LocalPreferences::class.java)
 
 
-        @BeforeClass
         @JvmStatic
-        fun setUpClass() {
-            Mockito.`when`(mLocalPreferences.server).thenReturn("TestServer")
-            Mockito.`when`(mLocalPreferences.accessToken).thenReturn("TestAccessToken")
-            Mockito.`when`(mLocalPreferences.characterName).thenReturn("TestCharacterName")
+        @BeforeClass
+        fun beforeClass() {
+            System.out.println("Start test class - ${Thread.currentThread().stackTrace[1].fileName}")
+            Mockito.`when`(mLocalPreferences.server).thenReturn("en")
+            Mockito.`when`(mLocalPreferences.accessToken).thenReturn("Token")
+            Mockito.`when`(mLocalPreferences.characterName).thenReturn(CharacterResponseRule.NAME)
             Mockito.`when`(mLocalPreferences.isActivated).thenReturn(true)
-            Mockito.`when`(mLocalPreferences.realmName).thenReturn("TestRealmName")
+            Mockito.`when`(mLocalPreferences.realmName).thenReturn(CharacterResponseRule.REALM)
 
             Mockito.`when`(mBlizzardApi.getMounts(mLocalPreferences.server))
                     .thenReturn(Single.fromCallable { mMountsResponseRule.getResponse() })
-
             Mockito.`when`(mBlizzardApi.getCharacter(mLocalPreferences.server, mLocalPreferences.realmName, mLocalPreferences.characterName))
                     .thenReturn(Single.fromCallable { mCharacterResponseRule.getResponse() })
-
             Mockito.`when`(mSpreadsheetApi.getSpreadsheetRows())
                     .thenReturn(Single.fromCallable { mSpreadsheetRowsResponseRule.getResponse() })
+        }
+
+        @JvmStatic
+        @AfterClass
+        fun afterClass() {
+            System.out.println("Finish test class - ${Thread.currentThread().stackTrace[1].fileName}")
         }
     }
 
@@ -61,91 +64,104 @@ class CharacterRemoteStorageTest {
 
 
     @Before
-    fun setUp() {
+    fun before() {
         mCharacterRemoteStorage = CharacterRemoteStorage(mBlizzardApi, mSpreadsheetApi, mLocalPreferences)
     }
 
 
     @Test
     fun get() {
-        System.out.println("Start Test get()")
+        System.out.println("Start test - ${Thread.currentThread().stackTrace[1].methodName}")
         val observer = mCharacterRemoteStorage.get()
                 .toObservable()
                 .test()
-        observer.assertValue {
-            if (it.first == null) {
-                System.out.println("Null character")
-                false
-            } else if (it.first!!.name != CharacterResponseRule.NAME ||
-                    it.first!!.realm != CharacterResponseRule.REALM ||
-                    it.first!!.level != CharacterResponseRule.LEVEL ||
-                    it.first!!.thumbnail != CharacterResponseRule.THUMBNAIL ||
-                    it.first!!.region != mLocalPreferences.server) {
-                System.out.println("Wrong character")
-                false
-            } else if (it.second.size != MountsResponseRule.MOUNT_LIST.size) {
-                System.out.println("Wrong mount list size")
-                false
-            } else if (it.second[0].let { mount ->
-                        mount.id != CharacterRemoteStorage.createId(MountsResponseRule.MOUNT_1) ||
-                                mount.name != MountsResponseRule.MOUNT_1.name ||
-                                mount.itemId != MountsResponseRule.MOUNT_1.itemId ||
-                                mount.qualityId != MountsResponseRule.MOUNT_1.qualityId ||
-                                mount.clientId != SpreadsheetRowsResponseRule.ROW_1.clientId ||
-                                mount.icon != MountsResponseRule.MOUNT_1.icon ||
-                                mount.isGround != MountsResponseRule.MOUNT_1.isGround ||
-                                mount.isFlying != MountsResponseRule.MOUNT_1.isFlying ||
-                                mount.isAquatic != MountsResponseRule.MOUNT_1.isAquatic ||
-                                mount.isCollected != CharacterResponseRule.COLLECTED_MOUNT_LIST.isContain { it.itemId == mount.itemId }
-                    }) {
-                System.out.println("Wrong mount 0")
-                false
-            } else if (it.second[1].let { mount ->
-                        mount.id != CharacterRemoteStorage.createId(MountsResponseRule.MOUNT_2) ||
-                                mount.name != MountsResponseRule.MOUNT_2.name ||
-                                mount.itemId != MountsResponseRule.MOUNT_2.itemId ||
-                                mount.qualityId != MountsResponseRule.MOUNT_2.qualityId ||
-                                mount.clientId != SpreadsheetRowsResponseRule.ROW_2.clientId ||
-                                mount.icon != MountsResponseRule.MOUNT_2.icon ||
-                                mount.isGround != MountsResponseRule.MOUNT_2.isGround ||
-                                mount.isFlying != MountsResponseRule.MOUNT_2.isFlying ||
-                                mount.isAquatic != MountsResponseRule.MOUNT_2.isAquatic ||
-                                mount.isCollected != CharacterResponseRule.COLLECTED_MOUNT_LIST.isContain { it.itemId == mount.itemId }
-                    }) {
-                System.out.println("Wrong mount 1")
-                false
-            } else if (it.second[2].let { mount ->
-                        mount.id != CharacterRemoteStorage.createId(MountsResponseRule.MOUNT_3) ||
-                                mount.name != MountsResponseRule.MOUNT_3.name ||
-                                mount.itemId != MountsResponseRule.MOUNT_3.itemId ||
-                                mount.qualityId != MountsResponseRule.MOUNT_3.qualityId ||
-                                mount.clientId != SpreadsheetRowsResponseRule.ROW_3.clientId ||
-                                mount.icon != MountsResponseRule.MOUNT_3.icon ||
-                                mount.isGround != MountsResponseRule.MOUNT_3.isGround ||
-                                mount.isFlying != MountsResponseRule.MOUNT_3.isFlying ||
-                                mount.isAquatic != MountsResponseRule.MOUNT_3.isAquatic ||
-                                mount.isCollected != CharacterResponseRule.COLLECTED_MOUNT_LIST.isContain { it.itemId == mount.itemId }
-                    }) {
-                System.out.println("Wrong mount 2")
-                false
-            } else if (it.second[3].let { mount ->
-                        mount.id != CharacterRemoteStorage.createId(MountsResponseRule.MOUNT_4) ||
-                                mount.name != MountsResponseRule.MOUNT_4.name ||
-                                mount.itemId != MountsResponseRule.MOUNT_4.itemId ||
-                                mount.qualityId != MountsResponseRule.MOUNT_4.qualityId ||
-                                mount.clientId != 0 ||
-                                mount.icon != MountsResponseRule.MOUNT_4.icon ||
-                                mount.isGround != MountsResponseRule.MOUNT_4.isGround ||
-                                mount.isFlying != MountsResponseRule.MOUNT_4.isFlying ||
-                                mount.isAquatic != MountsResponseRule.MOUNT_4.isAquatic ||
-                                mount.isCollected != CharacterResponseRule.COLLECTED_MOUNT_LIST.isContain { it.itemId == mount.itemId }
-                    }) {
-                System.out.println("Wrong mount 3")
-                false
-            } else {
-                System.out.println("Success")
-                true
+
+        System.out.print("Check character is not null - ")
+        observer.assertValue { it.first != null }
+        System.out.println("Success")
+
+        System.out.print("Check character - ")
+        observer.assertValue { (character, _) ->
+            character!!.name == CharacterResponseRule.NAME &&
+                    character.realm == CharacterResponseRule.REALM &&
+                    character.level == CharacterResponseRule.LEVEL &&
+                    character.thumbnail == CharacterResponseRule.THUMBNAIL &&
+                    character.region == mLocalPreferences.server
+        }
+        System.out.println("Success")
+
+        System.out.print("Check mount list size - ")
+        observer.assertValue { it.second.size == MountsResponseRule.MOUNT_LIST.size }
+        System.out.println("Success")
+
+        System.out.print("Check mount 0 - ")
+        observer.assertValue { (_, mounts) ->
+            mounts[0].run {
+                id == CharacterRemoteStorage.createId(MountsResponseRule.MOUNT_1) &&
+                        name == MountsResponseRule.MOUNT_1.name &&
+                        itemId == MountsResponseRule.MOUNT_1.itemId &&
+                        qualityId == MountsResponseRule.MOUNT_1.qualityId &&
+                        clientId == SpreadsheetRowsResponseRule.ROW_1.clientId &&
+                        icon == MountsResponseRule.MOUNT_1.icon &&
+                        isGround == MountsResponseRule.MOUNT_1.isGround &&
+                        isFlying == MountsResponseRule.MOUNT_1.isFlying &&
+                        isAquatic == MountsResponseRule.MOUNT_1.isAquatic &&
+                        isCollected == CharacterResponseRule.COLLECTED_MOUNT_LIST.isContain { it.itemId == itemId }
             }
         }
+        System.out.println("Success")
+
+        System.out.print("Check mount 1 - ")
+        observer.assertValue { (_, mounts) ->
+            mounts[1].run {
+                id == CharacterRemoteStorage.createId(MountsResponseRule.MOUNT_2) &&
+                        name == MountsResponseRule.MOUNT_2.name &&
+                        itemId == MountsResponseRule.MOUNT_2.itemId &&
+                        qualityId == MountsResponseRule.MOUNT_2.qualityId &&
+                        clientId == SpreadsheetRowsResponseRule.ROW_2.clientId &&
+                        icon == MountsResponseRule.MOUNT_2.icon &&
+                        isGround == MountsResponseRule.MOUNT_2.isGround &&
+                        isFlying == MountsResponseRule.MOUNT_2.isFlying &&
+                        isAquatic == MountsResponseRule.MOUNT_2.isAquatic &&
+                        isCollected == CharacterResponseRule.COLLECTED_MOUNT_LIST.isContain { it.itemId == itemId }
+            }
+        }
+        System.out.println("Success")
+
+        System.out.print("Check mount 2 - ")
+        observer.assertValue { (_, mounts) ->
+            mounts[2].run {
+                id == CharacterRemoteStorage.createId(MountsResponseRule.MOUNT_3) &&
+                        name == MountsResponseRule.MOUNT_3.name &&
+                        itemId == MountsResponseRule.MOUNT_3.itemId &&
+                        qualityId == MountsResponseRule.MOUNT_3.qualityId &&
+                        clientId == SpreadsheetRowsResponseRule.ROW_3.clientId &&
+                        icon == MountsResponseRule.MOUNT_3.icon &&
+                        isGround == MountsResponseRule.MOUNT_3.isGround &&
+                        isFlying == MountsResponseRule.MOUNT_3.isFlying &&
+                        isAquatic == MountsResponseRule.MOUNT_3.isAquatic &&
+                        isCollected == CharacterResponseRule.COLLECTED_MOUNT_LIST.isContain { it.itemId == itemId }
+            }
+        }
+        System.out.println("Success")
+
+        System.out.print("Check mount 3 - ")
+        observer.assertValue { (_, mounts) ->
+            mounts[3].run {
+                id == CharacterRemoteStorage.createId(MountsResponseRule.MOUNT_4) &&
+                        name == MountsResponseRule.MOUNT_4.name &&
+                        itemId == MountsResponseRule.MOUNT_4.itemId &&
+                        qualityId == MountsResponseRule.MOUNT_4.qualityId &&
+                        clientId == 0 &&
+                        icon == MountsResponseRule.MOUNT_4.icon &&
+                        isGround == MountsResponseRule.MOUNT_4.isGround &&
+                        isFlying == MountsResponseRule.MOUNT_4.isFlying &&
+                        isAquatic == MountsResponseRule.MOUNT_4.isAquatic &&
+                        isCollected == CharacterResponseRule.COLLECTED_MOUNT_LIST.isContain { it.itemId == itemId }
+            }
+        }
+        System.out.println("Success")
+
+        System.out.println("Finish test - ${Thread.currentThread().stackTrace[1].methodName}")
     }
 }
