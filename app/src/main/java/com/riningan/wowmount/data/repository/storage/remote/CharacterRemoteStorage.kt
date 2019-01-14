@@ -17,7 +17,7 @@ import io.reactivex.functions.Function3
 
 class CharacterRemoteStorage(private val mBlizzardApi: BlizzardApi,
                              private val mSpreadsheetApi: SpreadsheetApi,
-                             private val mLocalPreferences: LocalPreferences) : BaseRemoteStorage<Pair<Character?, List<Mount>>>() {
+                             private val mLocalPreferences: LocalPreferences) : BaseRemoteStorage<Pair<Character?, List<Mount>>> {
     override fun get(): Single<Pair<Character?, List<Mount>>> = Single
             .zip(mBlizzardApi.getMounts(mLocalPreferences.server),
                     mBlizzardApi.getCharacter(mLocalPreferences.server, mLocalPreferences.realmName, mLocalPreferences.characterName),

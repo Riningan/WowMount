@@ -9,7 +9,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 
 
-class CharacterLocalStorage(private val mDBHelper: DBHelper) : BaseLocalStorage<Pair<Character?, List<Mount>>>() {
+class CharacterLocalStorage(private val mDBHelper: DBHelper) : BaseLocalStorage<Pair<Character?, List<Mount>>> {
     override fun get(): Single<Pair<Character?, List<Mount>>> = Single
             .fromCallable {
                 mDBHelper.getDBInstance().run {

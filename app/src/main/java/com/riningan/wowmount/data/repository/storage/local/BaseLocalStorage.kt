@@ -4,10 +4,10 @@ import io.reactivex.Completable
 import io.reactivex.Single
 
 
-abstract class BaseLocalStorage<T> {
-    abstract fun get(): Single<T>
+interface BaseLocalStorage<T> {
+    fun get(): Single<T>
 
-    abstract fun set(cache: T): Completable
+    fun set(cache: T): Completable
 
-    abstract fun clear(): Completable
+    fun clear(): Completable
 }
