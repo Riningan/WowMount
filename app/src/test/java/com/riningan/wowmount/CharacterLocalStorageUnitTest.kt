@@ -13,7 +13,7 @@ import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "AndroidManifest.xml", sdk = [21])
-class CharacterLocalStorageTest {
+class CharacterLocalStorageUnitTest {
     @get:Rule
     val mRealmDBRule = RealmDBRule(RuntimeEnvironment.application.applicationContext)
 

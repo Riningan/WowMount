@@ -35,13 +35,6 @@ class WowMountApp : MultiDexApplication(), KodeinAware {
                 mRefWatcher = LeakCanary.install(this)
             }
         }
-        // Realm
-        Realm.init(this)
-        val config = RealmConfiguration.Builder()
-                .name("wowmount.realm")
-                .schemaVersion(1)
-                .build()
-        Realm.setDefaultConfiguration(config)
     }
 
     override val kodein = Kodein.lazy {
