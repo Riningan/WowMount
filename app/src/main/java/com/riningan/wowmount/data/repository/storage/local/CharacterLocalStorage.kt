@@ -53,17 +53,17 @@ class CharacterLocalStorage(private val mRealm: Realm) : BaseLocalStorage<Pair<C
                     beginTransaction()
                     delete(CharacterEntity::class.java)
                     cache.first!!.let {
-                        copyToRealm(CharacterEntity().apply {
+                        createObject(CharacterEntity::class.java).apply {
                             name = it.name
                             realm = it.realm
                             level = it.level
                             thumbnail = it.thumbnail
                             region = it.region
-                        })
+                        }
                     }
                     delete(MountEntity::class.java)
-                    cache.second.map {
-                        MountEntity().apply {
+                    cache.second.forEach {
+                        createObject(MountEntity::class.java).apply {
                             id = it.id
                             name = it.name
                             itemId = it.itemId
@@ -74,7 +74,7 @@ class CharacterLocalStorage(private val mRealm: Realm) : BaseLocalStorage<Pair<C
                             isAquatic = it.isAquatic
                             isCollected = it.isCollected
                         }
-                    }.forEach { copyToRealm(it) }
+                    }
                     commitTransaction()
                     close()
                 }
