@@ -17,6 +17,14 @@ abstract class BaseRepository<T>(private val mLocalStorage: BaseLocalStorage<T>,
         get() = 60
 
 
+    fun update(): Single<T> = mRemoteStorage
+            .get()
+            .doOnSuccess {
+                mCache = it
+                mLastUpdateTime = Date()
+            }
+            .flatMap { mLocalStorage.set(it).toSingle { it } }
+
     fun get(): Flowable<T> {
         val local = if (mCache == null) {
             mLocalStorage.get().doOnSuccess { mCache = it }
@@ -30,14 +38,6 @@ abstract class BaseRepository<T>(private val mLocalStorage: BaseLocalStorage<T>,
             local
         }
     }
-
-    fun update(): Single<T> = mRemoteStorage
-            .get()
-            .doOnSuccess {
-                mCache = it
-                mLastUpdateTime = Date()
-            }
-            .flatMap { mLocalStorage.set(it).toSingle { it } }
 
     fun clear(): Completable = mLocalStorage
             .clear()
