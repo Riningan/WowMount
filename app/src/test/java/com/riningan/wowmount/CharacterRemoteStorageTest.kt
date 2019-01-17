@@ -8,6 +8,7 @@ import com.riningan.wowmount.data.repository.storage.remote.CharacterRemoteStora
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.BeforeClass
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
@@ -38,6 +39,9 @@ class CharacterRemoteStorageTest {
         }
     }
 
+
+    @get: Rule
+    val logRule = LogRule()
 
     private lateinit var mCharacterRemoteStorage: CharacterRemoteStorage
 
