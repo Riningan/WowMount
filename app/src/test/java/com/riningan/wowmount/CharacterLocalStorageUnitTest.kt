@@ -2,7 +2,6 @@ package com.riningan.wowmount
 
 import com.riningan.wowmount.data.db.model.CharacterEntity
 import com.riningan.wowmount.data.db.model.MountEntity
-import com.riningan.wowmount.data.repository.model.Character
 import com.riningan.wowmount.data.repository.storage.local.CharacterLocalStorage
 import io.realm.Realm
 import io.realm.RealmQuery
@@ -14,7 +13,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.powermock.api.mockito.PowerMockito
@@ -33,7 +31,7 @@ import org.robolectric.annotation.Config
 @Config(manifest = "AndroidManifest.xml", sdk = [21])
 @PowerMockIgnore(value = ["org.mockito.*", "org.robolectric.*", "android.*"])
 @SuppressStaticInitializationFor("io.realm.internal.Util")
-@PrepareForTest(value = [Realm::class, RealmLog::class, RealmResults::class, RealmQuery::class, Character::class])
+@PrepareForTest(value = [Realm::class, RealmLog::class, RealmResults::class, RealmQuery::class])
 class CharacterLocalStorageUnitTest {
     @get: Rule
     var mPowerMockRule = PowerMockRule()
@@ -56,140 +54,62 @@ class CharacterLocalStorageUnitTest {
 
     @Test
     fun checkRealmMock() {
-        System.out.print("Check realm - ")
         assertThat(Realm.getDefaultInstance(), `is`(mRealm))
-        System.out.println("Success")
     }
 
     @Test
-    fun checkCreateEntitiesMock() {
-        System.out.print("Check character - ")
+    fun checkCreateCharacterEntitiesMock() {
         val characterEntity = CHARACTER_ENTITY
         PowerMockito.`when`(mRealm.createObject(CharacterEntity::class.java)).thenReturn(characterEntity)
         val outputCharacter = mRealm.createObject(CharacterEntity::class.java)
         assertThat(outputCharacter, `is`(characterEntity))
-        System.out.println("Success")
+    }
 
-        System.out.print("Check mount - ")
+    @Test
+    fun checkCreateMountEntitiesMock() {
         val mountEntity = MOUNT_ENTITY_1
         PowerMockito.`when`(mRealm.createObject(MountEntity::class.java)).thenReturn(mountEntity)
         val outputMount = mRealm.createObject(MountEntity::class.java)
         assertThat(outputMount, `is`(mountEntity))
-        System.out.println("Success")
     }
 
+    /**
+     * @see CharacterLocalStorage.get()
+     */
     @Test
     fun get() {
         // Create a mock RealmQuery
         val characterQuery = PowerMockito.mock(RealmQuery::class.java) as RealmQuery<CharacterEntity>
         PowerMockito.`when`(characterQuery.findFirst()).thenReturn(CHARACTER_ENTITY)
         PowerMockito.`when`(mRealm.where(CharacterEntity::class.java)).thenReturn(characterQuery)
-
         val mountsResult = PowerMockito.mock(RealmResults::class.java) as RealmResults<MountEntity>
         PowerMockito.`when`(mountsResult.iterator()).thenReturn(MOUNT_ENTITY_LIST.toMutableList().iterator())
         PowerMockito.`when`(mountsResult.size).thenReturn(MOUNT_ENTITY_LIST.size)
-        val array = Character("mock", "r")
-        PowerMockito.whenNew(Character::class.java).withArguments(Mockito.anyString(), Mockito.anyString()).thenReturn(array)
-        val array2 = Character("mock2", "r2")
-//        PowerMockito.`when`(mountsResult.toList()).thenReturn(arrayListOf())
+        // mock toList()
+        PowerMockito.`when`(mountsResult.toArray()).thenReturn(MOUNT_ENTITY_LIST.toTypedArray())
         val mountsQuery = PowerMockito.mock(RealmQuery::class.java) as RealmQuery<MountEntity>
         PowerMockito.`when`(mountsQuery.findAll()).thenReturn(mountsResult)
         PowerMockito.`when`(mRealm.where(MountEntity::class.java)).thenReturn(mountsQuery)
 
-        val observer = mCharacterLocalStorage
+        mCharacterLocalStorage
                 .get()
                 .toObservable()
                 .test()
-
-        System.out.print("Check character is not null - ")
-        observer.assertValue { it.first != null }
-        System.out.println("Success")
-
-        System.out.print("Check character - ")
-        observer.assertValue {
-            it.first!!.name == CHARACTER_ENTITY.name &&
-                    it.first!!.realm == CHARACTER_ENTITY.realm &&
-                    it.first!!.level == CHARACTER_ENTITY.level &&
-                    it.first!!.thumbnail == CHARACTER_ENTITY.thumbnail &&
-                    it.first!!.region == CHARACTER_ENTITY.region
-        }
-        System.out.println("Success")
-
-        System.out.print("Check mount list size - ")
-        observer.assertValue {
-            it.second.size == MOUNT_ENTITY_LIST.size
-        }
-        System.out.println("Success")
-
-//        System.out.print("Check mount 0 - ")
-//        observer.assertValue {
-//            it.second[0].run {
-//                id == RealmMockRule.MOUNT_ENTITY_1.id &&
-//                        name == RealmMockRule.MOUNT_ENTITY_1.name &&
-//                        itemId == RealmMockRule.MOUNT_ENTITY_1.itemId &&
-//                        qualityId == RealmMockRule.MOUNT_ENTITY_1.qualityId &&
-//                        clientId == RealmMockRule.MOUNT_ENTITY_1.clientId &&
-//                        icon == RealmMockRule.MOUNT_ENTITY_1.icon &&
-//                        isGround == RealmMockRule.MOUNT_ENTITY_1.isGround &&
-//                        isFlying == RealmMockRule.MOUNT_ENTITY_1.isFlying &&
-//                        isAquatic == RealmMockRule.MOUNT_ENTITY_1.isAquatic &&
-//                        isCollected == RealmMockRule.MOUNT_ENTITY_1.isCollected
-//            }
-//        }
-//        System.out.println("Success")
-//
-//        System.out.print("Check mount 1 - ")
-//        observer.assertValue {
-//            it.second[1].run {
-//                id == RealmMockRule.MOUNT_ENTITY_2.id &&
-//                        name == RealmMockRule.MOUNT_ENTITY_2.name &&
-//                        itemId == RealmMockRule.MOUNT_ENTITY_2.itemId &&
-//                        qualityId == RealmMockRule.MOUNT_ENTITY_2.qualityId &&
-//                        clientId == RealmMockRule.MOUNT_ENTITY_2.clientId &&
-//                        icon == RealmMockRule.MOUNT_ENTITY_2.icon &&
-//                        isGround == RealmMockRule.MOUNT_ENTITY_2.isGround &&
-//                        isFlying == RealmMockRule.MOUNT_ENTITY_2.isFlying &&
-//                        isAquatic == RealmMockRule.MOUNT_ENTITY_2.isAquatic &&
-//                        isCollected == RealmMockRule.MOUNT_ENTITY_2.isCollected
-//            }
-//        }
-//        System.out.println("Success")
-//
-//        System.out.print("Check mount 2 - ")
-//        observer.assertValue {
-//            it.second[2].run {
-//                id == RealmMockRule.MOUNT_ENTITY_3.id &&
-//                        name == RealmMockRule.MOUNT_ENTITY_3.name &&
-//                        itemId == RealmMockRule.MOUNT_ENTITY_3.itemId &&
-//                        qualityId == RealmMockRule.MOUNT_ENTITY_3.qualityId &&
-//                        clientId == RealmMockRule.MOUNT_ENTITY_3.clientId &&
-//                        icon == RealmMockRule.MOUNT_ENTITY_3.icon &&
-//                        isGround == RealmMockRule.MOUNT_ENTITY_3.isGround &&
-//                        isFlying == RealmMockRule.MOUNT_ENTITY_3.isFlying &&
-//                        isAquatic == RealmMockRule.MOUNT_ENTITY_3.isAquatic &&
-//                        isCollected == RealmMockRule.MOUNT_ENTITY_3.isCollected
-//            }
-//        }
-//        System.out.println("Success")
-//
-//        System.out.print("Check mount 3 - ")
-//        observer.assertValue {
-//            it.second[3].run {
-//                id == RealmMockRule.MOUNT_ENTITY_4.id &&
-//                        name == RealmMockRule.MOUNT_ENTITY_4.name &&
-//                        itemId == RealmMockRule.MOUNT_ENTITY_4.itemId &&
-//                        qualityId == RealmMockRule.MOUNT_ENTITY_4.qualityId &&
-//                        clientId == RealmMockRule.MOUNT_ENTITY_4.clientId &&
-//                        icon == RealmMockRule.MOUNT_ENTITY_4.icon &&
-//                        isGround == RealmMockRule.MOUNT_ENTITY_4.isGround &&
-//                        isFlying == RealmMockRule.MOUNT_ENTITY_4.isFlying &&
-//                        isAquatic == RealmMockRule.MOUNT_ENTITY_4.isAquatic &&
-//                        isCollected == RealmMockRule.MOUNT_ENTITY_4.isCollected
-//            }
-//        }
-//        System.out.println("Success")
+                .assertValue { it.first != null }
+                .assertValue { it.first!!.toString() == CHARACTER.toString() }
+                .assertValue { it.second.size == MOUNT_ENTITY_LIST.size }
+                .assertValue { it.second[0].toString() == MOUNT_1.toString() }
+                .assertValue { it.second[1].toString() == MOUNT_2.toString() }
+                .assertValue { it.second[2].toString() == MOUNT_3.toString() }
+                .assertValue { it.second[3].toString() == MOUNT_4.toString() }
+        verify(mRealm, times(1)).where(CharacterEntity::class.java)
+        verify(mRealm, times(1)).where(MountEntity::class.java)
+        verify(mRealm, times(1)).close()
     }
 
+    /**
+     * @see CharacterLocalStorage.set()
+     */
     @Test
     fun set() {
         // in create CharacterEntity return mock
@@ -216,11 +136,15 @@ class CharacterLocalStorageUnitTest {
         verify(mRealm, times(1)).close()
     }
 
+    /**
+     * @see CharacterLocalStorage.clear()
+     */
     @Test
     fun clear() {
         mCharacterLocalStorage
                 .clear()
                 .test()
+
         verify(mRealm, times(1)).beginTransaction()
         verify(mRealm, times(1)).delete(CharacterEntity::class.java)
         verify(mRealm, times(1)).delete(MountEntity::class.java)

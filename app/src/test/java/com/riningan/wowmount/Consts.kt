@@ -119,12 +119,12 @@ val MOUNT_ENTITY_1 = MountEntity().apply {
     name = MOUNT_RESPONSE_1.name
     itemId = MOUNT_RESPONSE_1.itemId
     qualityId = MOUNT_RESPONSE_1.qualityId
-    clientId = MOUNT_RESPONSE_1.qualityId
+    clientId = getClientId(this)
     icon = MOUNT_RESPONSE_1.icon
     isGround = MOUNT_RESPONSE_1.isGround
     isFlying = MOUNT_RESPONSE_1.isFlying
     isAquatic = MOUNT_RESPONSE_1.isAquatic
-    isCollected = CHARACTER_COLLECTED_MOUNT_LIST.isContain { it.itemId == itemId }
+    isCollected = isCollected(this)
 }
 
 val MOUNT_ENTITY_2 = MountEntity().apply {
@@ -132,12 +132,12 @@ val MOUNT_ENTITY_2 = MountEntity().apply {
     name = MOUNT_RESPONSE_2.name
     itemId = MOUNT_RESPONSE_2.itemId
     qualityId = MOUNT_RESPONSE_2.qualityId
-    clientId = MOUNT_RESPONSE_2.qualityId
+    clientId = getClientId(this)
     icon = MOUNT_RESPONSE_2.icon
     isGround = MOUNT_RESPONSE_2.isGround
     isFlying = MOUNT_RESPONSE_2.isFlying
     isAquatic = MOUNT_RESPONSE_2.isAquatic
-    isCollected = CHARACTER_COLLECTED_MOUNT_LIST.isContain { it.itemId == itemId }
+    isCollected = isCollected(this)
 }
 
 val MOUNT_ENTITY_3 = MountEntity().apply {
@@ -145,12 +145,12 @@ val MOUNT_ENTITY_3 = MountEntity().apply {
     name = MOUNT_RESPONSE_3.name
     itemId = MOUNT_RESPONSE_3.itemId
     qualityId = MOUNT_RESPONSE_3.qualityId
-    clientId = MOUNT_RESPONSE_3.qualityId
+    clientId = getClientId(this)
     icon = MOUNT_RESPONSE_3.icon
     isGround = MOUNT_RESPONSE_3.isGround
     isFlying = MOUNT_RESPONSE_3.isFlying
     isAquatic = MOUNT_RESPONSE_3.isAquatic
-    isCollected = CHARACTER_COLLECTED_MOUNT_LIST.isContain { it.itemId == itemId }
+    isCollected = isCollected(this)
 }
 
 val MOUNT_ENTITY_4 = MountEntity().apply {
@@ -158,12 +158,12 @@ val MOUNT_ENTITY_4 = MountEntity().apply {
     name = MOUNT_RESPONSE_4.name
     itemId = MOUNT_RESPONSE_4.itemId
     qualityId = MOUNT_RESPONSE_4.qualityId
-    clientId = MOUNT_RESPONSE_4.qualityId
+    clientId = getClientId(this)
     icon = MOUNT_RESPONSE_4.icon
     isGround = MOUNT_RESPONSE_4.isGround
     isFlying = MOUNT_RESPONSE_4.isFlying
     isAquatic = MOUNT_RESPONSE_4.isAquatic
-    isCollected = CHARACTER_COLLECTED_MOUNT_LIST.isContain { it.itemId == itemId }
+    isCollected = isCollected(this)
 }
 
 val MOUNT_ENTITY_LIST = listOf(MOUNT_ENTITY_1, MOUNT_ENTITY_2, MOUNT_ENTITY_3, MOUNT_ENTITY_4)
@@ -233,3 +233,16 @@ val CHARACTER = Character(
         LEVEL,
         THUMBNAIL,
         REGION)
+
+
+fun getClientId(mountEntity: MountEntity) = ROW_LIST.find {
+    MOUNT_RESPONSE_LIST.find { mountResponse ->
+        CharacterRemoteStorage.createId(mountResponse) == mountEntity.id
+    }?.let { mountResponse ->
+        it.itemId == mountResponse.itemId && it.creatureId == mountResponse.creatureId && it.spellId == mountResponse.spellId
+    } ?: false
+}?.clientId ?: 0
+
+fun isCollected(mountEntity: MountEntity) = CHARACTER_COLLECTED_MOUNT_LIST.isContain {
+    CharacterRemoteStorage.createId(it) == mountEntity.id
+}
