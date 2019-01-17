@@ -3,7 +3,10 @@ package com.riningan.wowmount
 import com.riningan.wowmount.data.repository.CharacterRepository
 import com.riningan.wowmount.data.repository.storage.local.CharacterLocalStorage
 import com.riningan.wowmount.data.repository.storage.remote.CharacterRemoteStorage
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import io.mockk.verifySequence
 import io.reactivex.Completable
 import io.reactivex.Single
 import org.junit.Before
@@ -11,12 +14,9 @@ import org.junit.Rule
 import org.junit.Test
 import java.util.*
 import kotlin.reflect.KMutableProperty1
-import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.declaredMembers
 import kotlin.reflect.full.superclasses
-import kotlin.reflect.full.valueParameters
 import kotlin.reflect.jvm.isAccessible
-import kotlin.reflect.jvm.javaField
 
 /**
  * using MockK because
@@ -159,7 +159,50 @@ class CharacterRepositoryTest {
         mCharacterRepository
                 .clear()
                 .test()
+
         verify(exactly = 1) { mCharacterLocalStorage.clear() }
+    }
+
+    @Test
+    fun getMountById() {
+        // first call
+        // get existing mount from local
+        // get existing mount from remote
+        mCharacterRepository
+                .getMountById(MOUNT_2.id)
+                .test()
+                .assertValueCount(2)
+                .assertValueAt(0) {it.toString() == MOUNT_2.toString()}
+                .assertValueAt(1) {it.toString() == MOUNT_2.toString()}
+        // second call
+        // get existing mount from local
+        mCharacterRepository
+                .getMountById(MOUNT_2.id)
+                .test()
+                .assertValueCount(1)
+                .assertValueAt(0) {it.toString() == MOUNT_2.toString()}
+        // third call
+        // get NOT existing mount
+        mCharacterRepository
+                .getMountById(MOUNT_4.id)
+                .test()
+                .assertFailure(NullPointerException::class.java)
+        // forth call
+        // get existing mount after cache dirty
+        resetCache()
+        mCharacterRepository
+                .getMountById(MOUNT_2.id)
+                .test()
+                .assertValueCount(1)
+                .assertValueAt(0) {it.toString() == MOUNT_2.toString()}
+        // fifth call
+        // get NOT existing mount after cache dirty
+        resetCache()
+        every { mCharacterRemoteStorage.get() } returns Single.fromCallable { Pair(CHARACTER, MOUNT_LIST) }
+        mCharacterRepository
+                .getMountById(MOUNT_4.id)
+                .test()
+                .assertFailure(NullPointerException::class.java)
     }
 
 

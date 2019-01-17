@@ -21,6 +21,6 @@ class CharacterRepository(localStorage: CharacterLocalStorage,
     fun getMountById(mountId: String): Flowable<Mount> = get()
             .map { (_, mounts) ->
                 mounts.find { it.id == mountId }
-                        ?: throw NullPointerException("No mount with itemId = $mountId")
+                        ?: throw NullPointerException("No mount with id = $mountId")
             }
 }
