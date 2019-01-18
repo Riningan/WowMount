@@ -83,7 +83,7 @@ class PageFragment : MvpAppCompatFragment(), KodeinAware, MountsView, ItemsAdapt
                 MountTypes.FLYING -> mounts.filter { it.isFlying }
                 MountTypes.AQUATIC -> mounts.filter { it.isAquatic }
             }
-            val diffResult = DiffUtil.calculateDiff(MountDiffUtillCallback(getMounts(), curMounts))
+            val diffResult = DiffUtil.calculateDiff(MountDiffUtilCallback(getMounts(), curMounts))
             setMounts(curMounts)
             diffResult.dispatchUpdatesTo(this)
         }

@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         Logger.debug()
         super.onCreate(null)
         setContentView(R.layout.activity_main)
-        mNavigator = Navigator(this, R.id.flMain)
+        mNavigator = Navigator(this, android.R.id.content)
         mRouter.newRootScreen(SplashFragment::class.java.canonicalName)
     }
 
