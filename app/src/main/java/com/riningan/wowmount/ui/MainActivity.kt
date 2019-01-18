@@ -4,7 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.riningan.util.Logger
+import com.riningan.wowmount.BuildConfig
 import com.riningan.wowmount.R
+import com.riningan.wowmount.app.WowMountApp
 import com.riningan.wowmount.route.Navigator
 import com.riningan.wowmount.ui.splash.SplashFragment
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
@@ -62,5 +64,9 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         Logger.debug()
         super.onDestroy()
         mNavigator = null
+        // LeakCanary
+        if (BuildConfig.DEBUG) {
+            WowMountApp.getRefWatcher().watch(this)
+        }
     }
 }

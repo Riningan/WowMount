@@ -1,6 +1,7 @@
 package com.riningan.wowmount.app
 
 import android.content.Context
+import android.os.StrictMode
 import androidx.multidex.MultiDexApplication
 import com.riningan.util.Logger
 import com.riningan.wowmount.BuildConfig
@@ -35,6 +36,7 @@ class WowMountApp : MultiDexApplication(), KodeinAware {
                 .addPreffix(BuildConfig.VERSION_NAME)
         // LeakCanary
         if (BuildConfig.DEBUG) {
+            enabledStrictMode()
             if (!LeakCanary.isInAnalyzerProcess(this)) {
                 mRefWatcher = LeakCanary.install(this)
             }
@@ -50,5 +52,14 @@ class WowMountApp : MultiDexApplication(), KodeinAware {
         fun getContext() = mInstance
 
         fun getRefWatcher() = mRefWatcher
+
+
+        private fun enabledStrictMode() {
+            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build())
+        }
     }
 }
