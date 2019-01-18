@@ -30,13 +30,13 @@ class CharacterInteractor constructor(executorThread: Scheduler, postExecutionTh
             .errorCast()
             .execution()
 
-    fun getMountByItemId(mountId: String): Observable<Mount> = mCharacterRepository
+    fun clear(): Completable = mCharacterRepository
+            .clear()
+            .execution()
+
+    fun getMountById(mountId: String): Observable<Mount> = mCharacterRepository
             .getMountById(mountId)
             .toObservable()
             .errorCast()
-            .execution()
-
-    fun clear(): Completable = mCharacterRepository
-            .clear()
             .execution()
 }

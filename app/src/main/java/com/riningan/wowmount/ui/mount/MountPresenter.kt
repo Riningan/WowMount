@@ -33,7 +33,7 @@ class MountPresenter constructor(kodein: Kodein) : BasePresenter<MountView>() {
     fun setupMount() {
         Logger.debug()
         mCharacterInteractor
-                .getMountByItemId(mMountId)
+                .getMountById(mMountId)
                 .subscribe({
                     viewState.setMount(it)
                 }, {

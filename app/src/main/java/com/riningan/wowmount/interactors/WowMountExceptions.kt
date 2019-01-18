@@ -5,27 +5,27 @@ import com.riningan.wowmount.app.WowMountApp
 
 
 sealed class WowMountExceptions : Throwable() {
-    class IOException : WowMountExceptions() {
-        override fun getLocalizedMessage(): String {
-            return WowMountApp.getContext().getString(R.string.error_character_io)
-        }
+    override fun getLocalizedMessage(): String {
+        return getApplicationMessage(this)
     }
 
-    class NoInternetException : WowMountExceptions() {
-        override fun getLocalizedMessage(): String {
-            return WowMountApp.getContext().getString(R.string.error_character_no_internet)
-        }
-    }
 
-    class AuthorizedException : WowMountExceptions() {
-        override fun getLocalizedMessage(): String {
-            return WowMountApp.getContext().getString(R.string.error_authorized)
-        }
-    }
+    class IOException : WowMountExceptions()
 
-    class ApplicationException : WowMountExceptions() {
-        override fun getLocalizedMessage(): String {
-            return WowMountApp.getContext().getString(R.string.error_character_application)
-        }
+    class NoInternetException : WowMountExceptions()
+
+    class AuthorizedException : WowMountExceptions()
+
+    class ApplicationException : WowMountExceptions()
+
+
+    companion object {
+        private fun getApplicationMessage(e: WowMountExceptions): String = WowMountApp.getContext().getString(
+                when (e) {
+                    is IOException -> R.string.error_character_io
+                    is NoInternetException -> R.string.error_character_no_internet
+                    is AuthorizedException -> R.string.error_authorized
+                    is ApplicationException -> R.string.error_character_application
+                })
     }
 }

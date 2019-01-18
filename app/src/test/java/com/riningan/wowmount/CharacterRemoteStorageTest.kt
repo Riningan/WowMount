@@ -41,7 +41,7 @@ class CharacterRemoteStorageTest {
 
 
     @get: Rule
-    val logRule = LogRule()
+    val mLogRule = LogRule()
 
     private lateinit var mCharacterRemoteStorage: CharacterRemoteStorage
 

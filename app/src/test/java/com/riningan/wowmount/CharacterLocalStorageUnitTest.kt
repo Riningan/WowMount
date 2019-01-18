@@ -38,7 +38,7 @@ class CharacterLocalStorageUnitTest {
     @get: Rule
     var mPowerMockRule = PowerMockRule()
     @get: Rule
-    val logRule = LogRule()
+    val mLogRule = LogRule()
 
     private lateinit var mRealm: Realm
     private lateinit var mCharacterLocalStorage: CharacterLocalStorage

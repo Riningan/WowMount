@@ -26,7 +26,7 @@ import kotlin.reflect.jvm.isAccessible
  */
 class CharacterRepositoryTest {
     @get: Rule
-    val logRule = LogRule()
+    val mLogRule = LogRule()
 
     private lateinit var mCharacterLocalStorage: CharacterLocalStorage
     private lateinit var mCharacterRemoteStorage: CharacterRemoteStorage
@@ -38,10 +38,10 @@ class CharacterRepositoryTest {
         mCharacterLocalStorage = mockk()
         every { mCharacterLocalStorage.clear() } returns Completable.complete()
         every { mCharacterLocalStorage.set(any()) } returns Completable.complete()
-        every { mCharacterLocalStorage.get() } returns Single.fromCallable { Pair(CHARACTER, listOf(MOUNT_1, MOUNT_2)) }
+        every { mCharacterLocalStorage.get() } returns Single.just(Pair(CHARACTER, listOf(MOUNT_1, MOUNT_2)))
 
         mCharacterRemoteStorage = mockk()
-        every { mCharacterRemoteStorage.get() } returns Single.fromCallable { Pair(CHARACTER, listOf(MOUNT_1, MOUNT_2, MOUNT_3)) }
+        every { mCharacterRemoteStorage.get() } returns Single.just(Pair(CHARACTER, listOf(MOUNT_1, MOUNT_2, MOUNT_3)))
 
         mCharacterRepository = CharacterRepository(mCharacterLocalStorage, mCharacterRemoteStorage)
     }
@@ -54,11 +54,10 @@ class CharacterRepositoryTest {
                 .test()
                 .assertValue { it.first != null }
                 .assertValue { it.first!!.toString() == CHARACTER.toString() }
-                .assertValue { it.second.size == MOUNT_ENTITY_LIST.size }
+                .assertValue { it.second.size == 3 }
                 .assertValue { it.second[0].toString() == MOUNT_1.toString() }
                 .assertValue { it.second[1].toString() == MOUNT_2.toString() }
                 .assertValue { it.second[2].toString() == MOUNT_3.toString() }
-                .assertValue { it.second[3].toString() == MOUNT_4.toString() }
         verify(exactly = 1) { mCharacterRemoteStorage.get() }
         verify(exactly = 1) { mCharacterLocalStorage.set(any()) }
     }
@@ -125,7 +124,7 @@ class CharacterRepositoryTest {
         verify(exactly = 2) { mCharacterRemoteStorage.get() }
         verify(exactly = 2) { mCharacterLocalStorage.set(any()) }
         // change remote storage
-        every { mCharacterRemoteStorage.get() } returns Single.fromCallable { Pair(CHARACTER, MOUNT_LIST) }
+        every { mCharacterRemoteStorage.get() } returns Single.just(Pair(CHARACTER, MOUNT_LIST))
         // reset time for reset cache life
         setCacheTrusted(false)
         // forth call
@@ -171,7 +170,7 @@ class CharacterRepositoryTest {
      * get existing mount from remote
      */
     @Test
-    fun getMountById1() {
+    fun getMountById_1() {
         mCharacterRepository
                 .getMountById(MOUNT_2.id)
                 .test()
@@ -191,7 +190,7 @@ class CharacterRepositoryTest {
      * get existing mount from cache
      */
     @Test
-    fun getMountById2() {
+    fun getMountById_2() {
         setCache(listOf(MOUNT_1, MOUNT_2))
         setCacheTrusted(true)
         mCharacterRepository
@@ -207,7 +206,7 @@ class CharacterRepositoryTest {
      * get NOT existing mount from cache
      */
     @Test
-    fun getMountById3() {
+    fun getMountById_3() {
         setCache(listOf(MOUNT_1, MOUNT_2))
         setCacheTrusted(true)
         mCharacterRepository
@@ -222,7 +221,7 @@ class CharacterRepositoryTest {
      * get NOT existing mount from cache and remote
      */
     @Test
-    fun getMountById4() {
+    fun getMountById_4() {
         setCache(listOf(MOUNT_1, MOUNT_2))
         setCacheTrusted(false)
         mCharacterRepository
@@ -241,10 +240,10 @@ class CharacterRepositoryTest {
      * but existing in remote
      */
     @Test
-    fun getMountById5() {
+    fun getMountById_5() {
         setCache(listOf(MOUNT_1, MOUNT_2))
         setCacheTrusted(false)
-        every { mCharacterRemoteStorage.get() } returns Single.fromCallable { Pair(CHARACTER, MOUNT_LIST) }
+        every { mCharacterRemoteStorage.get() } returns Single.just(Pair(CHARACTER, MOUNT_LIST))
         mCharacterRepository
                 .getMountById(MOUNT_4.id)
                 .test()
@@ -262,7 +261,7 @@ class CharacterRepositoryTest {
      * get existing mount from cache
      */
     @Test
-    fun getMountById6() {
+    fun getMountById_6() {
         setCache(MOUNT_LIST)
         setCacheTrusted(true)
         mCharacterRepository

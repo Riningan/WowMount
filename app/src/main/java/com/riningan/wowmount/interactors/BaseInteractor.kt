@@ -14,9 +14,6 @@ abstract class BaseInteractor constructor(private val mExecutorThread: Scheduler
     protected fun <T> Observable<T>.execution(): Observable<T> = this
             .subscribeOn(mExecutorThread)
             .observeOn(mPostExecutionThread, true)
-            .doOnError {
-                Logger.forThis(this@BaseInteractor).error(it)
-            }
 
     protected fun Completable.execution(): Completable = this
             .subscribeOn(mExecutorThread)
@@ -26,17 +23,20 @@ abstract class BaseInteractor constructor(private val mExecutorThread: Scheduler
             }
 
     protected fun <T> Observable<T>.errorCast(): Observable<T> = this
-            .onErrorReturn {
+            .onErrorResumeNext { it: Throwable ->
                 val throwable = if (it is CompositeException) {
                     it.exceptions[0]
                 } else {
                     it
                 }
-                throw when {
+                Logger.forThis(this@BaseInteractor).error(it)
+                Observable.error(when {
                     throwable is HttpException && throwable.code() == 401 -> WowMountExceptions.AuthorizedException()
                     throwable is IOException && DeviceUtil.isOnline() -> WowMountExceptions.IOException()
                     throwable is IOException -> WowMountExceptions.NoInternetException()
                     else -> WowMountExceptions.ApplicationException()
-                }
+                })
             }
 }
+
+
