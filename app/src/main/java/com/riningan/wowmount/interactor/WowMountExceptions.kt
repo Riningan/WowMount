@@ -1,4 +1,4 @@
-package com.riningan.wowmount.interactors
+package com.riningan.wowmount.interactor
 
 import com.riningan.wowmount.R
 import com.riningan.wowmount.app.WowMountApp

@@ -1,10 +1,22 @@
-package com.riningan.wowmount
+package com.riningan.wowmount.storage
 
+import com.riningan.wowmount.CHARACTER
+import com.riningan.wowmount.CHARACTER_RESPONSE
+import com.riningan.wowmount.MOUNT_1
+import com.riningan.wowmount.MOUNT_2
+import com.riningan.wowmount.MOUNT_3
+import com.riningan.wowmount.MOUNT_4
+import com.riningan.wowmount.MOUNT_RESPONSE_LIST
+import com.riningan.wowmount.NAME
+import com.riningan.wowmount.REALM
+import com.riningan.wowmount.REGION
+import com.riningan.wowmount.ROW_LIST
 import com.riningan.wowmount.data.network.BlizzardApi
 import com.riningan.wowmount.data.network.SpreadsheetApi
 import com.riningan.wowmount.data.network.model.MountsResponse
 import com.riningan.wowmount.data.preferences.LocalPreferences
 import com.riningan.wowmount.data.repository.storage.remote.CharacterRemoteStorage
+import com.riningan.wowmount.rule.LogRule
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.BeforeClass

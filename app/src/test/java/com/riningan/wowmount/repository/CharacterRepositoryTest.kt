@@ -1,9 +1,17 @@
-package com.riningan.wowmount
+package com.riningan.wowmount.repository
 
+import com.riningan.wowmount.CHARACTER
+import com.riningan.wowmount.MOUNT_1
+import com.riningan.wowmount.MOUNT_2
+import com.riningan.wowmount.MOUNT_3
+import com.riningan.wowmount.MOUNT_4
+import com.riningan.wowmount.MOUNT_LIST
 import com.riningan.wowmount.data.repository.CharacterRepository
 import com.riningan.wowmount.data.repository.model.Mount
 import com.riningan.wowmount.data.repository.storage.local.CharacterLocalStorage
 import com.riningan.wowmount.data.repository.storage.remote.CharacterRemoteStorage
+import com.riningan.wowmount.rule.LogRule
+import com.riningan.wowmount.setPrivateField
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -14,10 +22,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.util.*
-import kotlin.reflect.KMutableProperty1
-import kotlin.reflect.full.declaredMembers
 import kotlin.reflect.full.superclasses
-import kotlin.reflect.jvm.isAccessible
 
 /**
  * using MockK because
@@ -276,20 +281,16 @@ class CharacterRepositoryTest {
      * reset time for reset cache trust
      */
     private fun setCacheTrusted(trust: Boolean) {
-        setPrivateField("mLastUpdateTime", Date(if (trust) Long.MAX_VALUE else 1))
+        setPrivateField(CharacterRepository::class.superclasses[0],
+                "mLastUpdateTime",
+                mCharacterRepository,
+                Date(if (trust) Long.MAX_VALUE else 1))
     }
 
     private fun setCache(mounts: List<Mount>) {
-        setPrivateField("mCache", Pair(CHARACTER, mounts))
-    }
-
-    private fun <T> setPrivateField(fieldName: String, value: T) {
-        CharacterRepository::class.superclasses[0].declaredMembers.find {
-            it.name == fieldName
-        }?.let {
-            it.isAccessible = true
-            (it as KMutableProperty1<CharacterRepository, T>).set(mCharacterRepository, value)
-            it.isAccessible = false
-        }
+        setPrivateField(CharacterRepository::class.superclasses[0],
+                "mCache",
+                mCharacterRepository,
+                Pair(CHARACTER, mounts))
     }
 }

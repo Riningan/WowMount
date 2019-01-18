@@ -1,10 +1,13 @@
-package com.riningan.wowmount
+package com.riningan.wowmount.interactor
 
 import com.riningan.util.Log
 import com.riningan.util.Logger
+import com.riningan.wowmount.CHARACTER
+import com.riningan.wowmount.MOUNT_1
+import com.riningan.wowmount.MOUNT_2
+import com.riningan.wowmount.MOUNT_LIST
 import com.riningan.wowmount.data.repository.CharacterRepository
-import com.riningan.wowmount.interactors.CharacterInteractor
-import com.riningan.wowmount.interactors.WowMountExceptions
+import com.riningan.wowmount.rule.LogRule
 import com.riningan.wowmount.utils.DeviceUtil
 import io.mockk.every
 import io.mockk.mockk

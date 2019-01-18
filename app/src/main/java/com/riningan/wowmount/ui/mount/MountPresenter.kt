@@ -5,8 +5,8 @@ import com.riningan.frarg.annotations.Argument
 import com.riningan.frarg.annotations.ArgumentedFragment
 import com.riningan.frarg.processor.SplashFragmentArgs
 import com.riningan.util.Logger
-import com.riningan.wowmount.interactors.CharacterInteractor
-import com.riningan.wowmount.interactors.WowMountExceptions
+import com.riningan.wowmount.interactor.CharacterInteractor
+import com.riningan.wowmount.interactor.WowMountExceptions
 import com.riningan.wowmount.ui.base.BasePresenter
 import com.riningan.wowmount.ui.splash.SplashFragment
 import org.kodein.di.Kodein

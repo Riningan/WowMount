@@ -1,4 +1,4 @@
-package com.riningan.wowmount.interactors
+package com.riningan.wowmount.interactor
 
 import com.riningan.wowmount.data.repository.CharacterRepository
 import com.riningan.wowmount.data.repository.model.Character

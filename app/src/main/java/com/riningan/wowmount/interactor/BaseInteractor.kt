@@ -1,4 +1,4 @@
-package com.riningan.wowmount.interactors
+package com.riningan.wowmount.interactor
 
 import com.riningan.util.Logger
 import com.riningan.wowmount.utils.DeviceUtil

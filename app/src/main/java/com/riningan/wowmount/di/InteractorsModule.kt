@@ -1,6 +1,6 @@
 package com.riningan.wowmount.di
 
-import com.riningan.wowmount.interactors.CharacterInteractor
+import com.riningan.wowmount.interactor.CharacterInteractor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.kodein.di.Kodein

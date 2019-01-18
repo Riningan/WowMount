@@ -1,4 +1,4 @@
-package com.riningan.wowmount
+package com.riningan.wowmount.rule
 
 import org.junit.rules.TestRule
 import org.junit.runner.Description
