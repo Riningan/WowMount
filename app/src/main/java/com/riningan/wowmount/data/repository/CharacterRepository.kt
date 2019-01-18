@@ -4,6 +4,7 @@ import com.riningan.wowmount.data.repository.model.Character
 import com.riningan.wowmount.data.repository.model.Mount
 import com.riningan.wowmount.data.repository.storage.local.CharacterLocalStorage
 import com.riningan.wowmount.data.repository.storage.remote.CharacterRemoteStorage
+import com.riningan.wowmount.utils.Container
 import io.reactivex.Flowable
 
 
@@ -18,9 +19,17 @@ class CharacterRepository(localStorage: CharacterLocalStorage,
     }
 
 
-    fun getMountById(mountId: String): Flowable<Mount> = get()
-            .map { (_, mounts) ->
-                mounts.find { it.id == mountId }
-                        ?: throw NullPointerException("No mount with id = $mountId")
-            }
+    fun getMountById(mountId: String): Flowable<Mount> {
+        var onNextCount = 0
+        return get()
+                .map { (_, mounts) -> Container(mounts.find { it.id == mountId }) }
+                .filter { it.value != null }
+                .map { it.value!! }
+                .doOnNext { onNextCount++ }
+                .doOnComplete {
+                    if (onNextCount == 0) {
+                        throw NullPointerException("No mount with id = $mountId")
+                    }
+                }
+    }
 }

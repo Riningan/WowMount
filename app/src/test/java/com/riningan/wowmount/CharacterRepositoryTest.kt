@@ -1,6 +1,7 @@
 package com.riningan.wowmount
 
 import com.riningan.wowmount.data.repository.CharacterRepository
+import com.riningan.wowmount.data.repository.model.Mount
 import com.riningan.wowmount.data.repository.storage.local.CharacterLocalStorage
 import com.riningan.wowmount.data.repository.storage.remote.CharacterRemoteStorage
 import io.mockk.every
@@ -104,7 +105,7 @@ class CharacterRepositoryTest {
         verify(exactly = 1) { mCharacterRemoteStorage.get() }
         verify(exactly = 1) { mCharacterLocalStorage.set(any()) }
         // reset time for reset cache life
-        resetCache()
+        setCacheTrusted(false)
         // third call
         // read from memory cache
         // read from remote storage (NOT changed)
@@ -126,7 +127,7 @@ class CharacterRepositoryTest {
         // change remote storage
         every { mCharacterRemoteStorage.get() } returns Single.fromCallable { Pair(CHARACTER, MOUNT_LIST) }
         // reset time for reset cache life
-        resetCache()
+        setCacheTrusted(false)
         // forth call
         // read from memory cache
         // read from remote storage
@@ -163,56 +164,132 @@ class CharacterRepositoryTest {
         verify(exactly = 1) { mCharacterLocalStorage.clear() }
     }
 
+    /**
+     * first call
+     * no cache
+     * get existing mount from local
+     * get existing mount from remote
+     */
     @Test
-    fun getMountById() {
-        // first call
-        // get existing mount from local
-        // get existing mount from remote
+    fun getMountById1() {
         mCharacterRepository
                 .getMountById(MOUNT_2.id)
                 .test()
                 .assertValueCount(2)
-                .assertValueAt(0) {it.toString() == MOUNT_2.toString()}
-                .assertValueAt(1) {it.toString() == MOUNT_2.toString()}
-        // second call
-        // get existing mount from local
+                .assertValueAt(0) { it.toString() == MOUNT_2.toString() }
+                .assertValueAt(1) { it.toString() == MOUNT_2.toString() }
+        verifySequence {
+            mCharacterLocalStorage.get()
+            mCharacterRemoteStorage.get()
+            mCharacterLocalStorage.set(any())
+        }
+    }
+
+    /**
+     * second call
+     * cache is trusted
+     * get existing mount from cache
+     */
+    @Test
+    fun getMountById2() {
+        setCache(listOf(MOUNT_1, MOUNT_2))
+        setCacheTrusted(true)
         mCharacterRepository
                 .getMountById(MOUNT_2.id)
                 .test()
                 .assertValueCount(1)
-                .assertValueAt(0) {it.toString() == MOUNT_2.toString()}
-        // third call
-        // get NOT existing mount
-        mCharacterRepository
-                .getMountById(MOUNT_4.id)
-                .test()
-                .assertFailure(NullPointerException::class.java)
-        // forth call
-        // get existing mount after cache dirty
-        resetCache()
-        mCharacterRepository
-                .getMountById(MOUNT_2.id)
-                .test()
-                .assertValueCount(1)
-                .assertValueAt(0) {it.toString() == MOUNT_2.toString()}
-        // fifth call
-        // get NOT existing mount after cache dirty
-        resetCache()
-        every { mCharacterRemoteStorage.get() } returns Single.fromCallable { Pair(CHARACTER, MOUNT_LIST) }
+                .assertValueAt(0) { it.toString() == MOUNT_2.toString() }
+    }
+
+    /**
+     * third call
+     * cache is trusted
+     * get NOT existing mount from cache
+     */
+    @Test
+    fun getMountById3() {
+        setCache(listOf(MOUNT_1, MOUNT_2))
+        setCacheTrusted(true)
         mCharacterRepository
                 .getMountById(MOUNT_4.id)
                 .test()
                 .assertFailure(NullPointerException::class.java)
     }
 
+    /**
+     * forth call
+     * cache is NOT trusted
+     * get NOT existing mount from cache and remote
+     */
+    @Test
+    fun getMountById4() {
+        setCache(listOf(MOUNT_1, MOUNT_2))
+        setCacheTrusted(false)
+        mCharacterRepository
+                .getMountById(MOUNT_4.id)
+                .test()
+                .assertFailure(NullPointerException::class.java)
+        verifySequence {
+            mCharacterRemoteStorage.get()
+        }
+    }
 
-    private fun resetCache() {
-        // reset time for reset cache life
+    /**
+     * fifth call
+     * cache is NOT trusted
+     * get NOT existing mount from cache
+     * but existing in remote
+     */
+    @Test
+    fun getMountById5() {
+        setCache(listOf(MOUNT_1, MOUNT_2))
+        setCacheTrusted(false)
+        every { mCharacterRemoteStorage.get() } returns Single.fromCallable { Pair(CHARACTER, MOUNT_LIST) }
+        mCharacterRepository
+                .getMountById(MOUNT_4.id)
+                .test()
+                .assertValueCount(1)
+                .assertValue { it.toString() == MOUNT_4.toString() }
+        verifySequence {
+            mCharacterRemoteStorage.get()
+            mCharacterLocalStorage.set(any())
+        }
+    }
+
+    /**
+     * sixth call
+     * cache is trusted
+     * get existing mount from cache
+     */
+    @Test
+    fun getMountById6() {
+        setCache(MOUNT_LIST)
+        setCacheTrusted(true)
+        mCharacterRepository
+                .getMountById(MOUNT_4.id)
+                .test()
+                .assertValueCount(1)
+                .assertValue { it.toString() == MOUNT_4.toString() }
+    }
+
+
+    /**
+     * reset time for reset cache trust
+     */
+    private fun setCacheTrusted(trust: Boolean) {
+        setPrivateField("mLastUpdateTime", Date(if (trust) Long.MAX_VALUE else 1))
+    }
+
+    private fun setCache(mounts: List<Mount>) {
+        setPrivateField("mCache", Pair(CHARACTER, mounts))
+    }
+
+    private fun <T> setPrivateField(fieldName: String, value: T) {
         CharacterRepository::class.superclasses[0].declaredMembers.find {
-            it.name == "mLastUpdateTime"
+            it.name == fieldName
         }?.let {
             it.isAccessible = true
-            (it as KMutableProperty1<CharacterRepository, Date>).set(mCharacterRepository, Date(1))
+            (it as KMutableProperty1<CharacterRepository, T>).set(mCharacterRepository, value)
             it.isAccessible = false
         }
     }

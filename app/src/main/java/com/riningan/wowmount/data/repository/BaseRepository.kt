@@ -25,18 +25,11 @@ abstract class BaseRepository<T>(private val mLocalStorage: BaseLocalStorage<T>,
             }
             .flatMap { mLocalStorage.set(it).toSingle { it } }
 
-    fun get(): Flowable<T> {
-        val local = if (mCache == null) {
-            mLocalStorage.get().doOnSuccess { mCache = it }
-        } else {
-            Single.just(mCache!!)
-        }.toFlowable()
-        return if (cacheIsDirty()) {
-            Flowable.mergeDelayError(local, update().toFlowable())
-                    .distinct { calculateHashCode(it) }
-        } else {
-            local
-        }
+    fun get(): Flowable<T> = if (!isCacheTrusted()) {
+        Flowable.mergeDelayError(getCache().toFlowable(), update().toFlowable())
+                .distinct { calculateHashCode(it) }
+    } else {
+        getCache().toFlowable()
     }
 
     fun clear(): Completable = mLocalStorage
@@ -50,5 +43,11 @@ abstract class BaseRepository<T>(private val mLocalStorage: BaseLocalStorage<T>,
     protected abstract fun calculateHashCode(t: T): Any
 
 
-    private fun cacheIsDirty() = Date().time - mLastUpdateTime.time > updateIntervalInSeconds * 1000
+    private fun isCacheTrusted() = Date().time - mLastUpdateTime.time <= updateIntervalInSeconds * 1000
+
+    private fun getCache(): Single<T> = if (mCache == null) {
+        mLocalStorage.get().doOnSuccess { mCache = it }
+    } else {
+        Single.just(mCache!!)
+    }
 }
