@@ -27,11 +27,11 @@ class SplashPresenterTest {
     @get: Rule
     val mLogRule = LogRule()
     @get: Rule
+    val mLoggerRule = LoggerRule()
+    @get: Rule
     val mRxRule = RxRule()
     @get: Rule
     val mKodeinRule = KodeinRule()
-    @get: Rule
-    val mLoggerRule = LoggerRule()
     @get: Rule
     val mWowMountExceptionsRule = WowMountExceptionsRule()
 
