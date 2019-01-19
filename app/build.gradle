@@ -116,7 +116,7 @@ dependencies {
     // custom viewpager
     implementation "com.riningan.widget:extendedviewpager:1.1"
     // logger
-    implementation "com.riningan.util:logger:1.0"
+    implementation "com.riningan.util:logger:1.1"
     // tests
     testImplementation "junit:junit:4.12"
     testImplementation "org.mockito:mockito-core:$mockito_version"

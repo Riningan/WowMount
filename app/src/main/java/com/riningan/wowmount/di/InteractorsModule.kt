@@ -10,5 +10,5 @@ import org.kodein.di.generic.singleton
 
 
 val interactorsModule = Kodein.Module(name = "Interactors") {
-    bind<CharacterInteractor>() with singleton { CharacterInteractor(Schedulers.io(), AndroidSchedulers.mainThread(), instance()) }
+    bind<CharacterInteractor>() with singleton { CharacterInteractor(instance(), instance()) }
 }

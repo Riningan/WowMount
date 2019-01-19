@@ -9,6 +9,7 @@ import com.riningan.wowmount.MOUNT_LIST
 import com.riningan.wowmount.data.repository.CharacterRepository
 import com.riningan.wowmount.rule.LogRule
 import com.riningan.wowmount.utils.DeviceUtil
+import com.riningan.wowmount.utils.SchedulersProvider
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -51,8 +52,10 @@ class CharacterInteractorTest {
         } returns "mocked"
 
         mCharacterRepository = mockk()
-        val testScheduler = Schedulers.trampoline()
-        mCharacterInteractor = CharacterInteractor(testScheduler, testScheduler, mCharacterRepository)
+        val schedulersProvider: SchedulersProvider = mockk()
+        every { schedulersProvider.executorThread() } returns Schedulers.trampoline()
+        every { schedulersProvider.postExecutionThread() } returns Schedulers.trampoline()
+        mCharacterInteractor = CharacterInteractor(schedulersProvider, mCharacterRepository)
     }
 
 

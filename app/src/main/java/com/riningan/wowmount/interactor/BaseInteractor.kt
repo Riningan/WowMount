@@ -2,22 +2,22 @@ package com.riningan.wowmount.interactor
 
 import com.riningan.util.Logger
 import com.riningan.wowmount.utils.DeviceUtil
+import com.riningan.wowmount.utils.SchedulersProvider
 import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 import io.reactivex.exceptions.CompositeException
 import retrofit2.HttpException
 import java.io.IOException
 
 
-abstract class BaseInteractor constructor(private val mExecutorThread: Scheduler, private val mPostExecutionThread: Scheduler) {
+abstract class BaseInteractor(private val mSchedulersProvider: SchedulersProvider) {
     protected fun <T> Observable<T>.execution(): Observable<T> = this
-            .subscribeOn(mExecutorThread)
-            .observeOn(mPostExecutionThread, true)
+            .subscribeOn(mSchedulersProvider.executorThread())
+            .observeOn(mSchedulersProvider.postExecutionThread(), true)
 
     protected fun Completable.execution(): Completable = this
-            .subscribeOn(mExecutorThread)
-            .observeOn(mPostExecutionThread)
+            .subscribeOn(mSchedulersProvider.executorThread())
+            .observeOn(mSchedulersProvider.postExecutionThread())
             .doOnError {
                 Logger.forThis(this@BaseInteractor).error(it)
             }
