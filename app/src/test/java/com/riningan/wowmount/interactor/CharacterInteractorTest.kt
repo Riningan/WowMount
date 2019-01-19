@@ -1,19 +1,18 @@
 package com.riningan.wowmount.interactor
 
-import com.riningan.util.Log
-import com.riningan.util.Logger
 import com.riningan.wowmount.CHARACTER
 import com.riningan.wowmount.MOUNT_1
 import com.riningan.wowmount.MOUNT_2
 import com.riningan.wowmount.MOUNT_LIST
 import com.riningan.wowmount.data.repository.CharacterRepository
 import com.riningan.wowmount.rule.LogRule
+import com.riningan.wowmount.rule.LoggerRule
+import com.riningan.wowmount.rule.WowMountExceptionsRule
 import com.riningan.wowmount.utils.DeviceUtil
 import com.riningan.wowmount.utils.SchedulersProvider
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
-import io.mockk.mockkStatic
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -22,35 +21,22 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.io.IOException
-import kotlin.reflect.full.functions
-import kotlin.reflect.jvm.isAccessible
 
-/**
- * using MockK because WowMountExceptions has Companion that need mock
- */
+
 class CharacterInteractorTest {
     @get: Rule
     val mLogRule = LogRule()
+    @get: Rule
+    val mLoggerRule = LoggerRule()
+    @get: Rule
+    val mWowMountExceptionsRule = WowMountExceptionsRule()
+
     private lateinit var mCharacterRepository: CharacterRepository
     private lateinit var mCharacterInteractor: CharacterInteractor
 
 
     @Before
     fun setup() {
-        // Mock Logger.class
-        val log: Log = mockk(relaxed = true)
-        mockkStatic(Logger::class)
-        every { Logger.forThis(any()) } returns log
-        // Mock WowMountExceptions.class
-        mockkObject(WowMountExceptions)
-        every {
-            WowMountExceptions.Companion::class.functions.find {
-                it.name == "getApplicationMessage"
-            }!!.apply {
-                isAccessible = true
-            }.call(WowMountExceptions, any<WowMountExceptions>())
-        } returns "mocked"
-
         mCharacterRepository = mockk()
         val schedulersProvider: SchedulersProvider = mockk()
         every { schedulersProvider.executorThread() } returns Schedulers.trampoline()
