@@ -37,10 +37,8 @@ class AboutPresenterTest {
     fun onBackClick() {
         mAboutPresenter.onBackClick()
 
-        with(mKodeinRule) {
-            verifySequence {
-                router.exit()
-            }
+        verifySequence {
+            mKodeinRule.router.exit()
         }
     }
 }

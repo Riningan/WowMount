@@ -94,6 +94,8 @@ class MountsPresenter constructor(private val mRouter: Router,
         Logger.debug()
         mCharacterInteractor
                 .update()
+                .map { pair -> if (mShowAll) pair else Pair(pair.first, pair.second.filter { it.isCollected }) }
+                .map { (character, mounts) -> Pair(character, mounts.sortedWith(compareBy(Mount::name))) }
                 .subscribe({ (character, mounts) ->
                     setData(character, mounts)
                 }, {

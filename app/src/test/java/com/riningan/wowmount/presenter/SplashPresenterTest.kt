@@ -9,6 +9,9 @@ import com.riningan.wowmount.rule.LoggerRule
 import com.riningan.wowmount.rule.RxRule
 import com.riningan.wowmount.rule.WowMountExceptionsRule
 import com.riningan.wowmount.setPrivateField
+import com.riningan.wowmount.ui.authorization.AuthorizationFragment
+import com.riningan.wowmount.ui.mounts.MountsFragment
+import com.riningan.wowmount.ui.splash.SplashFragment
 import com.riningan.wowmount.ui.splash.SplashPresenter
 import com.riningan.wowmount.ui.splash.SplashView
 import io.mockk.every
@@ -47,7 +50,7 @@ class SplashPresenterTest {
 
 
     /**
-     * not activated
+     * Not activated
      */
     @Test
     fun onStart_1() {
@@ -62,14 +65,14 @@ class SplashPresenterTest {
         with(mKodeinRule) {
             verifySequence {
                 localPreferences.isActivated
-                router.navigateTo(any())
+                router.navigateTo(AuthorizationFragment::class.java.canonicalName)
             }
         }
     }
 
     /**
-     * activated
-     * success data
+     * Activated
+     * Success data
      */
     @Test
     fun onStart_2() {
@@ -87,14 +90,14 @@ class SplashPresenterTest {
                 localPreferences.isActivated
                 characterInteractor.update()
                 localPreferences.showAll
-                router.newRootScreen(any(), any())
+                router.newRootScreen(MountsFragment::class.java.canonicalName, any())
             }
         }
     }
 
     /**
-     * activated
-     * fail data
+     * Activated
+     * Fail data
      */
     @Test
     fun onStart_3() {
@@ -106,17 +109,15 @@ class SplashPresenterTest {
 
         (mKodeinRule.schedulersProvider.executorThread() as TestScheduler).triggerActions()
 
-        with(mKodeinRule) {
-            verifySequence {
-                localPreferences.isActivated
-                characterInteractor.update()
-                mViewState.showErrorDialog(any())
-            }
+        verifySequence {
+            mKodeinRule.localPreferences.isActivated
+            mKodeinRule.characterInteractor.update()
+            mViewState.showErrorDialog(any())
         }
     }
 
     /**
-     * activated
+     * Activated
      * AuthorizedException
      */
     @Test
@@ -139,13 +140,13 @@ class SplashPresenterTest {
 //                mSplashPresenter["logout"]()
                 characterInteractor.clear()
                 localPreferences.clear()
-                router.newRootScreen(any())
+                router.newRootScreen(SplashFragment::class.java.canonicalName)
             }
         }
     }
 
     /**
-     * mClear
+     * mClear == true
      */
     @Test
     fun onStart_5() {
@@ -162,7 +163,7 @@ class SplashPresenterTest {
                 //                mSplashPresenter["logout"]()
                 characterInteractor.clear()
                 localPreferences.clear()
-                router.newRootScreen(any())
+                router.newRootScreen(SplashFragment::class.java.canonicalName)
             }
         }
     }

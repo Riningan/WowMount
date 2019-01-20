@@ -62,7 +62,7 @@ class SplashPresenter constructor(kodein: Kodein) : BasePresenter<SplashView>() 
                 .clear()
                 .subscribe({
                     mLocalPreferences.clear()
-                    mRouter.newRootScreen(AuthorizationFragment::class.java.canonicalName)
+                    mRouter.newRootScreen(SplashFragment::class.java.canonicalName)
                 }, {
                     logout()
                 })
