@@ -10,7 +10,7 @@ import kotlin.reflect.full.functions
 import kotlin.reflect.jvm.isAccessible
 
 
-class WowMountExceptionsRule : TestRule {
+class WowMountExceptionsMockRule : TestRule {
     override fun apply(base: Statement, description: Description?) = object : Statement() {
         override fun evaluate() {
             mockkObject(WowMountExceptions)

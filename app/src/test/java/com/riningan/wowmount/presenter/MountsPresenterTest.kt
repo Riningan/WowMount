@@ -7,11 +7,11 @@ import com.riningan.wowmount.MOUNT_3
 import com.riningan.wowmount.MOUNT_4
 import com.riningan.wowmount.MOUNT_LIST
 import com.riningan.wowmount.interactor.WowMountExceptions
-import com.riningan.wowmount.rule.KodeinRule
+import com.riningan.wowmount.rule.KodeinMockRule
 import com.riningan.wowmount.rule.LogRule
-import com.riningan.wowmount.rule.LoggerRule
+import com.riningan.wowmount.rule.LoggerDisableRule
 import com.riningan.wowmount.rule.RxRule
-import com.riningan.wowmount.rule.WowMountExceptionsRule
+import com.riningan.wowmount.rule.WowMountExceptionsMockRule
 import com.riningan.wowmount.ui.about.AboutFragment
 import com.riningan.wowmount.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.ui.filter.FilterFragment
@@ -34,13 +34,13 @@ class MountsPresenterTest {
     @get: Rule
     val mLogRule = LogRule()
     @get: Rule
-    val mLoggerRule = LoggerRule()
+    val mLoggerRule = LoggerDisableRule()
     @get: Rule
-    val mKodeinRule = KodeinRule()
+    val mKodeinRule = KodeinMockRule()
     @get: Rule
     val mRxRule = RxRule()
     @get: Rule
-    val mWowMountExceptionsRule = WowMountExceptionsRule()
+    val mWowMountExceptionsRule = WowMountExceptionsMockRule()
 
     private val mViewState: MountsView = mockk(relaxed = true)
     private lateinit var mMountsPresenter: MountsPresenter

@@ -16,7 +16,7 @@ import org.kodein.di.generic.provider
 import ru.terrakok.cicerone.Router
 
 
-class KodeinRule : TestRule {
+class KodeinMockRule : TestRule {
     val characterInteractor: CharacterInteractor = mockk()
     val router: Router = mockk(relaxed = true)
     val localPreferences: LocalPreferences = mockk()

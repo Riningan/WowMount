@@ -6,7 +6,7 @@ import org.junit.runner.Description
 import org.junit.runners.model.Statement
 
 
-class LoggerRule : TestRule {
+class LoggerDisableRule : TestRule {
     override fun apply(base: Statement, description: Description?) = object : Statement() {
         override fun evaluate() {
             Logger.Config.setEnabled(false)

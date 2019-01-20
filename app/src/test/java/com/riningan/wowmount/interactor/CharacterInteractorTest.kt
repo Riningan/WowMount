@@ -6,8 +6,8 @@ import com.riningan.wowmount.MOUNT_2
 import com.riningan.wowmount.MOUNT_LIST
 import com.riningan.wowmount.data.repository.CharacterRepository
 import com.riningan.wowmount.rule.LogRule
-import com.riningan.wowmount.rule.LoggerRule
-import com.riningan.wowmount.rule.WowMountExceptionsRule
+import com.riningan.wowmount.rule.LoggerDisableRule
+import com.riningan.wowmount.rule.WowMountExceptionsMockRule
 import com.riningan.wowmount.utils.DeviceUtil
 import com.riningan.wowmount.utils.SchedulersProvider
 import io.mockk.every
@@ -27,9 +27,9 @@ class CharacterInteractorTest {
     @get: Rule
     val mLogRule = LogRule()
     @get: Rule
-    val mLoggerRule = LoggerRule()
+    val mLoggerRule = LoggerDisableRule()
     @get: Rule
-    val mWowMountExceptionsRule = WowMountExceptionsRule()
+    val mWowMountExceptionsRule = WowMountExceptionsMockRule()
 
     private lateinit var mCharacterRepository: CharacterRepository
     private lateinit var mCharacterInteractor: CharacterInteractor

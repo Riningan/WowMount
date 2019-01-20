@@ -1,8 +1,8 @@
 package com.riningan.wowmount.presenter
 
-import com.riningan.wowmount.rule.KodeinRule
+import com.riningan.wowmount.rule.KodeinMockRule
 import com.riningan.wowmount.rule.LogRule
-import com.riningan.wowmount.rule.LoggerRule
+import com.riningan.wowmount.rule.LoggerDisableRule
 import com.riningan.wowmount.ui.about.AboutPresenter
 import com.riningan.wowmount.ui.about.AboutView
 import io.mockk.every
@@ -18,9 +18,9 @@ class AboutPresenterTest {
     @get: Rule
     val mLogRule = LogRule()
     @get: Rule
-    val mLoggerRule = LoggerRule()
+    val mLoggerRule = LoggerDisableRule()
     @get: Rule
-    val mKodeinRule = KodeinRule()
+    val mKodeinRule = KodeinMockRule()
 
     private val mViewState: AboutView = mockk(relaxed = true)
     private lateinit var mAboutPresenter: AboutPresenter
