@@ -10,7 +10,7 @@ import io.realm.Realm
 import io.realm.RealmQuery
 import io.realm.RealmResults
 import io.realm.log.RealmLog
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.CoreMatchers.`is`
 import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Rule
@@ -86,14 +86,17 @@ class CharacterLocalStorageTest {
     @Test
     fun get() {
         // Create a mock RealmQuery
+        @Suppress("UNCHECKED_CAST")
         val characterQuery = PowerMockito.mock(RealmQuery::class.java) as RealmQuery<CharacterEntity>
         PowerMockito.`when`(characterQuery.findFirst()).thenReturn(CHARACTER_ENTITY)
         PowerMockito.`when`(mRealm.where(CharacterEntity::class.java)).thenReturn(characterQuery)
+        @Suppress("UNCHECKED_CAST")
         val mountsResult = PowerMockito.mock(RealmResults::class.java) as RealmResults<MountEntity>
         PowerMockito.`when`(mountsResult.iterator()).thenReturn(MOUNT_ENTITY_LIST.toMutableList().iterator())
         PowerMockito.`when`(mountsResult.size).thenReturn(MOUNT_ENTITY_LIST.size)
         // mock toList()
         PowerMockito.`when`(mountsResult.toArray()).thenReturn(MOUNT_ENTITY_LIST.toTypedArray())
+        @Suppress("UNCHECKED_CAST")
         val mountsQuery = PowerMockito.mock(RealmQuery::class.java) as RealmQuery<MountEntity>
         PowerMockito.`when`(mountsQuery.findAll()).thenReturn(mountsResult)
         PowerMockito.`when`(mRealm.where(MountEntity::class.java)).thenReturn(mountsQuery)
