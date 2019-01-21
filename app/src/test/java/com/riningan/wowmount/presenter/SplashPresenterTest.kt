@@ -28,7 +28,7 @@ class SplashPresenterTest {
     @get: Rule
     val mLoggerRule = LoggerDisableRule()
     @get: Rule
-    val mRxRule = RxRule()
+    val mRxRule = RxSchedulersRule()
     @get: Rule
     val mKodeinRule = KodeinMockRule()
     @get: Rule

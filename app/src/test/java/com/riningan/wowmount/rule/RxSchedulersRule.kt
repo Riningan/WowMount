@@ -8,7 +8,7 @@ import org.junit.runner.Description
 import org.junit.runners.model.Statement
 
 
-class RxRule : TestRule {
+class RxSchedulersRule : TestRule {
     override fun apply(base: Statement, description: Description?) = object : Statement() {
         override fun evaluate() {
             RxJavaPlugins.setComputationSchedulerHandler { Schedulers.trampoline() }
