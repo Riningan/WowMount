@@ -1,14 +1,6 @@
 package com.riningan.wowmount.storage
 
-import com.riningan.wowmount.CHARACTER
-import com.riningan.wowmount.CHARACTER_ENTITY
-import com.riningan.wowmount.MOUNT_1
-import com.riningan.wowmount.MOUNT_2
-import com.riningan.wowmount.MOUNT_3
-import com.riningan.wowmount.MOUNT_4
-import com.riningan.wowmount.MOUNT_ENTITY_1
-import com.riningan.wowmount.MOUNT_ENTITY_LIST
-import com.riningan.wowmount.MOUNT_LIST
+import com.riningan.wowmount.*
 import com.riningan.wowmount.data.db.model.CharacterEntity
 import com.riningan.wowmount.data.db.model.MountEntity
 import com.riningan.wowmount.data.repository.storage.local.CharacterLocalStorage

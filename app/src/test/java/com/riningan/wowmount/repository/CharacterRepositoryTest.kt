@@ -1,17 +1,11 @@
 package com.riningan.wowmount.repository
 
-import com.riningan.wowmount.CHARACTER
-import com.riningan.wowmount.MOUNT_1
-import com.riningan.wowmount.MOUNT_2
-import com.riningan.wowmount.MOUNT_3
-import com.riningan.wowmount.MOUNT_4
-import com.riningan.wowmount.MOUNT_LIST
+import com.riningan.wowmount.*
 import com.riningan.wowmount.data.repository.CharacterRepository
 import com.riningan.wowmount.data.repository.model.Mount
 import com.riningan.wowmount.data.repository.storage.local.CharacterLocalStorage
 import com.riningan.wowmount.data.repository.storage.remote.CharacterRemoteStorage
 import com.riningan.wowmount.rule.LogRule
-import com.riningan.wowmount.setPrivateField
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -169,10 +163,9 @@ class CharacterRepositoryTest {
     }
 
     /**
-     * first call
-     * no cache
-     * get existing mount from local
-     * get existing mount from remote
+     * No cache
+     * Get existing mount from local
+     * Get existing mount from remote
      */
     @Test
     fun getMountById_1() {
@@ -190,9 +183,8 @@ class CharacterRepositoryTest {
     }
 
     /**
-     * second call
-     * cache is trusted
-     * get existing mount from cache
+     * Cache is trusted
+     * Get existing mount from cache
      */
     @Test
     fun getMountById_2() {
@@ -206,9 +198,8 @@ class CharacterRepositoryTest {
     }
 
     /**
-     * third call
-     * cache is trusted
-     * get NOT existing mount from cache
+     * Cache is trusted
+     * Get NOT existing mount from cache
      */
     @Test
     fun getMountById_3() {
@@ -221,9 +212,8 @@ class CharacterRepositoryTest {
     }
 
     /**
-     * forth call
-     * cache is NOT trusted
-     * get NOT existing mount from cache and remote
+     * Cache is NOT trusted
+     * Get NOT existing mount from cache and remote
      */
     @Test
     fun getMountById_4() {
@@ -239,10 +229,9 @@ class CharacterRepositoryTest {
     }
 
     /**
-     * fifth call
-     * cache is NOT trusted
-     * get NOT existing mount from cache
-     * but existing in remote
+     * Cache is NOT trusted
+     * Get NOT existing mount from cache
+     * But existing in remote
      */
     @Test
     fun getMountById_5() {
@@ -261,9 +250,8 @@ class CharacterRepositoryTest {
     }
 
     /**
-     * sixth call
-     * cache is trusted
-     * get existing mount from cache
+     * Cache is trusted
+     * Get existing mount from cache
      */
     @Test
     fun getMountById_6() {
@@ -278,7 +266,7 @@ class CharacterRepositoryTest {
 
 
     /**
-     * reset time for reset cache trust
+     * Reset time for reset cache trust
      */
     private fun setCacheTrusted(trust: Boolean) {
         setPrivateField(CharacterRepository::class.superclasses[0],

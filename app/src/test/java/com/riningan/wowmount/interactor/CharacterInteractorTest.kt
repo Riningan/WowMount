@@ -46,7 +46,7 @@ class CharacterInteractorTest {
 
 
     /**
-     * normal values
+     * Normal values
      */
     @Test
     fun update_1() {
@@ -59,7 +59,7 @@ class CharacterInteractorTest {
     }
 
     /**
-     * null character
+     * Null character
      */
     @Test
     fun update_2() {

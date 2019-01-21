@@ -3,11 +3,7 @@ package com.riningan.wowmount.presenter
 import com.riningan.wowmount.CHARACTER
 import com.riningan.wowmount.MOUNT_LIST
 import com.riningan.wowmount.interactor.WowMountExceptions
-import com.riningan.wowmount.rule.KodeinMockRule
-import com.riningan.wowmount.rule.LogRule
-import com.riningan.wowmount.rule.LoggerDisableRule
-import com.riningan.wowmount.rule.RxRule
-import com.riningan.wowmount.rule.WowMountExceptionsMockRule
+import com.riningan.wowmount.rule.*
 import com.riningan.wowmount.setPrivateField
 import com.riningan.wowmount.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.ui.mounts.MountsFragment

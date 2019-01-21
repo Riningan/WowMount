@@ -1,10 +1,6 @@
 package com.riningan.wowmount.presenter
 
-import com.riningan.wowmount.CHARACTER
-import com.riningan.wowmount.MOUNT_LIST
-import com.riningan.wowmount.NAME
-import com.riningan.wowmount.REALM
-import com.riningan.wowmount.REGION
+import com.riningan.wowmount.*
 import com.riningan.wowmount.interactor.WowMountExceptions
 import com.riningan.wowmount.rule.KodeinMockRule
 import com.riningan.wowmount.rule.LogRule
