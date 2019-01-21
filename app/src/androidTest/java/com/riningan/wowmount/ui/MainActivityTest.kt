@@ -1,59 +1,74 @@
 package com.riningan.wowmount.ui
 
-
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.action.ViewActions.click
-import android.support.test.espresso.matcher.ViewMatchers.*
-import android.support.test.filters.LargeTest
+import android.content.Intent
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import android.view.View
-import android.view.ViewGroup
-import com.riningan.wowmount.R
-import org.hamcrest.Description
-import org.hamcrest.Matcher
-import org.hamcrest.Matchers.allOf
-import org.hamcrest.TypeSafeMatcher
+import com.riningan.wowmount.app.di.preferencesModule
+import com.riningan.wowmount.data.preferences.AppPreferences
+import com.riningan.wowmount.data.preferences.LocalPreferences
+import io.mockk.*
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.kodein.di.Kodein
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.singleton
 
-@LargeTest
+
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
+    @get: Rule
+    var mActivityTestRule = ActivityTestRule(MainActivity::class.java, true, false)
 
-    @Rule
-    @JvmField
-    var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
+
+    @Before
+    fun setup() {
+        MockKAnnotations.init(this, relaxUnitFun = true)
+//        val app = InstrumentationRegistry.getInstrumentation().targetContext as WowMountApp
+
+//        mockkStatic("com.riningan.wowmount.app.di.PreferencesModuleKt")
+
+//        preferencesModule = Kodein.Module(name = "Preferences") {
+//            bind<LocalPreferences>() with singleton { object : LocalPreferences {
+//                override var isActivated: Boolean
+//                    get() = true
+//                    set(value) {}
+//                override var server: String
+//                    get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+//                    set(value) {}
+//                override var realmName: String
+//                    get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+//                    set(value) {}
+//                override var characterName: String
+//                    get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+//                    set(value) {}
+//                override var accessToken: String
+//                    get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+//                    set(value) {}
+//                override var showAll: Boolean
+//                    get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+//                    set(value) {}
+//
+//                override fun clear() {
+//                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                }
+//
+//            } }
+//        }
+
+        val presenter = mockkClass(MainPresenter::class)
+        every { presenter.startNavigation() } returns Unit
+
+        mActivityTestRule.launchActivity(Intent())
+    }
+
 
     @Test
     fun mainActivityTest() {
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        Thread.sleep(5000)
-
-        val appCompatButton = onView(allOf(withId(R.id.btnAuthorizationShow),
-                        withText("Show mounts"),
-                        childAtPosition(childAtPosition(withId(android.R.id.content), 0), 4),
-                        isDisplayed()))
-        appCompatButton.perform(click())
-    }
-
-    private fun childAtPosition(
-            parentMatcher: Matcher<View>, position: Int): Matcher<View> {
-
-        return object : TypeSafeMatcher<View>() {
-            override fun describeTo(description: Description) {
-                description.appendText("Child at position $position in parent ")
-                parentMatcher.describeTo(description)
-            }
-
-            public override fun matchesSafely(view: View): Boolean {
-                val parent = view.parent
-                return parent is ViewGroup && parentMatcher.matches(parent)
-                        && view == parent.getChildAt(position)
-            }
-        }
+//        await().atMost(5, TimeUnit.SECONDS).until(newUserWasAdded())
+        Thread.sleep(10000)
+//        onView(withId(R.id.container)).perform(click())
     }
 }

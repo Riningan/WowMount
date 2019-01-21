@@ -8,6 +8,6 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 
 
-val preferencesModule = Kodein.Module(name = "Preferences") {
+var preferencesModule = Kodein.Module(name = "Preferences") {
     bind<LocalPreferences>() with singleton { AppPreferences(instance()) }
 }
