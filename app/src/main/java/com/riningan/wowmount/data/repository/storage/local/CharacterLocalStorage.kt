@@ -1,18 +1,18 @@
 package com.riningan.wowmount.data.repository.storage.local
 
+import com.riningan.wowmount.data.db.DBHelper
 import com.riningan.wowmount.data.db.model.CharacterEntity
 import com.riningan.wowmount.data.db.model.MountEntity
 import com.riningan.wowmount.data.repository.model.Character
 import com.riningan.wowmount.data.repository.model.Mount
 import io.reactivex.Completable
 import io.reactivex.Single
-import io.realm.Realm
 
 
-class CharacterLocalStorage(private val mRealm: Realm) : BaseLocalStorage<Pair<Character?, List<Mount>>> {
+class CharacterLocalStorage(private val mDBHelper: DBHelper) : BaseLocalStorage<Pair<Character?, List<Mount>>> {
     override fun get(): Single<Pair<Character?, List<Mount>>> = Single
             .fromCallable {
-                mRealm.run {
+                mDBHelper.getDBInstance().run {
                     val character = where(CharacterEntity::class.java)
                             .findFirst()
                             ?.run {
@@ -46,7 +46,7 @@ class CharacterLocalStorage(private val mRealm: Realm) : BaseLocalStorage<Pair<C
 
     override fun set(cache: Pair<Character?, List<Mount>>): Completable = Completable
             .fromCallable {
-                mRealm.apply {
+                mDBHelper.getDBInstance().apply {
                     if (cache.first == null) {
                         throw NullPointerException("Character is null")
                     }
@@ -82,7 +82,7 @@ class CharacterLocalStorage(private val mRealm: Realm) : BaseLocalStorage<Pair<C
 
     override fun clear(): Completable = Completable
             .fromCallable {
-                mRealm.apply {
+                mDBHelper.getDBInstance().apply {
                     beginTransaction()
                     delete(CharacterEntity::class.java)
                     delete(MountEntity::class.java)

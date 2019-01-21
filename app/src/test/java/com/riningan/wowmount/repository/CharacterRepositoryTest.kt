@@ -19,7 +19,7 @@ import java.util.*
 import kotlin.reflect.full.superclasses
 
 /**
- * using MockK because
+ * Using MockK because
  * @see CharacterLocalStorage.set
  * using generic parameter
  */

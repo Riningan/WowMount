@@ -10,5 +10,4 @@ import org.kodein.di.generic.singleton
 
 val dbModule = Kodein.Module(name = "DB") {
     bind<DBHelper>() with singleton { DBHelper(instance()) }
-    bind<Realm>() with singleton { instance<DBHelper>().getDBInstance() }
 }

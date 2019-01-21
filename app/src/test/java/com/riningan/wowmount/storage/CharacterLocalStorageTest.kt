@@ -1,6 +1,7 @@
 package com.riningan.wowmount.storage
 
 import com.riningan.wowmount.*
+import com.riningan.wowmount.data.db.DBHelper
 import com.riningan.wowmount.data.db.model.CharacterEntity
 import com.riningan.wowmount.data.db.model.MountEntity
 import com.riningan.wowmount.data.repository.storage.local.CharacterLocalStorage
@@ -22,20 +23,15 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore
 import org.powermock.core.classloader.annotations.PrepareForTest
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor
 import org.powermock.modules.junit4.PowerMockRunner
-import org.powermock.modules.junit4.PowerMockRunnerDelegate
 import org.powermock.modules.junit4.rule.PowerMockRule
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 /**
- * using PowerMock because Realm using static method
+ * Using PowerMock because Realm using static method
  */
 @RunWith(PowerMockRunner::class)
-@PowerMockRunnerDelegate(RobolectricTestRunner::class)
-@Config(manifest = "AndroidManifest.xml", sdk = [21])
 @PowerMockIgnore(value = ["org.mockito.*", "org.robolectric.*", "android.*"])
 @SuppressStaticInitializationFor("io.realm.internal.Util")
-@PrepareForTest(value = [Realm::class, RealmLog::class, RealmResults::class, RealmQuery::class])
+@PrepareForTest(value = [Realm::class, RealmLog::class, RealmResults::class, RealmQuery::class, DBHelper::class])
 class CharacterLocalStorageTest {
     @get: Rule
     var mPowerMockRule = PowerMockRule()
@@ -48,13 +44,18 @@ class CharacterLocalStorageTest {
 
     @Before
     fun setup() {
-        PowerMockito.mockStatic(RealmLog::class.java)
         PowerMockito.mockStatic(Realm::class.java)
+        PowerMockito.mockStatic(RealmLog::class.java)
         PowerMockito.mockStatic(RealmResults::class.java)
+
         mRealm = PowerMockito.mock(Realm::class.java)
         PowerMockito.`when`(Realm.getDefaultInstance()).thenReturn(mRealm)
         PowerMockito.doNothing().`when`(mRealm).close()
-        mCharacterLocalStorage = CharacterLocalStorage(Realm.getDefaultInstance())
+
+        val dbHelper = PowerMockito.mock(DBHelper::class.java)
+        PowerMockito.doCallRealMethod().`when`(dbHelper).getDBInstance()
+
+        mCharacterLocalStorage = CharacterLocalStorage(dbHelper)
     }
 
 
