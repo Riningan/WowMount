@@ -23,6 +23,7 @@ class AboutFragment : BaseFragment(), AboutView {
     @InjectPresenter
     lateinit var mPresenter: AboutPresenter
 
+
     @ProvidePresenter
     fun providePresenter() = AboutPresenter(kodein)
 

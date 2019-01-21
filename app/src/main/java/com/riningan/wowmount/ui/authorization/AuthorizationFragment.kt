@@ -21,6 +21,7 @@ class AuthorizationFragment : BaseFragment(), AuthorizationView {
     @InjectPresenter
     lateinit var mPresenter: AuthorizationPresenter
 
+
     @ProvidePresenter
     fun providePresenter() = AuthorizationPresenter(kodein)
 

@@ -22,6 +22,7 @@ class MountFragment : BaseFragment(), MountView {
     @InjectPresenter
     lateinit var mPresenter: MountPresenter
 
+
     @ProvidePresenter
     fun providePresenter() = MountPresenter(kodein)
 

@@ -18,6 +18,7 @@ class FilterFragment : BaseFragment(), FilterView, CompoundButton.OnCheckedChang
     @InjectPresenter
     lateinit var mPresenter: FilterPresenter
 
+
     @ProvidePresenter
     fun providePresenter() = FilterPresenter(kodein)
 

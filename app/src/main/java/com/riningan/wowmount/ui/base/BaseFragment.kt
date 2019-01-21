@@ -16,6 +16,7 @@ open class BaseFragment : MvpAppCompatFragment(), BaseView, KodeinAware {
     override val kodein by closestKodein()
     override val kodeinTrigger = KodeinTrigger()
 
+
     override fun onAttach(context: Context?) {
         Logger.forThis(this).debug()
         super.onAttach(context)

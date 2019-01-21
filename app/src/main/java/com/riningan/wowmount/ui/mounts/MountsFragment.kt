@@ -25,6 +25,7 @@ class MountsFragment : BaseFragment(), MountsView {
     @InjectPresenter(tag = MountsPresenter.TAG, type = PresenterType.WEAK)
     lateinit var mPresenter: MountsPresenter
 
+
     @ProvidePresenter(tag = MountsPresenter.TAG, type = PresenterType.WEAK)
     fun providePresenter(): MountsPresenter {
         val presenter by kodein.instance<MountsPresenter>()

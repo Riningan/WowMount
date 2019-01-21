@@ -18,6 +18,7 @@ class SplashFragment : BaseFragment(), SplashView {
     @InjectPresenter
     lateinit var mPresenter: SplashPresenter
 
+
     @ProvidePresenter
     fun providePresenter() = SplashPresenter(kodein)
 
