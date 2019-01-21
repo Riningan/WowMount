@@ -110,7 +110,7 @@ dependencies {
     debugImplementation "com.squareup.leakcanary:leakcanary-support-fragment:$leakcanary_version"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
 //    testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
-    androidTestImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
+//    androidTestImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
     // image loader
     implementation "com.squareup.picasso:picasso:2.71828"
     // circle imageview
