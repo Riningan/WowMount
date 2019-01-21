@@ -1,4 +1,4 @@
-package com.riningan.wowmount.di
+package com.riningan.wowmount.app.di
 
 import com.riningan.wowmount.data.preferences.AppPreferences
 import com.riningan.wowmount.data.preferences.LocalPreferences

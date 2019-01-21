@@ -1,4 +1,4 @@
-package com.riningan.wowmount.di
+package com.riningan.wowmount.app.di
 
 import com.riningan.wowmount.utils.SchedulersProvider
 import org.kodein.di.Kodein

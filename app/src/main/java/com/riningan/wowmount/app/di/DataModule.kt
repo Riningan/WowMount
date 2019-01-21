@@ -1,4 +1,4 @@
-package com.riningan.wowmount.di
+package com.riningan.wowmount.app.di
 
 import com.riningan.wowmount.data.repository.CharacterRepository
 import com.riningan.wowmount.data.repository.storage.local.CharacterLocalStorage

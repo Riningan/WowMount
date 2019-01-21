@@ -1,4 +1,4 @@
-package com.riningan.wowmount.di
+package com.riningan.wowmount.app.di
 
 import com.riningan.wowmount.data.network.ApiClient
 import com.riningan.wowmount.data.network.BlizzardApi

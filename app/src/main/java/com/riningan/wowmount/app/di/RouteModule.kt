@@ -1,4 +1,4 @@
-package com.riningan.wowmount.di
+package com.riningan.wowmount.app.di
 
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind

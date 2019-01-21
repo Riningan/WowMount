@@ -5,7 +5,7 @@ import android.os.StrictMode
 import androidx.multidex.MultiDexApplication
 import com.riningan.util.Logger
 import com.riningan.wowmount.BuildConfig
-import com.riningan.wowmount.di.*
+import com.riningan.wowmount.app.di.*
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import org.kodein.di.Kodein
