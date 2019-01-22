@@ -4,6 +4,12 @@
 ![logo](./app/src/main/res/drawable-mdpi/drawable_logo.png)
 
 
+About application
+---
+
+Application allow browse character mounts list by using data from [Blizzard Api service](https://develop.battle.net).
+
+
 Application architecture
 ---
 
