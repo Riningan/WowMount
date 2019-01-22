@@ -108,9 +108,9 @@ Types:
 ### Layout type naming
 
 * `Activity` - activity\_\<name under\_score\>
-* `Fragment как окно приложения` - fragment\_\<name\>
-* `Fragment для ViewPager` - page\_\<parent fragment name\>\_\<additional information\>
-* `Fragment для диалога` - dialog\_\<parent fragment name\>\_\<additional information\>
+* `Fragment` - fragment\_\<name\>
+* `Fragment for ViewPager` - page\_\<parent fragment name\>\_\<additional information\>
+* `Fragment for dialog` - dialog\_\<parent fragment name\>\_\<additional information\>
 * `Include` - layout\_\<parent fragment name\>\_\<additional information\>
 * `ViewHolder` - item\_\<parent fragment name\>\_\<additional information\>
 * `View` - view\_\<additional information\>
