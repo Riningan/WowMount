@@ -21,6 +21,7 @@ android {
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "CLIENT_SECRET", getClientSecret()
+        buildConfigField "String", "CLIENT_ID", "\"9dbd799cb01a4ce194705b6cbf652875\""
         testInstrumentationRunner = 'android.support.test.runner.AndroidJUnitRunner'
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

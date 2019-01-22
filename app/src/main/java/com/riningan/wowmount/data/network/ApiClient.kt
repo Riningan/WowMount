@@ -27,7 +27,7 @@ class ApiClient constructor(private val mLocalPreferences: LocalPreferences) {
                 .addInterceptor { chain ->
                     val original = chain.request()
                     val requestBuilder = original.newBuilder()
-                            .header("Authorization", Credentials.basic(CLIENT_ID, BuildConfig.CLIENT_SECRET))
+                            .header("Authorization", Credentials.basic(BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET))
                             .header("Content-Type", "application/json")
                             .method(original.method(), original.body())
                     val request = requestBuilder.build()
@@ -113,7 +113,6 @@ class ApiClient constructor(private val mLocalPreferences: LocalPreferences) {
 
     companion object {
         private const val TIMEOUT = 30000L
-        private const val CLIENT_ID = "9dbd799cb01a4ce194705b6cbf652875"
         private const val EMPTY_URL = "http://this.is.not.valid.url"
         private const val DOCS_URL = "https://docs.google.com"
         private val REGEX = "(\\w\\w)\\.api\\.blizzard\\.com".toRegex()
