@@ -7,6 +7,6 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 
 
-val interactorsModule = Kodein.Module(name = "Interactors") {
+fun getInteractorsModule() = Kodein.Module(name = "Interactors") {
     bind<CharacterInteractor>() with singleton { CharacterInteractor(instance(), instance()) }
 }

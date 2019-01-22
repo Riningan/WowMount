@@ -1,5 +1,6 @@
 package com.riningan.wowmount.app.di
 
+import com.riningan.wowmount.route.Starter
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -9,8 +10,9 @@ import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 
 
-val routeModule = Kodein.Module(name = "Route") {
+fun getRouteModule() = Kodein.Module(name = "Route") {
     bind<Router>() with singleton { Router() }
     bind<Cicerone<Router>>() with singleton { Cicerone.create<Router>(instance()) }
     bind<NavigatorHolder>() with singleton { instance<Cicerone<Router>>().navigatorHolder }
+    bind<Starter>() with singleton { Starter() }
 }

@@ -17,14 +17,14 @@ import org.kodein.di.generic.singleton
 class WowMountApp : MultiDexApplication(), KodeinAware {
     override val kodein = Kodein.lazy {
         bind<Context>() with singleton { this@WowMountApp }
-        import(preferencesModule)
-        import(networkModule)
-        import(dbModule)
-        import(dataModule)
-        import(interactorsModule)
-        import(routeModule)
-        import(presentersModule)
-        import(schedulersModule)
+        import(getPreferencesModule())
+        import(getNetworkModule())
+        import(getDBModule())
+        import(getDataModule())
+        import(getInteractorsModule())
+        import(getRouteModule())
+        import(getPresentersModule())
+        import(getSchedulersModule())
     }
 
 

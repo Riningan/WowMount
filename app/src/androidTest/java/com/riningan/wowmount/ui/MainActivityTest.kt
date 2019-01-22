@@ -3,18 +3,13 @@ package com.riningan.wowmount.ui
 import android.content.Intent
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import com.riningan.wowmount.app.di.preferencesModule
-import com.riningan.wowmount.data.preferences.AppPreferences
-import com.riningan.wowmount.data.preferences.LocalPreferences
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.every
+import io.mockk.mockkClass
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
 
 
 @RunWith(AndroidJUnit4::class)

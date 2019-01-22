@@ -6,6 +6,6 @@ import org.kodein.di.generic.bind
 import org.kodein.di.generic.provider
 
 
-val schedulersModule = Kodein.Module(name = "Schedulers") {
+fun getSchedulersModule() = Kodein.Module(name = "Schedulers") {
     bind<SchedulersProvider>() with provider { SchedulersProvider() }
 }

@@ -9,7 +9,7 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 
 
-val networkModule = Kodein.Module(name = "Network") {
+fun getNetworkModule() = Kodein.Module(name = "Network") {
     bind<ApiClient>() with singleton { ApiClient(instance()) }
     bind<BlizzardApi>() with singleton { instance<ApiClient>().getBlizzardApi() }
     bind<SpreadsheetApi>() with singleton { instance<ApiClient>().getSpreadsheetApi() }

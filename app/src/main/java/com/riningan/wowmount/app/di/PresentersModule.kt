@@ -7,6 +7,6 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 
 
-val presentersModule = Kodein.Module(name = "Presenters") {
+fun getPresentersModule() = Kodein.Module(name = "Presenters") {
     bind<MountsPresenter>() with singleton { MountsPresenter(instance(), instance(), instance()) }
 }

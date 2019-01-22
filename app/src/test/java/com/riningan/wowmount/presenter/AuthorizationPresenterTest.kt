@@ -117,17 +117,17 @@ class AuthorizationPresenterTest {
 
         mAuthorizationPresenter.onShowClick(REGION, REALM, NAME)
 
-        with(mKodeinRule) {
-            verifySequence {
-                mViewState.lockView()
+        verifySequence {
+            mViewState.lockView()
+            with(mKodeinRule) {
                 localPreferences.server = REGION
                 localPreferences.realmName = REALM
                 localPreferences.characterName = NAME
                 characterInteractor.update()
                 localPreferences.clear()
-                mViewState.unlockView()
-                mViewState.showRequestErrorDialog(any())
             }
+            mViewState.unlockView()
+            mViewState.showRequestErrorDialog(any())
         }
     }
 }
