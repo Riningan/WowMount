@@ -1,4 +1,4 @@
-package com.riningan.wowmount.data.network
+package com.riningan.wowmount.data.network.api
 
 import com.riningan.wowmount.data.network.model.CharacterResponse
 import com.riningan.wowmount.data.network.model.MountsResponse

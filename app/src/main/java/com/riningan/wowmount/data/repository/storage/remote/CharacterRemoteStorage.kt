@@ -1,7 +1,7 @@
 package com.riningan.wowmount.data.repository.storage.remote
 
-import com.riningan.wowmount.data.network.BlizzardApi
-import com.riningan.wowmount.data.network.SpreadsheetApi
+import com.riningan.wowmount.data.network.api.BlizzardApi
+import com.riningan.wowmount.data.network.api.SpreadsheetApi
 import com.riningan.wowmount.data.network.model.CharacterResponse
 import com.riningan.wowmount.data.network.model.MountResponse
 import com.riningan.wowmount.data.network.model.MountsResponse

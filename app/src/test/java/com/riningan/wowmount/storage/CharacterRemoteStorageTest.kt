@@ -1,8 +1,8 @@
 package com.riningan.wowmount.storage
 
 import com.riningan.wowmount.*
-import com.riningan.wowmount.data.network.BlizzardApi
-import com.riningan.wowmount.data.network.SpreadsheetApi
+import com.riningan.wowmount.data.network.api.BlizzardApi
+import com.riningan.wowmount.data.network.api.SpreadsheetApi
 import com.riningan.wowmount.data.network.model.MountsResponse
 import com.riningan.wowmount.data.preferences.LocalPreferences
 import com.riningan.wowmount.data.repository.storage.remote.CharacterRemoteStorage

@@ -1,8 +1,8 @@
 package com.riningan.wowmount.app.di
 
 import com.riningan.wowmount.data.network.ApiClient
-import com.riningan.wowmount.data.network.BlizzardApi
-import com.riningan.wowmount.data.network.SpreadsheetApi
+import com.riningan.wowmount.data.network.api.BlizzardApi
+import com.riningan.wowmount.data.network.api.SpreadsheetApi
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
