@@ -4,12 +4,12 @@ import com.riningan.wowmount.CHARACTER
 import com.riningan.wowmount.CHARACTER_COLLECTED_MOUNT_LIST
 import com.riningan.wowmount.MOUNT_LIST
 import com.riningan.wowmount.domain.WowMountExceptions
-import com.riningan.wowmount.rule.*
-import com.riningan.wowmount.setPrivateField
 import com.riningan.wowmount.presentation.ui.filter.FilterPresenter
 import com.riningan.wowmount.presentation.ui.filter.FilterView
 import com.riningan.wowmount.presentation.ui.mounts.MountsFragment
 import com.riningan.wowmount.presentation.ui.splash.SplashFragment
+import com.riningan.wowmount.rule.*
+import com.riningan.wowmount.setPrivateField
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk

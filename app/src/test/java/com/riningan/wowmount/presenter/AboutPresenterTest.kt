@@ -1,10 +1,10 @@
 package com.riningan.wowmount.presenter
 
+import com.riningan.wowmount.presentation.ui.about.AboutPresenter
+import com.riningan.wowmount.presentation.ui.about.AboutView
 import com.riningan.wowmount.rule.KodeinMockRule
 import com.riningan.wowmount.rule.LogRule
 import com.riningan.wowmount.rule.LoggerDisableRule
-import com.riningan.wowmount.presentation.ui.about.AboutPresenter
-import com.riningan.wowmount.presentation.ui.about.AboutView
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk

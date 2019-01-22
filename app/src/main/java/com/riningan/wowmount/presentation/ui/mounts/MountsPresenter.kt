@@ -10,8 +10,8 @@ import com.riningan.util.Logger
 import com.riningan.wowmount.data.preferences.LocalPreferences
 import com.riningan.wowmount.data.repository.model.Character
 import com.riningan.wowmount.data.repository.model.Mount
-import com.riningan.wowmount.domain.interactor.CharacterInteractor
 import com.riningan.wowmount.domain.WowMountExceptions
+import com.riningan.wowmount.domain.interactor.CharacterInteractor
 import com.riningan.wowmount.presentation.ui.about.AboutFragment
 import com.riningan.wowmount.presentation.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.presentation.ui.base.BasePresenter

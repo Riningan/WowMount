@@ -3,13 +3,13 @@ package com.riningan.wowmount.presenter
 import com.riningan.wowmount.CHARACTER
 import com.riningan.wowmount.MOUNT_LIST
 import com.riningan.wowmount.domain.WowMountExceptions
-import com.riningan.wowmount.rule.*
-import com.riningan.wowmount.setPrivateField
 import com.riningan.wowmount.presentation.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.presentation.ui.mounts.MountsFragment
 import com.riningan.wowmount.presentation.ui.splash.SplashFragment
 import com.riningan.wowmount.presentation.ui.splash.SplashPresenter
 import com.riningan.wowmount.presentation.ui.splash.SplashView
+import com.riningan.wowmount.rule.*
+import com.riningan.wowmount.setPrivateField
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk

@@ -1,7 +1,7 @@
 package com.riningan.wowmount.app.di
 
-import com.riningan.wowmount.domain.interactor.CharacterInteractor
 import com.riningan.wowmount.domain.SchedulersProvider
+import com.riningan.wowmount.domain.interactor.CharacterInteractor
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance

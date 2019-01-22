@@ -7,8 +7,8 @@ import com.riningan.frarg.processor.MountsFragmentArgs
 import com.riningan.frarg.processor.SplashFragmentArgs
 import com.riningan.util.Logger
 import com.riningan.wowmount.data.preferences.LocalPreferences
-import com.riningan.wowmount.domain.interactor.CharacterInteractor
 import com.riningan.wowmount.domain.WowMountExceptions
+import com.riningan.wowmount.domain.interactor.CharacterInteractor
 import com.riningan.wowmount.presentation.ui.base.BasePresenter
 import com.riningan.wowmount.presentation.ui.mounts.MountsFragment
 import com.riningan.wowmount.presentation.ui.splash.SplashFragment

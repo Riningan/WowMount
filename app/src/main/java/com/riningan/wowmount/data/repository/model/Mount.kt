@@ -10,7 +10,7 @@ data class Mount(
         var icon: String?,
         var isGround: Boolean,
         var isFlying: Boolean,
-        var isAquatic: Boolean ,
+        var isAquatic: Boolean,
         var isCollected: Boolean) {
     /**
      * generated

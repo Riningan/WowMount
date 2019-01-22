@@ -6,12 +6,12 @@ import com.riningan.frarg.annotations.ArgumentedFragment
 import com.riningan.frarg.processor.MountsFragmentArgs
 import com.riningan.util.Logger
 import com.riningan.wowmount.data.preferences.LocalPreferences
-import com.riningan.wowmount.domain.interactor.CharacterInteractor
+import com.riningan.wowmount.domain.SchedulersProvider
 import com.riningan.wowmount.domain.WowMountExceptions
+import com.riningan.wowmount.domain.interactor.CharacterInteractor
 import com.riningan.wowmount.presentation.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.presentation.ui.base.BasePresenter
 import com.riningan.wowmount.presentation.ui.mounts.MountsFragment
-import com.riningan.wowmount.domain.SchedulersProvider
 import io.reactivex.Observable
 import org.kodein.di.Kodein
 import org.kodein.di.generic.instance

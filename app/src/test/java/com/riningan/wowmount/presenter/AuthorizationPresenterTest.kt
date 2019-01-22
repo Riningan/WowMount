@@ -2,13 +2,13 @@ package com.riningan.wowmount.presenter
 
 import com.riningan.wowmount.*
 import com.riningan.wowmount.domain.WowMountExceptions
+import com.riningan.wowmount.presentation.ui.authorization.AuthorizationPresenter
+import com.riningan.wowmount.presentation.ui.authorization.AuthorizationView
+import com.riningan.wowmount.presentation.ui.mounts.MountsFragment
 import com.riningan.wowmount.rule.KodeinMockRule
 import com.riningan.wowmount.rule.LogRule
 import com.riningan.wowmount.rule.LoggerDisableRule
 import com.riningan.wowmount.rule.WowMountExceptionsMockRule
-import com.riningan.wowmount.presentation.ui.authorization.AuthorizationPresenter
-import com.riningan.wowmount.presentation.ui.authorization.AuthorizationView
-import com.riningan.wowmount.presentation.ui.mounts.MountsFragment
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk

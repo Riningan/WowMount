@@ -7,11 +7,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.ViewCompat
-import com.riningan.frarg.processor.FilterFragmentArgs
-import com.riningan.frarg.processor.FragmentBuilder
-import com.riningan.frarg.processor.MountFragmentArgs
-import com.riningan.frarg.processor.MountsFragmentArgs
-import com.riningan.frarg.processor.SplashFragmentArgs
+import com.riningan.frarg.processor.*
 import com.riningan.wowmount.presentation.ui.about.AboutFragment
 import com.riningan.wowmount.presentation.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.presentation.ui.filter.FilterFragment

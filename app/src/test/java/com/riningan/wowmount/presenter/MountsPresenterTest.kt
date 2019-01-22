@@ -2,7 +2,6 @@ package com.riningan.wowmount.presenter
 
 import com.riningan.wowmount.*
 import com.riningan.wowmount.domain.WowMountExceptions
-import com.riningan.wowmount.rule.*
 import com.riningan.wowmount.presentation.ui.about.AboutFragment
 import com.riningan.wowmount.presentation.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.presentation.ui.filter.FilterFragment
@@ -10,6 +9,7 @@ import com.riningan.wowmount.presentation.ui.mount.MountFragment
 import com.riningan.wowmount.presentation.ui.mounts.MountsPresenter
 import com.riningan.wowmount.presentation.ui.mounts.MountsView
 import com.riningan.wowmount.presentation.ui.splash.SplashFragment
+import com.riningan.wowmount.rule.*
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
