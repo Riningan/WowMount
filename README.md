@@ -125,6 +125,15 @@ Types:
 In case there layout using in several place, **name** must replace by **all**. Also in this case should be renamed all ids. 
 
 
+Download source code
+---
+
+For build project add **client.secret=\<get from [Blizzard Api service](https://develop.battle.net)\>** to **local.properties**.
+
+And change **CLIENT_ID** in **build.gradle app**
+
+
+
 LICENCE
 -----
 
