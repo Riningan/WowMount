@@ -152,8 +152,8 @@ class MountsPresenterTest {
 
         mMountsPresenter.onLogoutClick()
 
-        with(mKodeinRule) {
-            verifySequence {
+        verifySequence {
+            with(mKodeinRule) {
                 characterInteractor.clear()
                 localPreferences.clear()
                 router.newRootScreen(AuthorizationFragment::class.java.canonicalName)

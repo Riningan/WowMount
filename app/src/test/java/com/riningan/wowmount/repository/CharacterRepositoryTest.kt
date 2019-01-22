@@ -57,6 +57,7 @@ class CharacterRepositoryTest {
                 .assertValue { it.second[0].toString() == MOUNT_1.toString() }
                 .assertValue { it.second[1].toString() == MOUNT_2.toString() }
                 .assertValue { it.second[2].toString() == MOUNT_3.toString() }
+
         verify(exactly = 1) { mCharacterRemoteStorage.get() }
         verify(exactly = 1) { mCharacterLocalStorage.set(any()) }
     }
@@ -81,6 +82,7 @@ class CharacterRepositoryTest {
                 .assertValueAt(1) { it.second[0].toString() == MOUNT_1.toString() }
                 .assertValueAt(1) { it.second[1].toString() == MOUNT_2.toString() }
                 .assertValueAt(1) { it.second[2].toString() == MOUNT_3.toString() }
+
         verifySequence {
             mCharacterLocalStorage.get()
             mCharacterRemoteStorage.get()
@@ -119,6 +121,7 @@ class CharacterRepositoryTest {
                 .assertValue { it.second[0].toString() == MOUNT_1.toString() }
                 .assertValue { it.second[1].toString() == MOUNT_2.toString() }
                 .assertValue { it.second[2].toString() == MOUNT_3.toString() }
+
         verify(exactly = 1) { mCharacterLocalStorage.get() }
         verify(exactly = 2) { mCharacterRemoteStorage.get() }
         verify(exactly = 2) { mCharacterLocalStorage.set(any()) }
@@ -148,6 +151,7 @@ class CharacterRepositoryTest {
                 .assertValueAt(1) { it.second[1].toString() == MOUNT_2.toString() }
                 .assertValueAt(1) { it.second[2].toString() == MOUNT_3.toString() }
                 .assertValueAt(1) { it.second[3].toString() == MOUNT_4.toString() }
+
         verify(exactly = 1) { mCharacterLocalStorage.get() }
         verify(exactly = 3) { mCharacterRemoteStorage.get() }
         verify(exactly = 3) { mCharacterLocalStorage.set(any()) }
@@ -175,6 +179,7 @@ class CharacterRepositoryTest {
                 .assertValueCount(2)
                 .assertValueAt(0) { it.toString() == MOUNT_2.toString() }
                 .assertValueAt(1) { it.toString() == MOUNT_2.toString() }
+
         verifySequence {
             mCharacterLocalStorage.get()
             mCharacterRemoteStorage.get()
@@ -190,6 +195,7 @@ class CharacterRepositoryTest {
     fun getMountById_2() {
         setCache(listOf(MOUNT_1, MOUNT_2))
         setCacheTrusted(true)
+
         mCharacterRepository
                 .getMountById(MOUNT_2.id)
                 .test()
@@ -205,6 +211,7 @@ class CharacterRepositoryTest {
     fun getMountById_3() {
         setCache(listOf(MOUNT_1, MOUNT_2))
         setCacheTrusted(true)
+
         mCharacterRepository
                 .getMountById(MOUNT_4.id)
                 .test()
@@ -219,10 +226,12 @@ class CharacterRepositoryTest {
     fun getMountById_4() {
         setCache(listOf(MOUNT_1, MOUNT_2))
         setCacheTrusted(false)
+
         mCharacterRepository
                 .getMountById(MOUNT_4.id)
                 .test()
                 .assertFailure(NullPointerException::class.java)
+
         verifySequence {
             mCharacterRemoteStorage.get()
         }
@@ -238,11 +247,13 @@ class CharacterRepositoryTest {
         setCache(listOf(MOUNT_1, MOUNT_2))
         setCacheTrusted(false)
         every { mCharacterRemoteStorage.get() } returns Single.just(Pair(CHARACTER, MOUNT_LIST))
+
         mCharacterRepository
                 .getMountById(MOUNT_4.id)
                 .test()
                 .assertValueCount(1)
                 .assertValue { it.toString() == MOUNT_4.toString() }
+
         verifySequence {
             mCharacterRemoteStorage.get()
             mCharacterLocalStorage.set(any())
@@ -257,6 +268,7 @@ class CharacterRepositoryTest {
     fun getMountById_6() {
         setCache(MOUNT_LIST)
         setCacheTrusted(true)
+
         mCharacterRepository
                 .getMountById(MOUNT_4.id)
                 .test()

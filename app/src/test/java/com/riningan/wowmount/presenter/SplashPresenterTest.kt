@@ -58,8 +58,8 @@ class SplashPresenterTest {
 
         (mKodeinRule.schedulersProvider.executorThread() as TestScheduler).triggerActions()
 
-        with(mKodeinRule) {
-            verifySequence {
+        verifySequence {
+            with(mKodeinRule) {
                 localPreferences.isActivated
                 router.navigateTo(AuthorizationFragment::class.java.canonicalName)
             }
@@ -81,8 +81,8 @@ class SplashPresenterTest {
 
         (mKodeinRule.schedulersProvider.executorThread() as TestScheduler).triggerActions()
 
-        with(mKodeinRule) {
-            verifySequence {
+        verifySequence {
+            with(mKodeinRule) {
                 localPreferences.isActivated
                 characterInteractor.update()
                 localPreferences.showAll
@@ -128,8 +128,8 @@ class SplashPresenterTest {
 
         (mKodeinRule.schedulersProvider.executorThread() as TestScheduler).triggerActions()
 
-        with(mKodeinRule) {
-            verifySequence {
+        verifySequence {
+            with(mKodeinRule) {
                 localPreferences.isActivated
                 characterInteractor.update()
                 mViewState.showErrorDialog(any())
@@ -154,8 +154,8 @@ class SplashPresenterTest {
 
         (mKodeinRule.schedulersProvider.executorThread() as TestScheduler).triggerActions()
 
-        with(mKodeinRule) {
-            verifySequence {
+        verifySequence {
+            with(mKodeinRule) {
                 //                mSplashPresenter["logout"]()
                 characterInteractor.clear()
                 localPreferences.clear()

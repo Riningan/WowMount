@@ -112,6 +112,7 @@ class CharacterLocalStorageTest {
                 .assertValue { it.second[1].toString() == MOUNT_2.toString() }
                 .assertValue { it.second[2].toString() == MOUNT_3.toString() }
                 .assertValue { it.second[3].toString() == MOUNT_4.toString() }
+
         verify(mRealm, times(1)).where(CharacterEntity::class.java)
         verify(mRealm, times(1)).where(MountEntity::class.java)
         verify(mRealm, times(1)).close()

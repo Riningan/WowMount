@@ -90,9 +90,9 @@ class AuthorizationPresenterTest {
 
         mAuthorizationPresenter.onShowClick(REGION, REALM, NAME)
 
-        with(mKodeinRule) {
-            verifySequence {
-                mViewState.lockView()
+        verifySequence {
+            mViewState.lockView()
+            with(mKodeinRule) {
                 localPreferences.server = REGION
                 localPreferences.realmName = REALM
                 localPreferences.characterName = NAME
