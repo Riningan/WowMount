@@ -1,6 +1,6 @@
 package com.riningan.wowmount.app.di
 
-import com.riningan.wowmount.route.Starter
+import com.riningan.wowmount.presentation.route.Starter
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance

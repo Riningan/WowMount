@@ -1,8 +1,8 @@
 package com.riningan.wowmount.rule
 
 import com.riningan.wowmount.data.preferences.LocalPreferences
-import com.riningan.wowmount.interactor.CharacterInteractor
-import com.riningan.wowmount.utils.SchedulersProvider
+import com.riningan.wowmount.domain.interactor.CharacterInteractor
+import com.riningan.wowmount.domain.SchedulersProvider
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.schedulers.TestScheduler

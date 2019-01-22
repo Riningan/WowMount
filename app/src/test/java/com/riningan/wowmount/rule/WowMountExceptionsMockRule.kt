@@ -1,6 +1,6 @@
 package com.riningan.wowmount.rule
 
-import com.riningan.wowmount.interactor.WowMountExceptions
+import com.riningan.wowmount.domain.WowMountExceptions
 import io.mockk.every
 import io.mockk.mockkObject
 import org.junit.rules.TestRule

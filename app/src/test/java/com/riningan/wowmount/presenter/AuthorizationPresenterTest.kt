@@ -1,19 +1,19 @@
 package com.riningan.wowmount.presenter
 
 import com.riningan.wowmount.*
-import com.riningan.wowmount.interactor.WowMountExceptions
+import com.riningan.wowmount.domain.WowMountExceptions
 import com.riningan.wowmount.rule.KodeinMockRule
 import com.riningan.wowmount.rule.LogRule
 import com.riningan.wowmount.rule.LoggerDisableRule
 import com.riningan.wowmount.rule.WowMountExceptionsMockRule
-import com.riningan.wowmount.ui.authorization.AuthorizationPresenter
-import com.riningan.wowmount.ui.authorization.AuthorizationView
-import com.riningan.wowmount.ui.mounts.MountsFragment
+import com.riningan.wowmount.presentation.ui.authorization.AuthorizationPresenter
+import com.riningan.wowmount.presentation.ui.authorization.AuthorizationView
+import com.riningan.wowmount.presentation.ui.mounts.MountsFragment
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verifySequence
-import io.reactivex.Observable
+import io.reactivex.Single
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -84,7 +84,7 @@ class AuthorizationPresenterTest {
         every { mKodeinRule.localPreferences.server = any() } returns Unit
         every { mKodeinRule.localPreferences.realmName = any() } returns Unit
         every { mKodeinRule.localPreferences.characterName = any() } returns Unit
-        every { mKodeinRule.characterInteractor.update() } returns Observable.just(Pair(CHARACTER, MOUNT_LIST))
+        every { mKodeinRule.characterInteractor.update() } returns Single.just(Pair(CHARACTER, MOUNT_LIST))
         every { mKodeinRule.localPreferences.isActivated = any() } returns Unit
         every { mKodeinRule.localPreferences.showAll } returns true
 
@@ -112,7 +112,7 @@ class AuthorizationPresenterTest {
         every { mKodeinRule.localPreferences.server = any() } returns Unit
         every { mKodeinRule.localPreferences.realmName = any() } returns Unit
         every { mKodeinRule.localPreferences.characterName = any() } returns Unit
-        every { mKodeinRule.characterInteractor.update() } returns Observable.error(WowMountExceptions.IOException())
+        every { mKodeinRule.characterInteractor.update() } returns Single.error(WowMountExceptions.IOException())
         every { mKodeinRule.localPreferences.clear() } returns Unit
 
         mAuthorizationPresenter.onShowClick(REGION, REALM, NAME)

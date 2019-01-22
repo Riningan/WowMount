@@ -24,7 +24,6 @@ class WowMountApp : MultiDexApplication(), KodeinAware {
         import(getInteractorsModule())
         import(getRouteModule())
         import(getPresentersModule())
-        import(getSchedulersModule())
     }
 
 

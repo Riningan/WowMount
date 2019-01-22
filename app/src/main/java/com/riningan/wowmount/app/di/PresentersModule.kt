@@ -1,6 +1,6 @@
 package com.riningan.wowmount.app.di
 
-import com.riningan.wowmount.ui.mounts.MountsPresenter
+import com.riningan.wowmount.presentation.ui.mounts.MountsPresenter
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance

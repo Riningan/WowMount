@@ -3,18 +3,18 @@ package com.riningan.wowmount.presenter
 import com.riningan.wowmount.CHARACTER
 import com.riningan.wowmount.CHARACTER_COLLECTED_MOUNT_LIST
 import com.riningan.wowmount.MOUNT_LIST
-import com.riningan.wowmount.interactor.WowMountExceptions
+import com.riningan.wowmount.domain.WowMountExceptions
 import com.riningan.wowmount.rule.*
 import com.riningan.wowmount.setPrivateField
-import com.riningan.wowmount.ui.filter.FilterPresenter
-import com.riningan.wowmount.ui.filter.FilterView
-import com.riningan.wowmount.ui.mounts.MountsFragment
-import com.riningan.wowmount.ui.splash.SplashFragment
+import com.riningan.wowmount.presentation.ui.filter.FilterPresenter
+import com.riningan.wowmount.presentation.ui.filter.FilterView
+import com.riningan.wowmount.presentation.ui.mounts.MountsFragment
+import com.riningan.wowmount.presentation.ui.splash.SplashFragment
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verifySequence
-import io.reactivex.Observable
+import io.reactivex.Flowable
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -58,7 +58,7 @@ class FilterPresenterTest {
     @Test
     fun onStart_1() {
         setPrivateField(FilterPresenter::class, "mShowAll", mFilterPresenter, true)
-        every { mKodeinRule.characterInteractor.get() } returns Observable.just(Pair(CHARACTER, MOUNT_LIST))
+        every { mKodeinRule.characterInteractor.get() } returns Flowable.just(Pair(CHARACTER, MOUNT_LIST))
 
         mFilterPresenter.onStart()
 
@@ -76,7 +76,7 @@ class FilterPresenterTest {
     @Test
     fun onStart_2() {
         setPrivateField(FilterPresenter::class, "mShowAll", mFilterPresenter, false)
-        every { mKodeinRule.characterInteractor.get() } returns Observable.just(Pair(CHARACTER, MOUNT_LIST))
+        every { mKodeinRule.characterInteractor.get() } returns Flowable.just(Pair(CHARACTER, MOUNT_LIST))
 
         mFilterPresenter.onStart()
 
@@ -93,7 +93,7 @@ class FilterPresenterTest {
     @Test
     fun onStart_3() {
         setPrivateField(FilterPresenter::class, "mShowAll", mFilterPresenter, true)
-        every { mKodeinRule.characterInteractor.get() } returns Observable.error(WowMountExceptions.IOException())
+        every { mKodeinRule.characterInteractor.get() } returns Flowable.error(WowMountExceptions.IOException())
 
         mFilterPresenter.onStart()
 
@@ -110,7 +110,7 @@ class FilterPresenterTest {
     @Test
     fun onStart_4() {
         setPrivateField(FilterPresenter::class, "mShowAll", mFilterPresenter, true)
-        every { mKodeinRule.characterInteractor.get() } returns Observable.error(WowMountExceptions.AuthorizedException())
+        every { mKodeinRule.characterInteractor.get() } returns Flowable.error(WowMountExceptions.AuthorizedException())
 
         mFilterPresenter.onStart()
 
@@ -134,7 +134,7 @@ class FilterPresenterTest {
     @Test
     fun onShowAllChecked() {
         setPrivateField(FilterPresenter::class, "mShowAll", mFilterPresenter, true)
-        every { mKodeinRule.characterInteractor.get() } returns Observable.just(Pair(CHARACTER, MOUNT_LIST))
+        every { mKodeinRule.characterInteractor.get() } returns Flowable.just(Pair(CHARACTER, MOUNT_LIST))
 
         // call it before for create subject
         mFilterPresenter.onStart()

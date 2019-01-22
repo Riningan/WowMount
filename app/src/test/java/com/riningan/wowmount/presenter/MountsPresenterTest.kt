@@ -1,21 +1,22 @@
 package com.riningan.wowmount.presenter
 
 import com.riningan.wowmount.*
-import com.riningan.wowmount.interactor.WowMountExceptions
+import com.riningan.wowmount.domain.WowMountExceptions
 import com.riningan.wowmount.rule.*
-import com.riningan.wowmount.ui.about.AboutFragment
-import com.riningan.wowmount.ui.authorization.AuthorizationFragment
-import com.riningan.wowmount.ui.filter.FilterFragment
-import com.riningan.wowmount.ui.mount.MountFragment
-import com.riningan.wowmount.ui.mounts.MountsPresenter
-import com.riningan.wowmount.ui.mounts.MountsView
-import com.riningan.wowmount.ui.splash.SplashFragment
+import com.riningan.wowmount.presentation.ui.about.AboutFragment
+import com.riningan.wowmount.presentation.ui.authorization.AuthorizationFragment
+import com.riningan.wowmount.presentation.ui.filter.FilterFragment
+import com.riningan.wowmount.presentation.ui.mount.MountFragment
+import com.riningan.wowmount.presentation.ui.mounts.MountsPresenter
+import com.riningan.wowmount.presentation.ui.mounts.MountsView
+import com.riningan.wowmount.presentation.ui.splash.SplashFragment
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verifySequence
 import io.reactivex.Completable
-import io.reactivex.Observable
+import io.reactivex.Flowable
+import io.reactivex.Single
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Before
 import org.junit.Rule
@@ -49,7 +50,7 @@ class MountsPresenterTest {
      */
     @Test
     fun loadCharacter_1() {
-        every { mKodeinRule.characterInteractor.get() } returns Observable.just(Pair(CHARACTER, MOUNT_LIST))
+        every { mKodeinRule.characterInteractor.get() } returns Flowable.just(Pair(CHARACTER, MOUNT_LIST))
 
         mMountsPresenter.loadCharacter()
 
@@ -67,7 +68,7 @@ class MountsPresenterTest {
      */
     @Test
     fun loadCharacter_2() {
-        every { mKodeinRule.characterInteractor.get() } returns Observable.just(Pair(CHARACTER, listOf(MOUNT_4, MOUNT_3, MOUNT_2, MOUNT_1)))
+        every { mKodeinRule.characterInteractor.get() } returns Flowable.just(Pair(CHARACTER, listOf(MOUNT_4, MOUNT_3, MOUNT_2, MOUNT_1)))
 
         mMountsPresenter.loadCharacter()
 
@@ -85,7 +86,7 @@ class MountsPresenterTest {
      */
     @Test
     fun loadCharacter_3() {
-        every { mKodeinRule.characterInteractor.get() } returns Observable.error(WowMountExceptions.IOException())
+        every { mKodeinRule.characterInteractor.get() } returns Flowable.error(WowMountExceptions.IOException())
 
         mMountsPresenter.loadCharacter()
 
@@ -102,7 +103,7 @@ class MountsPresenterTest {
      */
     @Test
     fun loadCharacter_4() {
-        every { mKodeinRule.characterInteractor.get() } returns Observable.error(WowMountExceptions.AuthorizedException())
+        every { mKodeinRule.characterInteractor.get() } returns Flowable.error(WowMountExceptions.AuthorizedException())
 
         mMountsPresenter.loadCharacter()
 
@@ -199,7 +200,7 @@ class MountsPresenterTest {
      */
     @Test
     fun onRefresh_1() {
-        every { mKodeinRule.characterInteractor.update() } returns Observable.just(Pair(CHARACTER, MOUNT_LIST))
+        every { mKodeinRule.characterInteractor.update() } returns Single.just(Pair(CHARACTER, MOUNT_LIST))
 
         mMountsPresenter.onRefresh()
 
@@ -216,7 +217,7 @@ class MountsPresenterTest {
      */
     @Test
     fun onRefresh_2() {
-        every { mKodeinRule.characterInteractor.update() } returns Observable.just(Pair(CHARACTER, listOf(MOUNT_4, MOUNT_3, MOUNT_2, MOUNT_1)))
+        every { mKodeinRule.characterInteractor.update() } returns Single.just(Pair(CHARACTER, listOf(MOUNT_4, MOUNT_3, MOUNT_2, MOUNT_1)))
 
         mMountsPresenter.onRefresh()
 
@@ -233,7 +234,7 @@ class MountsPresenterTest {
      */
     @Test
     fun onRefresh_3() {
-        every { mKodeinRule.characterInteractor.update() } returns Observable.error(WowMountExceptions.IOException())
+        every { mKodeinRule.characterInteractor.update() } returns Single.error(WowMountExceptions.IOException())
 
         mMountsPresenter.onRefresh()
 
@@ -249,7 +250,7 @@ class MountsPresenterTest {
      */
     @Test
     fun onRefresh_4() {
-        every { mKodeinRule.characterInteractor.update() } returns Observable.error(WowMountExceptions.AuthorizedException())
+        every { mKodeinRule.characterInteractor.update() } returns Single.error(WowMountExceptions.AuthorizedException())
 
         mMountsPresenter.onRefresh()
 

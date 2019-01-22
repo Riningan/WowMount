@@ -1,20 +1,20 @@
 package com.riningan.wowmount.presenter
 
 import com.riningan.wowmount.MOUNT_1
-import com.riningan.wowmount.interactor.WowMountExceptions
+import com.riningan.wowmount.domain.WowMountExceptions
 import com.riningan.wowmount.rule.KodeinMockRule
 import com.riningan.wowmount.rule.LogRule
 import com.riningan.wowmount.rule.LoggerDisableRule
 import com.riningan.wowmount.rule.WowMountExceptionsMockRule
 import com.riningan.wowmount.setPrivateField
-import com.riningan.wowmount.ui.mount.MountPresenter
-import com.riningan.wowmount.ui.mount.MountView
-import com.riningan.wowmount.ui.splash.SplashFragment
+import com.riningan.wowmount.presentation.ui.mount.MountPresenter
+import com.riningan.wowmount.presentation.ui.mount.MountView
+import com.riningan.wowmount.presentation.ui.splash.SplashFragment
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verifySequence
-import io.reactivex.Observable
+import io.reactivex.Flowable
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -58,7 +58,7 @@ class MountPresenterTest {
     @Test
     fun setupMount_1() {
         setPrivateField(MountPresenter::class, "mMountId", mMountPresenter, MOUNT_1.id)
-        every { mKodeinRule.characterInteractor.getMountById(MOUNT_1.id) } returns Observable.just(MOUNT_1)
+        every { mKodeinRule.characterInteractor.getMountById(MOUNT_1.id) } returns Flowable.just(MOUNT_1)
 
         mMountPresenter.setupMount()
 
@@ -74,7 +74,7 @@ class MountPresenterTest {
     @Test
     fun setupMount_2() {
         setPrivateField(MountPresenter::class, "mMountId", mMountPresenter, MOUNT_1.id)
-        every { mKodeinRule.characterInteractor.getMountById(MOUNT_1.id) } returns Observable.error(WowMountExceptions.IOException())
+        every { mKodeinRule.characterInteractor.getMountById(MOUNT_1.id) } returns Flowable.error(WowMountExceptions.IOException())
 
         mMountPresenter.setupMount()
 
@@ -90,7 +90,7 @@ class MountPresenterTest {
     @Test
     fun setupMount_3() {
         setPrivateField(MountPresenter::class, "mMountId", mMountPresenter, MOUNT_1.id)
-        every { mKodeinRule.characterInteractor.getMountById(MOUNT_1.id) } returns Observable.error(WowMountExceptions.AuthorizedException())
+        every { mKodeinRule.characterInteractor.getMountById(MOUNT_1.id) } returns Flowable.error(WowMountExceptions.AuthorizedException())
 
         mMountPresenter.setupMount()
 

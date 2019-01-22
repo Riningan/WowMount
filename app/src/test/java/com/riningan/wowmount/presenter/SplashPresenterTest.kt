@@ -2,20 +2,20 @@ package com.riningan.wowmount.presenter
 
 import com.riningan.wowmount.CHARACTER
 import com.riningan.wowmount.MOUNT_LIST
-import com.riningan.wowmount.interactor.WowMountExceptions
+import com.riningan.wowmount.domain.WowMountExceptions
 import com.riningan.wowmount.rule.*
 import com.riningan.wowmount.setPrivateField
-import com.riningan.wowmount.ui.authorization.AuthorizationFragment
-import com.riningan.wowmount.ui.mounts.MountsFragment
-import com.riningan.wowmount.ui.splash.SplashFragment
-import com.riningan.wowmount.ui.splash.SplashPresenter
-import com.riningan.wowmount.ui.splash.SplashView
+import com.riningan.wowmount.presentation.ui.authorization.AuthorizationFragment
+import com.riningan.wowmount.presentation.ui.mounts.MountsFragment
+import com.riningan.wowmount.presentation.ui.splash.SplashFragment
+import com.riningan.wowmount.presentation.ui.splash.SplashPresenter
+import com.riningan.wowmount.presentation.ui.splash.SplashView
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verifySequence
 import io.reactivex.Completable
-import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Before
 import org.junit.Rule
@@ -52,7 +52,7 @@ class SplashPresenterTest {
     fun onStart_1() {
         setmClear(false)
         every { mKodeinRule.localPreferences.isActivated } returns false
-        every { mKodeinRule.characterInteractor.update() } returns Observable.just(Pair(CHARACTER, MOUNT_LIST))
+        every { mKodeinRule.characterInteractor.update() } returns Single.just(Pair(CHARACTER, MOUNT_LIST))
 
         mSplashPresenter.onStart()
 
@@ -75,7 +75,7 @@ class SplashPresenterTest {
         setmClear(false)
         every { mKodeinRule.localPreferences.isActivated } returns true
         every { mKodeinRule.localPreferences.showAll } returns true
-        every { mKodeinRule.characterInteractor.update() } returns Observable.just(Pair(CHARACTER, MOUNT_LIST))
+        every { mKodeinRule.characterInteractor.update() } returns Single.just(Pair(CHARACTER, MOUNT_LIST))
 
         mSplashPresenter.onStart()
 
@@ -99,7 +99,7 @@ class SplashPresenterTest {
     fun onStart_3() {
         setmClear(false)
         every { mKodeinRule.localPreferences.isActivated } returns true
-        every { mKodeinRule.characterInteractor.update() } returns Observable.error(WowMountExceptions.IOException())
+        every { mKodeinRule.characterInteractor.update() } returns Single.error(WowMountExceptions.IOException())
 
         mSplashPresenter.onStart()
 
@@ -120,7 +120,7 @@ class SplashPresenterTest {
     fun onStart_4() {
         setmClear(false)
         every { mKodeinRule.localPreferences.isActivated } returns true
-        every { mKodeinRule.characterInteractor.update() } returns Observable.error(WowMountExceptions.AuthorizedException())
+        every { mKodeinRule.characterInteractor.update() } returns Single.error(WowMountExceptions.AuthorizedException())
         every { mKodeinRule.characterInteractor.clear() } returns Completable.complete()
         every { mKodeinRule.localPreferences.clear() } returns Unit
 
