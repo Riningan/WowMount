@@ -37,6 +37,7 @@ Code style conventions
 ### General
 
 [Naming](https://kotlinlang.org/docs/reference/coding-conventions.html#naming-rules)
+
 [Formatting](https://kotlinlang.org/docs/reference/coding-conventions.html#formatting)
 
 
