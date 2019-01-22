@@ -43,12 +43,12 @@ Code style conventions
 ### UI fragment naming
 
 Fragment naming **(Case-sensitive)**:
-* `package` ui.**<name under\_score без \_>** 
-* `fragment class` **<Name UpperCamelCase>** Fragment.kt
-* `view interface` **<Name UpperCamelCase>** View.kt
-* `presenter class` **<Name UpperCamelCase>** Presenter.kt
-* `res/layout` fraqment\_**<name under_score>**.xml
-* `res/menu` menu\_**<name under_score>**.xml
+* `package` ui.\<name under\_score without \_\> 
+* `fragment class` \<Name UpperCamelCase\>Fragment.kt
+* `view interface` \<Name UpperCamelCase\>View.kt
+* `presenter class` \<Name UpperCamelCase\>Presenter.kt
+* `res/layout` fraqment\_\<name under_score\>.xml
+* `res/menu` menu\_\<name under_score\>.xml
 
 
 ### Class organization
@@ -75,7 +75,7 @@ Fragment naming **(Case-sensitive)**:
 
 ### Views naming
 
-android:id="@+id/***<type>*<Fragment name UpperCamelCase>***<additional information UpperCamelCase>*".
+android:id="@+id/\<type\>\<Fragment name UpperCamelCase\>\<additional information UpperCamelCase\>".
 
 Ignoring AppCompat in view.
 
@@ -107,13 +107,13 @@ Types:
 
 ### Layout type naming
 
-* `Activity` - activity\_**<name under\_score>**
-* `Fragment как окно приложения` - fragment\_**<name>**
-* `Fragment для ViewPager` - page\_**<parent fragment name>**\_**<additional information>**
-* `Fragment для диалога` - dialog\_**<parent fragment name>**\_**<additional information>**
-* `Include` - layout\_**<parent fragment name>**\_**<additional information>**
-* `ViewHolder` - item\_**<parent fragment name>**\_**<additional information>**
-* `View` - view\_**<additional information>**
+* `Activity` - activity\_\<name under\_score\>
+* `Fragment как окно приложения` - fragment\_\<name\>
+* `Fragment для ViewPager` - page\_\<parent fragment name\>\_\<additional information\>
+* `Fragment для диалога` - dialog\_\<parent fragment name\>\_\<additional information\>
+* `Include` - layout\_\<parent fragment name\>\_\<additional information\>
+* `ViewHolder` - item\_\<parent fragment name\>\_\<additional information\>
+* `View` - view\_\<additional information\>
 
 In case there layout using in several place, **name** must replace by **all**. Also in this case should be renamed all ids. 
 
