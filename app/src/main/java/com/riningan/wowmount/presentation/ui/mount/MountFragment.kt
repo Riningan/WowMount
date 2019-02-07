@@ -15,6 +15,7 @@ import com.riningan.wowmount.presentation.ui.base.BaseFragment
 import com.riningan.wowmount.utils.SnackbarUtil
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.GrayscaleTransformation
 import kotlinx.android.synthetic.main.fragment_mount.*
 
 
@@ -65,6 +66,11 @@ class MountFragment : BaseFragment(), MountView {
     override fun setMount(mount: Mount) {
         Picasso.get()
                 .load(mount.getIconUrl())
+                .apply {
+                    if (!mount.isCollected) {
+                        transform(GrayscaleTransformation())
+                    }
+                }
                 .noFade()
                 .into(ivMountIcon, object : Callback {
                     override fun onSuccess() {

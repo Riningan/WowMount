@@ -46,10 +46,10 @@ class CharacterLocalStorage(private val mDBHelper: DBHelper) : BaseLocalStorage<
 
     override fun set(cache: Pair<Character?, List<Mount>>): Completable = Completable
             .fromCallable {
+                if (cache.first == null) {
+                    throw NullPointerException("Character is null")
+                }
                 mDBHelper.getDBInstance().apply {
-                    if (cache.first == null) {
-                        throw NullPointerException("Character is null")
-                    }
                     beginTransaction()
                     delete(CharacterEntity::class.java)
                     cache.first!!.let {

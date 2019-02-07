@@ -44,6 +44,9 @@ android {
             includeAndroidResources = true
         }
     }
+    packagingOptions {
+        exclude 'mockito-extensions/org.mockito.plugins.MockMaker'
+    }
 }
 
 ext {
@@ -115,10 +118,11 @@ dependencies {
 //    androidTestImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
     // image loader
     implementation "com.squareup.picasso:picasso:2.71828"
+    implementation 'jp.wasabeef:picasso-transformations:2.2.1'
     // circle imageview
     implementation "de.hdodenhof:circleimageview:2.2.0"
     // custom viewpager
-    implementation "com.riningan.widget:extendedviewpager:1.1"
+    implementation "com.riningan.widget:extendedviewpager:1.2"
     // logger
     implementation "com.riningan.util:logger:1.1"
     // tests

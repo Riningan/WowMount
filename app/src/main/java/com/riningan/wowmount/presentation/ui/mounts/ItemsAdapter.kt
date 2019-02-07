@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.riningan.wowmount.R
 import com.riningan.wowmount.data.repository.model.Mount
 import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.GrayscaleTransformation
 import kotlinx.android.synthetic.main.item_mount.view.*
 
 
@@ -56,6 +57,11 @@ class ItemsAdapter constructor(private val mType: PageFragment.MountTypes, priva
             ViewCompat.setTransitionName(itemView.ivMountIcon, mType.name + "/" + mount.id)
             Picasso.get()
                     .load(mount.getIconUrl())
+                    .apply {
+                        if (!mount.isCollected) {
+                            transform(GrayscaleTransformation())
+                        }
+                    }
                     .into(itemView.ivMountIcon)
             itemView.tvMountName.apply {
                 text = mount.name

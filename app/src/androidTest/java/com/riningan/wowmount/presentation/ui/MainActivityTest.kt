@@ -1,27 +1,29 @@
 package com.riningan.wowmount.presentation.ui
 
 import android.content.Intent
+import android.support.test.InstrumentationRegistry
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import io.mockk.MockKAnnotations
-import io.mockk.every
-import io.mockk.mockkClass
+import com.riningan.wowmount.app.WowMountApp
+import com.riningan.wowmount.presentation.ui.authorization.AuthorizationFragment
+import com.riningan.wowmount.test.TestActivity
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.kodein.di.generic.instance
+import ru.terrakok.cicerone.Router
 
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
     @get: Rule
-    var mActivityTestRule = ActivityTestRule(MainActivity::class.java, true, false)
-
+    var mActivityTestRule = ActivityTestRule(TestActivity::class.java, true, false)
 
     @Before
     fun setup() {
-        MockKAnnotations.init(this, relaxUnitFun = true)
-//        val app = InstrumentationRegistry.getInstrumentation().targetContext as WowMountApp
+//        MockKAnnotations.init(this, relaxUnitFun = true)
+        val app = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as WowMountApp
 
 //        mockkStatic("com.riningan.wowmount.app.di.PreferencesModuleKt")
 
@@ -53,10 +55,8 @@ class MainActivityTest {
 //            } }
 //        }
 
-        val presenter = mockkClass(MainPresenter::class)
-        every { presenter.startNavigation() } returns Unit
-
         mActivityTestRule.launchActivity(Intent())
+        mActivityTestRule.activity.setFragment(AuthorizationFragment::class.java)
     }
 
 
