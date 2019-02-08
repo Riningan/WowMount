@@ -47,7 +47,7 @@ class SplashPresenter constructor(kodein: Kodein) : BasePresenter<SplashView>() 
                     })
                     .attach()
             else -> Observable
-                    .timer(3, TimeUnit.SECONDS, mSchedulersProvider.executorThread())
+                    .timer(3, TimeUnit.SECONDS)
                     .subscribeOn(mSchedulersProvider.executorThread())
                     .observeOn(mSchedulersProvider.postExecutionThread())
                     .subscribe { mRouter.navigateTo(AuthorizationFragment::class.java.canonicalName) }

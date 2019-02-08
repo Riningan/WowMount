@@ -47,6 +47,15 @@ android {
     packagingOptions {
         exclude 'mockito-extensions/org.mockito.plugins.MockMaker'
     }
+    sourceSets {
+        String sharedTestDir = 'src/testShared/java'
+        test {
+            java.srcDirs sharedTestDir
+        }
+        androidTest {
+            java.srcDirs sharedTestDir
+        }
+    }
 }
 
 ext {

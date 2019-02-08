@@ -1,11 +1,17 @@
 package com.riningan.wowmount.repository
 
-import com.riningan.wowmount.*
+import com.riningan.wowmount.CHARACTER
+import com.riningan.wowmount.MOUNT_1
+import com.riningan.wowmount.MOUNT_2
+import com.riningan.wowmount.MOUNT_3
+import com.riningan.wowmount.MOUNT_4
+import com.riningan.wowmount.MOUNT_LIST
 import com.riningan.wowmount.data.repository.CharacterRepository
 import com.riningan.wowmount.data.repository.model.Mount
 import com.riningan.wowmount.data.repository.storage.local.CharacterLocalStorage
 import com.riningan.wowmount.data.repository.storage.remote.CharacterRemoteStorage
 import com.riningan.wowmount.rule.LogRule
+import com.riningan.wowmount.setPrivateField
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

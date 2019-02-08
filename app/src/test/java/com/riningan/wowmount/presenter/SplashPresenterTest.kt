@@ -8,7 +8,11 @@ import com.riningan.wowmount.presentation.ui.mounts.MountsFragment
 import com.riningan.wowmount.presentation.ui.splash.SplashFragment
 import com.riningan.wowmount.presentation.ui.splash.SplashPresenter
 import com.riningan.wowmount.presentation.ui.splash.SplashView
-import com.riningan.wowmount.rule.*
+import com.riningan.wowmount.rule.KodeinMockRule
+import com.riningan.wowmount.rule.LogRule
+import com.riningan.wowmount.rule.LoggerDisableRule
+import com.riningan.wowmount.rule.RxSchedulersRule
+import com.riningan.wowmount.rule.WowMountExceptionsMockRule
 import com.riningan.wowmount.setPrivateField
 import io.mockk.every
 import io.mockk.mockk

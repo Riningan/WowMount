@@ -1,6 +1,11 @@
 package com.riningan.wowmount.presenter
 
-import com.riningan.wowmount.*
+import com.riningan.wowmount.CHARACTER
+import com.riningan.wowmount.MOUNT_1
+import com.riningan.wowmount.MOUNT_2
+import com.riningan.wowmount.MOUNT_3
+import com.riningan.wowmount.MOUNT_4
+import com.riningan.wowmount.MOUNT_LIST
 import com.riningan.wowmount.domain.WowMountExceptions
 import com.riningan.wowmount.presentation.ui.about.AboutFragment
 import com.riningan.wowmount.presentation.ui.authorization.AuthorizationFragment
@@ -9,7 +14,11 @@ import com.riningan.wowmount.presentation.ui.mount.MountFragment
 import com.riningan.wowmount.presentation.ui.mounts.MountsPresenter
 import com.riningan.wowmount.presentation.ui.mounts.MountsView
 import com.riningan.wowmount.presentation.ui.splash.SplashFragment
-import com.riningan.wowmount.rule.*
+import com.riningan.wowmount.rule.KodeinMockRule
+import com.riningan.wowmount.rule.LogRule
+import com.riningan.wowmount.rule.LoggerDisableRule
+import com.riningan.wowmount.rule.RxSchedulersRule
+import com.riningan.wowmount.rule.WowMountExceptionsMockRule
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
@@ -21,6 +30,7 @@ import io.reactivex.schedulers.TestScheduler
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+
 
 class MountsPresenterTest {
     @get: Rule

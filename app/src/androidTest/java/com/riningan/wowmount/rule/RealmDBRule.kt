@@ -19,8 +19,8 @@ class RealmDBRule(private val mAppContext: Context) : TestRule {
                     .build()
             Realm.getDefaultInstance().apply {
                 beginTransaction()
-//                copyToRealm(CHARACTER_ENTITY)
-//                MOUNT_ENTITY_LIST.forEach { copyToRealm(it) }
+//                copyToRealm(java.getCHARACTER_ENTITY)
+//                java.getMOUNT_ENTITY_LIST.forEach { copyToRealm(it) }
                 commitTransaction()
                 close()
             }
