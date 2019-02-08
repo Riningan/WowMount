@@ -1,6 +1,5 @@
 package com.riningan.wowmount.app
 
-import android.content.Context
 import android.os.StrictMode
 import androidx.multidex.MultiDexApplication
 import com.riningan.util.Logger
@@ -8,23 +7,12 @@ import com.riningan.wowmount.BuildConfig
 import com.riningan.wowmount.app.di.*
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
-import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.singleton
+import org.kodein.di.conf.ConfigurableKodein
 
 
 class WowMountApp : MultiDexApplication(), KodeinAware {
-    override val kodein = Kodein.lazy {
-        bind<Context>() with singleton { this@WowMountApp }
-        import(getPreferencesModule())
-        import(getNetworkModule())
-        import(getDBModule())
-        import(getDataModule())
-        import(getInteractorsModule())
-        import(getRouteModule())
-        import(getPresentersModule())
-    }
+    override val kodein = ConfigurableKodein(mutable = true)
 
 
     override fun onCreate() {
@@ -40,6 +28,18 @@ class WowMountApp : MultiDexApplication(), KodeinAware {
             if (!LeakCanary.isInAnalyzerProcess(this)) {
                 mRefWatcher = LeakCanary.install(this)
             }
+        }
+        // kodein
+        kodein.apply {
+            clear()
+            addImport(getContextModule())
+            addImport(getPreferencesModule())
+            addImport(getNetworkModule())
+            addImport(getDBModule())
+            addImport(getDataModule())
+            addImport(getInteractorsModule())
+            addImport(getRouteModule())
+            addImport(getPresentersModule())
         }
     }
 

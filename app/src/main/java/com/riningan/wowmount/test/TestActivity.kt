@@ -5,7 +5,6 @@ import android.support.annotation.RestrictTo
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.riningan.wowmount.R
 import com.riningan.wowmount.presentation.route.Navigator
-import com.riningan.wowmount.presentation.ui.authorization.AuthorizationFragment
 import com.riningan.wowmount.presentation.ui.base.BaseFragment
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein

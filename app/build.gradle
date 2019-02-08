@@ -80,6 +80,7 @@ dependencies {
     // ktx - need androidx instead support, but moxy doesn't support androidx
 //    implementation "androidx.core:core-ktx:1.1.0-alpha03"
     // di
+    implementation "org.kodein.di:kodein-di-conf-jvm:$kodein_version"
     implementation "org.kodein.di:kodein-di-generic-jvm:$kodein_version"
     implementation "org.kodein.di:kodein-di-framework-android-core:$kodein_version"
     implementation "org.kodein.di:kodein-di-framework-android-support:$kodein_version"

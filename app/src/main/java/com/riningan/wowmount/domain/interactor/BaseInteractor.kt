@@ -51,5 +51,3 @@ abstract class BaseInteractor(private val mSchedulersProvider: SchedulersProvide
                 Completable.error(throwableCast(it))
             }
 }
-
-
