@@ -53,9 +53,9 @@ class TestActivity : MvpAppCompatActivity(), KodeinAware {
     }
 
 
-    fun setFragment(fragmentClass: Class<out BaseFragment>) {
+    fun setFragment(fragmentClass: Class<out BaseFragment>, data: Any?) {
         runOnUiThread {
-            mRouter.newRootScreen(fragmentClass.canonicalName)
+            mRouter.newRootScreen(fragmentClass.canonicalName, data)
         }
     }
 }

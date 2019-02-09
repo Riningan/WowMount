@@ -16,7 +16,7 @@ const val NAME = "Квентис"
 const val REALM = "Гордунни"
 const val LEVEL = 120
 const val THUMBNAIL = "http://url"
-const val REGION = "en"
+const val REGION = "eu"
 
 val MOUNT_RESPONSE_1 = MountResponse(
         "Test mount 1",

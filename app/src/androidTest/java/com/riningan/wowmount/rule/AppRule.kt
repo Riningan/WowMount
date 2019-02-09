@@ -21,10 +21,10 @@ class AppRule : TestRule {
             mRuleChain.apply(base, description)
 
 
-    fun launch(fragmentClass: Class<out BaseFragment>) {
-        mActivityTestRule.activity.setFragment(fragmentClass)
+    fun launch(fragmentClass: Class<out BaseFragment>, data: Any? = null) {
+        mActivityTestRule.activity.setFragment(fragmentClass, data)
     }
 
 
-    fun getMockedLocalPreferences() = mKodeinDIMockRule.mockedLocalPreferences
+    fun getMockedLocalPreferences() = mKodeinDIMockRule.localPreferences
 }
