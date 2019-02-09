@@ -9,18 +9,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 class BlizzardApiClient(okHttpClient: OkHttpClient) {
-    private val mBlizzardApi: BlizzardApi
-
-
-    init {
-        mBlizzardApi = Retrofit.Builder()
-                .baseUrl(EMPTY_URL)
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-                .build()
-                .create(BlizzardApi::class.java)
-    }
+    private val mBlizzardApi: BlizzardApi = Retrofit.Builder()
+            .baseUrl(EMPTY_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+            .build()
+            .create(BlizzardApi::class.java)
 
 
     fun getClient() = mBlizzardApi

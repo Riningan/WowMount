@@ -43,7 +43,7 @@ class SplashFragmentTest {
 
     @After
     fun teardown() {
-        mWebServer.shutdown();
+        mWebServer.shutdown()
     }
 
 
