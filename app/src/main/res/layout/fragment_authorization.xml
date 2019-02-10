@@ -2,8 +2,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/cnslAuthorization"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.v7.widget.AppCompatImageView
@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:padding="26dp"
-        android:transitionName="@string/splash_transition"
         android:scaleType="centerInside"
+        android:transitionName="@string/splash_transition"
         app:layout_constraintBottom_toTopOf="@id/cmbAuthorizationRegion"
         app:srcCompat="@drawable/drawable_logo"
         tools:ignore="UnusedAttribute" />
@@ -27,8 +27,8 @@
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilAuthorizationRealm"
-        android:layout_width="match_parent"
         style="@style/LayoutStyle_Base"
+        android:layout_width="match_parent"
         android:layout_height="52dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -49,8 +49,8 @@
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilAuthorizationCharacter"
-        android:layout_width="match_parent"
         style="@style/LayoutStyle_Base"
+        android:layout_width="match_parent"
         android:layout_height="52dp"
         app:layout_constraintTop_toBottomOf="@+id/tilAuthorizationRealm">
 
@@ -60,10 +60,10 @@
             android:layout_height="wrap_content"
             android:hint="@string/authorization_character"
             android:importantForAutofill="no"
-            android:text="Квентис"
             android:inputType="text"
             android:maxLength="30"
             android:maxLines="1"
+            android:text="Квентис"
             tools:targetApi="o" />
 
     </android.support.design.widget.TextInputLayout>
@@ -73,6 +73,17 @@
         style="@style/LayoutStyle_Button"
         android:layout_marginTop="8dp"
         android:text="@string/authorization_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tilAuthorizationCharacter" />
+
+    <ProgressBar
+        android:id="@+id/pbAuthorization"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tilAuthorizationCharacter" />

@@ -26,5 +26,7 @@ class AppRule : TestRule {
     }
 
 
+    fun getActivity() = mActivityTestRule.activity
+
     fun getMockedLocalPreferences() = mKodeinDIMockRule.localPreferences
 }

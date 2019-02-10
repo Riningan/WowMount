@@ -34,9 +34,9 @@ import java.util.concurrent.TimeUnit
 class KodeinDIMockRule : TestRule {
     val localPreferences = object : LocalPreferences {
         override var isActivated: Boolean = false
-        override var server: String = REGION
-        override var realmName: String = REALM
-        override var characterName: String = NAME
+        override var server: String = ""
+        override var realmName: String = ""
+        override var characterName: String = ""
         override var accessToken: String = ""
         override var showAll: Boolean = true
 

@@ -68,18 +68,18 @@ class AuthorizationFragment : BaseFragment(), AuthorizationView {
     }
 
     override fun lockView() {
-        setViewState(false)
+        cmbAuthorizationRegion.isEnabled = false
+        etAuthorizationRealm.isEnabled = false
+        etAuthorizationCharacter.isEnabled = false
+        btnAuthorizationShow.visibility = View.INVISIBLE
+        pbAuthorization.visibility = View.VISIBLE
     }
 
     override fun unlockView() {
-        setViewState(true)
-    }
-
-
-    private fun setViewState(isEnabled: Boolean) {
-        cmbAuthorizationRegion.isEnabled = isEnabled
-        etAuthorizationRealm.isEnabled = isEnabled
-        etAuthorizationCharacter.isEnabled = isEnabled
-        btnAuthorizationShow.isEnabled = isEnabled
+        cmbAuthorizationRegion.isEnabled = true
+        etAuthorizationRealm.isEnabled = true
+        etAuthorizationCharacter.isEnabled = true
+        btnAuthorizationShow.visibility = View.VISIBLE
+        pbAuthorization.visibility = View.INVISIBLE
     }
 }
