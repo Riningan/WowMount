@@ -1,14 +1,6 @@
 package com.riningan.wowmount.storage
 
-import com.riningan.wowmount.CHARACTER
-import com.riningan.wowmount.CHARACTER_ENTITY
-import com.riningan.wowmount.MOUNT_1
-import com.riningan.wowmount.MOUNT_2
-import com.riningan.wowmount.MOUNT_3
-import com.riningan.wowmount.MOUNT_4
-import com.riningan.wowmount.MOUNT_ENTITY_1
-import com.riningan.wowmount.MOUNT_ENTITY_LIST
-import com.riningan.wowmount.MOUNT_LIST
+import com.riningan.wowmount.*
 import com.riningan.wowmount.data.db.DBHelper
 import com.riningan.wowmount.data.db.model.CharacterEntity
 import com.riningan.wowmount.data.db.model.MountEntity
@@ -39,7 +31,7 @@ import org.powermock.modules.junit4.rule.PowerMockRule
 @RunWith(PowerMockRunner::class)
 @PowerMockIgnore(value = ["org.mockito.*", "org.robolectric.*", "android.*"])
 @SuppressStaticInitializationFor("io.realm.internal.Util")
-@PrepareForTest(value = [Realm::class, RealmLog::class, RealmResults::class, RealmQuery::class, DBHelper::class])
+@PrepareForTest(value = [Realm::class, RealmLog::class, RealmResults::class, RealmQuery::class])
 class CharacterLocalStorageTest {
     @get: Rule
     var mPowerMockRule = PowerMockRule()
@@ -60,8 +52,9 @@ class CharacterLocalStorageTest {
         PowerMockito.`when`(Realm.getDefaultInstance()).thenReturn(mRealm)
         PowerMockito.doNothing().`when`(mRealm).close()
 
-        val dbHelper = PowerMockito.mock(DBHelper::class.java)
-        PowerMockito.doCallRealMethod().`when`(dbHelper).getDBInstance()
+        val dbHelper = object : DBHelper {
+            override fun getDBInstance(): Realm = Realm.getDefaultInstance()
+        }
 
         mCharacterLocalStorage = CharacterLocalStorage(dbHelper)
     }

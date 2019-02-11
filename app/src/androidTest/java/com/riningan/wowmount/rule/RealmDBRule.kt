@@ -12,19 +12,7 @@ class RealmDBRule(private val mAppContext: Context) : TestRule {
     override fun apply(base: Statement, description: Description?) = object : Statement() {
         @Throws(Throwable::class)
         override fun evaluate() {
-            Realm.init(mAppContext)
-            RealmConfiguration.Builder()
-                    .inMemory()
-                    .name("test-realm")
-                    .build()
-            Realm.getDefaultInstance().apply {
-                beginTransaction()
-//                copyToRealm(java.getCHARACTER_ENTITY)
-//                java.getMOUNT_ENTITY_LIST.forEach { copyToRealm(it) }
-                commitTransaction()
-                close()
-            }
-            base.evaluate()
+
         }
     }
 

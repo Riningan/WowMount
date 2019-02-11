@@ -22,27 +22,25 @@ android {
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "CLIENT_ID", "\"9dbd799cb01a4ce194705b6cbf652875\""
         buildConfigField "String", "CLIENT_SECRET", getClientSecret()
-        testInstrumentationRunner = 'android.support.test.runner.AndroidJUnitRunner'
-//        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            proguardFiles fileTree('proguard').asList().toArray()
+            testProguardFile 'proguard-test-rules.pro'
         }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            proguardFiles fileTree('proguard').asList().toArray()
+            testProguardFile 'proguard-test-rules.pro'
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-        }
     }
     packagingOptions {
         exclude 'mockito-extensions/org.mockito.plugins.MockMaker'

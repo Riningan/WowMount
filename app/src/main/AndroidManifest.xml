@@ -23,7 +23,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".test.TestActivity" />
+        <activity
+            android:name=".test.TestActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"
