@@ -42,7 +42,6 @@
             android:inputType="text"
             android:maxLength="30"
             android:maxLines="1"
-            android:text="Гордунни"
             tools:targetApi="o" />
 
     </android.support.design.widget.TextInputLayout>
@@ -63,7 +62,6 @@
             android:inputType="text"
             android:maxLength="30"
             android:maxLines="1"
-            android:text="Квентис"
             tools:targetApi="o" />
 
     </android.support.design.widget.TextInputLayout>

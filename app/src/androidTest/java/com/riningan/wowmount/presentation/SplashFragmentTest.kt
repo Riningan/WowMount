@@ -46,8 +46,21 @@ class SplashFragmentTest {
 
 
     @Test
-    fun checkContainerIsDisplayed() {
+    fun checkContainer() {
         onView(withId(android.R.id.content)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun checkLayout() {
+        mAppRule.getMockedLocalPreferences().isActivated = false
+
+        mAppRule.launch(SplashFragment::class.java)
+
+        await().atMost(10, TimeUnit.SECONDS)
+                .ignoreExceptions()
+                .untilAsserted {
+                    onView(withId(R.id.cnslSplash)).check(matches(isDisplayed()))
+                }
     }
 
     /**
@@ -63,7 +76,9 @@ class SplashFragmentTest {
 
         await().atMost(10, TimeUnit.SECONDS)
                 .ignoreExceptions()
-                .untilAsserted { onView(withId(R.id.cnslAuthorization)).check(matches(isDisplayed())) }
+                .untilAsserted {
+                    onView(withId(R.id.cnslAuthorization)).check(matches(isDisplayed()))
+                }
     }
 
     /**
@@ -83,7 +98,9 @@ class SplashFragmentTest {
 
         await().atMost(10, TimeUnit.SECONDS)
                 .ignoreExceptions()
-                .untilAsserted { onView(withId(R.id.crdlMounts)).check(matches(isDisplayed())) }
+                .untilAsserted {
+                    onView(withId(R.id.crdlMounts)).check(matches(isDisplayed()))
+                }
     }
 
     /**
@@ -93,7 +110,7 @@ class SplashFragmentTest {
      * showError
      */
     @Test
-    fun routeToMountsButError() {
+    fun networkError() {
         mAppRule.getMockedLocalPreferences().isActivated = true
         mAppRule.getMockedLocalPreferences().server = REGION
         mAppRule.getMockedLocalPreferences().realmName = REALM
@@ -102,13 +119,13 @@ class SplashFragmentTest {
 
         mAppRule.launch(SplashFragment::class.java)
 
-        await().atMost(10, TimeUnit.SECONDS)
+        await().atMost(5, TimeUnit.SECONDS)
                 .ignoreExceptions()
-                .untilAsserted { onView(withId(android.support.design.R.id.snackbar_text)).check(matches(isDisplayed())) }
+                .untilAsserted {
+                    onView(withId(android.support.design.R.id.snackbar_text)).check(matches(isDisplayed()))
+                }
 
-        await().atMost(1, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted { onView(withId(R.id.cnslSplash)).check(matches(isDisplayed())) }
+        onView(withId(R.id.cnslSplash)).check(matches(isDisplayed()))
     }
 
     /**
@@ -119,7 +136,7 @@ class SplashFragmentTest {
      * go to AuthorizationFragment
      */
     @Test
-    fun routeToMountsButError401() {
+    fun authorizationError() {
         mAppRule.getMockedLocalPreferences().isActivated = true
         mAppRule.getMockedLocalPreferences().server = REGION
         mAppRule.getMockedLocalPreferences().realmName = REALM
@@ -130,7 +147,9 @@ class SplashFragmentTest {
 
         await().atMost(15, TimeUnit.SECONDS)
                 .ignoreExceptions()
-                .untilAsserted { onView(withId(R.id.cnslAuthorization)).check(matches(isDisplayed())) }
+                .untilAsserted {
+                    onView(withId(R.id.cnslAuthorization)).check(matches(isDisplayed()))
+                }
     }
 
     /**
@@ -151,6 +170,8 @@ class SplashFragmentTest {
 
         await().atMost(10, TimeUnit.SECONDS)
                 .ignoreExceptions()
-                .untilAsserted { onView(withId(R.id.cnslAuthorization)).check(matches(isDisplayed())) }
+                .untilAsserted {
+                    onView(withId(R.id.cnslAuthorization)).check(matches(isDisplayed()))
+                }
     }
 }

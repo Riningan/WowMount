@@ -9,7 +9,7 @@ import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
 
 
-class RequestDispatcher(private val mWithSlowConnection: Boolean = false) : Dispatcher() {
+class RequestDispatcher : Dispatcher() {
     override fun dispatch(request: RecordedRequest) = MockResponse().apply {
         when {
             request.path.contains("/wow/mount") -> setResponseCode(200).setBody(readAsset("mounts.json"))
@@ -17,9 +17,7 @@ class RequestDispatcher(private val mWithSlowConnection: Boolean = false) : Disp
             request.path.contains("/spreadsheets/d") -> setResponseCode(200).setBody(readAsset("spreadsheet.csv"))
             else -> setResponseCode(404)
         }
-        if (mWithSlowConnection) {
-            throttleBody(1024 * 50, 1, TimeUnit.SECONDS)
-        }
+        throttleBody(1024 * 50, 1, TimeUnit.SECONDS)
     }
 
 
