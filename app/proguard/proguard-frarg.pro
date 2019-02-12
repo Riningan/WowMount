@@ -1,2 +1,2 @@
 # Frarg
--keep public class com.riringan.frarg.** { *; }
+-keep public class com.riningan.frarg.** { *; }
