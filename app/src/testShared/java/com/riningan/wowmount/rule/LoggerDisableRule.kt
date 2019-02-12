@@ -10,9 +10,6 @@ class LoggerDisableRule : TestRule {
     override fun apply(base: Statement, description: Description?) = object : Statement() {
         override fun evaluate() {
             Logger.Config.setEnabled(false)
-//            val log: Log = mockk(relaxed = true)
-//            mockkStatic(Logger::class)
-//            every { Logger.forThis(any()) } returns log
             base.evaluate()
         }
     }

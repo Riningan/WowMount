@@ -15,13 +15,10 @@ import com.riningan.wowmount.dispatcher.ErrorDispatcher
 import com.riningan.wowmount.dispatcher.RequestDispatcher
 import com.riningan.wowmount.presentation.ui.splash.SplashFragment
 import com.riningan.wowmount.rule.AppRule
-import com.riningan.wowmount.rule.LogRule
-import com.riningan.wowmount.rule.LoggerDisableRule
 import okhttp3.mockwebserver.MockWebServer
 import org.awaitility.Awaitility.await
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.TimeUnit
@@ -29,11 +26,6 @@ import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class SplashFragmentTest {
-    @get: Rule
-    val mLogRule = LogRule()
-    @get: Rule
-    val mLoggerRule = LoggerDisableRule()
-    @get: Rule
     var mAppRule = AppRule()
 
     private lateinit var mWebServer: MockWebServer

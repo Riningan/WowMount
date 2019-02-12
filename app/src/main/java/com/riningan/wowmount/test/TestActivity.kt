@@ -28,11 +28,11 @@ class TestActivity : MvpAppCompatActivity(), KodeinAware {
         super.onCreate(null)
         setContentView(R.layout.activity_main)
 
-        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                        or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
-                        or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                        or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
-                        or WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON)
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or
+                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON or
+                WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON)
 
         mNavigator = Navigator(this, android.R.id.content)
     }
@@ -53,7 +53,7 @@ class TestActivity : MvpAppCompatActivity(), KodeinAware {
     }
 
 
-    fun setFragment(fragmentClass: Class<out BaseFragment>, data: Any?) {
+    fun setFragment(fragmentClass: Class<out BaseFragment>, data: Any? = null) {
         runOnUiThread {
             mRouter.newRootScreen(fragmentClass.canonicalName, data)
         }

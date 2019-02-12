@@ -15,6 +15,8 @@ class AppRule : TestRule {
     private var mRuleChain: RuleChain = RuleChain
             .outerRule(mKodeinDIMockRule)
             .around(mActivityTestRule)
+//            .around(LogRule())
+//            .around(LoggerDisableRule())
 
 
     override fun apply(base: Statement?, description: Description?): Statement =
@@ -26,7 +28,7 @@ class AppRule : TestRule {
     }
 
 
-    fun getActivity() = mActivityTestRule.activity
+    fun getActivity(): TestActivity = mActivityTestRule.activity
 
     fun getMockedLocalPreferences() = mKodeinDIMockRule.localPreferences
 }

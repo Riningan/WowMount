@@ -18,7 +18,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
+        multiDexEnabled false
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "CLIENT_ID", "\"9dbd799cb01a4ce194705b6cbf652875\""
         buildConfigField "String", "CLIENT_SECRET", getClientSecret()

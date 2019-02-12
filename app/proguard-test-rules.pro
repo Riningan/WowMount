@@ -1,28 +1,28 @@
-# Proguard rules run against the test module (split since Gradle plugin v 1.1.0)
--dontobfuscate
+-include proguard-rules.pro
+-keepattributes SourceFile,LineNumberTable
+
 -ignorewarnings
 
--keep class kotlin.** { *; }
--keep class kotlin.Metadata { *; }
--dontwarn kotlin.**
--keepclassmembers class **$WhenMappings {
-    <fields>;
-}
--keepclassmembers class kotlin.Metadata {
-    public <methods>;
-}
--assumenosideeffects class kotlin.jvm.internal.Intrinsics {
-    static void checkParameterIsNotNull(java.lang.Object, java.lang.String);
-}
+-keepattributes *Annotation*
 
-# Specific classes that common test libs warn about
+-dontnote junit.framework.**
+-dontnote junit.runner.**
+
+-dontwarn android.test.**
+-dontwarn android.support.test.**
+-dontwarn org.junit.**
+-dontwarn org.hamcrest.**
+-dontwarn com.squareup.javawriter.JavaWriter
 -dontwarn java.beans.**
 -dontwarn javax.lang.model.element.Modifier
 -dontwarn org.apache.tools.ant.**
 -dontwarn org.assertj.core.internal.cglib.asm.util.TraceClassVisitor
--dontwarn org.easymock.**
 -dontwarn io.mockk.**
 -dontwarn org.jmock.core.**
+-dontwarn org.mockito.**
+-dontwarn org.awaitility.core.**
+-dontwarn org.bouncycastle.jce.**
+-dontwarn org.bouncycastle.x509.**
 -dontwarn org.w3c.dom.bootstrap.**
 -dontwarn sun.misc.Unsafe
 -dontwarn sun.reflect.**

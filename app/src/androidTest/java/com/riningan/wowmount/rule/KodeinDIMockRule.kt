@@ -12,7 +12,6 @@ import com.riningan.wowmount.data.network.api.SpreadsheetApi
 import com.riningan.wowmount.data.preferences.LocalPreferences
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
-import io.realm.RealmConfiguration
 import okhttp3.OkHttpClient
 import org.junit.rules.TestRule
 import org.junit.runner.Description
@@ -70,11 +69,11 @@ class KodeinDIMockRule : TestRule {
 
     private val mDBHelper = object : DBHelper {
         init {
-            Realm.init(InstrumentationRegistry.getInstrumentation().targetContext)
-            RealmConfiguration.Builder()
-                    .inMemory()
-                    .name("test-realm")
-                    .build()
+//            Realm.init(InstrumentationRegistry.getInstrumentation().targetContext)
+//            RealmConfiguration.Builder()
+//                    .inMemory()
+//                    .name("test-realm")
+//                    .build()
         }
 
         override fun getDBInstance(): Realm = Realm.getDefaultInstance()
