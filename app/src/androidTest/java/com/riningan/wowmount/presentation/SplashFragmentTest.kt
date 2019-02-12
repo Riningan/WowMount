@@ -19,6 +19,7 @@ import okhttp3.mockwebserver.MockWebServer
 import org.awaitility.Awaitility.await
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.TimeUnit
@@ -26,6 +27,7 @@ import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class SplashFragmentTest {
+    @get: Rule
     var mAppRule = AppRule()
 
     private lateinit var mWebServer: MockWebServer
