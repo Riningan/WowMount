@@ -3,7 +3,11 @@ package com.riningan.wowmount.rule
 import android.support.test.InstrumentationRegistry
 import com.riningan.retrofit2.converter.csv.CsvConverterFactory
 import com.riningan.wowmount.app.WowMountApp
-import com.riningan.wowmount.app.di.*
+import com.riningan.wowmount.app.di.getContextModule
+import com.riningan.wowmount.app.di.getDataModule
+import com.riningan.wowmount.app.di.getInteractorsModule
+import com.riningan.wowmount.app.di.getPresentersModule
+import com.riningan.wowmount.app.di.getRouteModule
 import com.riningan.wowmount.data.db.DBHelper
 import com.riningan.wowmount.data.network.BlizzardApiClient
 import com.riningan.wowmount.data.network.TIMEOUT
@@ -12,6 +16,7 @@ import com.riningan.wowmount.data.network.api.SpreadsheetApi
 import com.riningan.wowmount.data.preferences.LocalPreferences
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
+import io.realm.RealmConfiguration
 import okhttp3.OkHttpClient
 import org.junit.rules.TestRule
 import org.junit.runner.Description
@@ -69,11 +74,11 @@ class KodeinDIMockRule : TestRule {
 
     private val mDBHelper = object : DBHelper {
         init {
-//            Realm.init(InstrumentationRegistry.getInstrumentation().targetContext)
-//            RealmConfiguration.Builder()
-//                    .inMemory()
-//                    .name("test-realm")
-//                    .build()
+            Realm.init(InstrumentationRegistry.getInstrumentation().targetContext)
+            RealmConfiguration.Builder()
+                    .inMemory()
+                    .name("test-realm")
+                    .build()
         }
 
         override fun getDBInstance(): Realm = Realm.getDefaultInstance()

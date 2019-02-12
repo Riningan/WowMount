@@ -15,8 +15,8 @@ class AppRule : TestRule {
     private var mRuleChain: RuleChain = RuleChain
             .outerRule(mKodeinDIMockRule)
             .around(mActivityTestRule)
-//            .around(LogRule())
-//            .around(LoggerDisableRule())
+            .around(LogRule())
+            .around(LoggerDisableRule())
 
 
     override fun apply(base: Statement?, description: Description?): Statement =

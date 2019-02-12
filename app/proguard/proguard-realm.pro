@@ -10,3 +10,6 @@
 -keep @io.realm.internal.Keep class *
 -dontwarn javax.**
 -dontwarn io.realm.**
+
+# for androidTest
+-keep class io.realm.RealmConfiguration$Builder { *; }
