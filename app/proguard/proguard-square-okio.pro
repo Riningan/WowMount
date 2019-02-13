@@ -4,5 +4,5 @@
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 -dontwarn okio.**
 
-# for androidTest
+# for MockWebServer in androidTest
 -keep class okio.Buffer { *; }
