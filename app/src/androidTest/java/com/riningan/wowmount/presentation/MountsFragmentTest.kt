@@ -5,7 +5,11 @@ import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.runner.AndroidJUnit4
+import com.riningan.wowmount.NAME
 import com.riningan.wowmount.R
+import com.riningan.wowmount.REALM
+import com.riningan.wowmount.REGION
+import com.riningan.wowmount.dispatcher.RequestDispatcher
 import com.riningan.wowmount.presentation.ui.mounts.MountsFragment
 import com.riningan.wowmount.rule.AppRule
 import okhttp3.mockwebserver.MockWebServer
@@ -45,7 +49,11 @@ class MountsFragmentTest {
 
     @Test
     fun checkLayout() {
-        mAppRule.getMockedLocalPreferences().isActivated = false
+        mAppRule.getMockedLocalPreferences().isActivated = true
+        mAppRule.getMockedLocalPreferences().server = REGION
+        mAppRule.getMockedLocalPreferences().realmName = REALM
+        mAppRule.getMockedLocalPreferences().characterName = NAME
+        mWebServer.setDispatcher(RequestDispatcher())
 
         mAppRule.launch(MountsFragment::class.java)
 

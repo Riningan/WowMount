@@ -30,15 +30,19 @@
     </string-array>
     <string name="mounts_logout_error">Can\'t logout</string>
 
+    <string name="mount_back">Back</string>
+
     <string name="about_title">About</string>
     <string name="about_version">Application version: %s</string>
     <string name="about_author">Author: Akhmarov Vadim (%s)</string>
     <string name="about_author_email">Vadim.akhmarov@gmail.com</string>
     <string name="about_code">Code source:\n</string>
     <string name="about_code_url">https://github.com/Riningan/WowMount</string>
+    <string name="about_back">Back</string>
 
     <string name="filter_title">Filter</string>
     <string name="filter_show_all">Show all mounts</string>
     <string name="filter_show_with_count">Show %d</string>
     <string name="filter_show_without_count">Show</string>
+    <string name="filter_back">Back</string>
 </resources>
