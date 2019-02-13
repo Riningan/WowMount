@@ -8,17 +8,13 @@ import com.riningan.wowmount.presentation.ui.filter.FilterPresenter
 import com.riningan.wowmount.presentation.ui.filter.FilterView
 import com.riningan.wowmount.presentation.ui.mounts.MountsFragment
 import com.riningan.wowmount.presentation.ui.splash.SplashFragment
-import com.riningan.wowmount.rule.KodeinMockRule
-import com.riningan.wowmount.rule.LogRule
-import com.riningan.wowmount.rule.LoggerDisableRule
-import com.riningan.wowmount.rule.RxSchedulersRule
-import com.riningan.wowmount.rule.WowMountExceptionsMockRule
+import com.riningan.wowmount.rule.*
 import com.riningan.wowmount.setPrivateField
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verifySequence
-import io.reactivex.Flowable
+import io.reactivex.Single
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -63,13 +59,13 @@ class FilterPresenterTest {
     @Test
     fun onStart_1() {
         setPrivateField(FilterPresenter::class, "mShowAll", mFilterPresenter, true)
-        every { mKodeinRule.characterInteractor.get() } returns Flowable.just(Pair(CHARACTER, MOUNT_LIST))
+        every { mKodeinRule.characterInteractor.update() } returns Single.just(Pair(CHARACTER, MOUNT_LIST))
 
         mFilterPresenter.onStart()
 
         verifySequence {
             mViewState.showProgress()
-            mKodeinRule.characterInteractor.get()
+            mKodeinRule.characterInteractor.update()
             mViewState.showButton(MOUNT_LIST.size)
         }
     }
@@ -81,13 +77,13 @@ class FilterPresenterTest {
     @Test
     fun onStart_2() {
         setPrivateField(FilterPresenter::class, "mShowAll", mFilterPresenter, false)
-        every { mKodeinRule.characterInteractor.get() } returns Flowable.just(Pair(CHARACTER, MOUNT_LIST))
+        every { mKodeinRule.characterInteractor.update() } returns Single.just(Pair(CHARACTER, MOUNT_LIST))
 
         mFilterPresenter.onStart()
 
         verifySequence {
             mViewState.showProgress()
-            mKodeinRule.characterInteractor.get()
+            mKodeinRule.characterInteractor.update()
             mViewState.showButton(CHARACTER_COLLECTED_MOUNT_LIST.size)
         }
     }
@@ -98,13 +94,13 @@ class FilterPresenterTest {
     @Test
     fun onStart_3() {
         setPrivateField(FilterPresenter::class, "mShowAll", mFilterPresenter, true)
-        every { mKodeinRule.characterInteractor.get() } returns Flowable.error(WowMountExceptions.IOException())
+        every { mKodeinRule.characterInteractor.update() } returns Single.error(WowMountExceptions.IOException())
 
         mFilterPresenter.onStart()
 
         verifySequence {
             mViewState.showProgress()
-            mKodeinRule.characterInteractor.get()
+            mKodeinRule.characterInteractor.update()
             mViewState.showError(any())
         }
     }
@@ -115,13 +111,13 @@ class FilterPresenterTest {
     @Test
     fun onStart_4() {
         setPrivateField(FilterPresenter::class, "mShowAll", mFilterPresenter, true)
-        every { mKodeinRule.characterInteractor.get() } returns Flowable.error(WowMountExceptions.AuthorizedException())
+        every { mKodeinRule.characterInteractor.update() } returns Single.error(WowMountExceptions.AuthorizedException())
 
         mFilterPresenter.onStart()
 
         verifySequence {
             mViewState.showProgress()
-            mKodeinRule.characterInteractor.get()
+            mKodeinRule.characterInteractor.update()
             mViewState.showError(any())
             mKodeinRule.router.newRootScreen(SplashFragment::class.java.canonicalName, any())
         }
@@ -139,7 +135,7 @@ class FilterPresenterTest {
     @Test
     fun onShowAllChecked() {
         setPrivateField(FilterPresenter::class, "mShowAll", mFilterPresenter, true)
-        every { mKodeinRule.characterInteractor.get() } returns Flowable.just(Pair(CHARACTER, MOUNT_LIST))
+        every { mKodeinRule.characterInteractor.update() } returns Single.just(Pair(CHARACTER, MOUNT_LIST))
 
         // call it before for create subject
         mFilterPresenter.onStart()
@@ -148,11 +144,11 @@ class FilterPresenterTest {
         verifySequence {
             // onStart
             mViewState.showProgress()
-            mKodeinRule.characterInteractor.get()
+            mKodeinRule.characterInteractor.update()
             mViewState.showButton(MOUNT_LIST.size)
             // onShowAllChecked
             mViewState.showProgress()
-            mKodeinRule.characterInteractor.get()
+            mKodeinRule.characterInteractor.update()
             mViewState.showButton(CHARACTER_COLLECTED_MOUNT_LIST.size)
         }
     }

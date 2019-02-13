@@ -12,7 +12,7 @@ import com.riningan.wowmount.domain.interactor.CharacterInteractor
 import com.riningan.wowmount.presentation.ui.base.BasePresenter
 import com.riningan.wowmount.presentation.ui.mounts.MountsFragment
 import com.riningan.wowmount.presentation.ui.splash.SplashFragment
-import io.reactivex.processors.PublishProcessor
+import io.reactivex.subjects.PublishSubject
 import org.kodein.di.Kodein
 import org.kodein.di.generic.instance
 import ru.terrakok.cicerone.Router
@@ -27,7 +27,7 @@ class FilterPresenter constructor(kodein: Kodein) : BasePresenter<FilterView>() 
     private val mCharacterInteractor: CharacterInteractor by kodein.instance()
     @Argument
     private var mShowAll: Boolean = true
-    private var mFilterSubject: PublishProcessor<Boolean> = PublishProcessor.create()
+    private var mFilterSubject: PublishSubject<Boolean> = PublishSubject.create()
 
 
     fun onViewCreated() {
@@ -40,7 +40,7 @@ class FilterPresenter constructor(kodein: Kodein) : BasePresenter<FilterView>() 
         mFilterSubject
                 .doOnNext { viewState.showProgress() }
                 .debounce(400, TimeUnit.MILLISECONDS)
-                .flatMap { mCharacterInteractor.get() }
+                .flatMap { mCharacterInteractor.update().toObservable() }
                 .map { it.second }
                 .map { mounts -> if (mShowAll) mounts else mounts.filter { it.isCollected } }
                 .subscribe({
