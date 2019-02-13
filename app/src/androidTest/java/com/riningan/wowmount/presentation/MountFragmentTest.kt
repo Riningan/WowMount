@@ -3,13 +3,13 @@ package com.riningan.wowmount.presentation
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.*
+import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
+import android.support.test.espresso.matcher.ViewMatchers.withContentDescription
+import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.runner.AndroidJUnit4
 import com.riningan.frarg.processor.MountFragmentArgs
-import com.riningan.wowmount.NAME
 import com.riningan.wowmount.R
-import com.riningan.wowmount.REALM
-import com.riningan.wowmount.REGION
 import com.riningan.wowmount.dispatcher.Error401Dispatcher
 import com.riningan.wowmount.dispatcher.ErrorDispatcher
 import com.riningan.wowmount.dispatcher.RequestDispatcher
@@ -38,6 +38,8 @@ class MountFragmentTest {
     fun setup() {
         mWebServer = MockWebServer()
         mWebServer.start(8080)
+
+        mAppRule.getMockedDI().setAuthorized()
     }
 
     @After
@@ -53,10 +55,6 @@ class MountFragmentTest {
 
     @Test
     fun checkLayout() {
-        mAppRule.getMockedLocalPreferences().isActivated = true
-        mAppRule.getMockedLocalPreferences().server = REGION
-        mAppRule.getMockedLocalPreferences().realmName = REALM
-        mAppRule.getMockedLocalPreferences().characterName = NAME
         mWebServer.setDispatcher(RequestDispatcher())
 
         mAppRule.launch(MountFragment::class.java, MountFragmentArgs("only for animation", "Ковер-самолет/44554/3"))
@@ -70,10 +68,6 @@ class MountFragmentTest {
 
     @Test
     fun checkToolbar() {
-        mAppRule.getMockedLocalPreferences().isActivated = true
-        mAppRule.getMockedLocalPreferences().server = REGION
-        mAppRule.getMockedLocalPreferences().realmName = REALM
-        mAppRule.getMockedLocalPreferences().characterName = NAME
         mWebServer.setDispatcher(RequestDispatcher())
 
         mAppRule.launch(MountFragment::class.java, MountFragmentArgs("only for animation", "Ковер-самолет/44554/3"))
@@ -93,10 +87,6 @@ class MountFragmentTest {
 
     @Test
     fun error() {
-        mAppRule.getMockedLocalPreferences().isActivated = true
-        mAppRule.getMockedLocalPreferences().server = REGION
-        mAppRule.getMockedLocalPreferences().realmName = REALM
-        mAppRule.getMockedLocalPreferences().characterName = NAME
         mWebServer.setDispatcher(ErrorDispatcher())
 
         mAppRule.launch(MountFragment::class.java, MountFragmentArgs("only for animation", "Ковер-самолет/44554/3"))
@@ -116,10 +106,6 @@ class MountFragmentTest {
 
     @Test
     fun error401() {
-        mAppRule.getMockedLocalPreferences().isActivated = true
-        mAppRule.getMockedLocalPreferences().server = REGION
-        mAppRule.getMockedLocalPreferences().realmName = REALM
-        mAppRule.getMockedLocalPreferences().characterName = NAME
         mWebServer.setDispatcher(Error401Dispatcher())
 
         mAppRule.launch(MountFragment::class.java, MountFragmentArgs("only for animation", "Ковер-самолет/44554/3"))
@@ -145,10 +131,6 @@ class MountFragmentTest {
 
     @Test
     fun backClick() {
-        mAppRule.getMockedLocalPreferences().isActivated = true
-        mAppRule.getMockedLocalPreferences().server = REGION
-        mAppRule.getMockedLocalPreferences().realmName = REALM
-        mAppRule.getMockedLocalPreferences().characterName = NAME
         mWebServer.setDispatcher(RequestDispatcher())
 
         mAppRule.launch(MountFragment::class.java, MountFragmentArgs("only for animation", "Ковер-самолет/44554/3"))

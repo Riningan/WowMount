@@ -3,7 +3,9 @@ package com.riningan.wowmount.presentation
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.*
+import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
+import android.support.test.espresso.matcher.ViewMatchers.withContentDescription
+import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.runner.AndroidJUnit4
 import com.riningan.wowmount.R
 import com.riningan.wowmount.presentation.ui.about.AboutFragment
@@ -29,8 +31,7 @@ class AboutFragmentTest {
 
     @Test
     fun checkLayout() {
-        mAppRule.getMockedLocalPreferences().isActivated = false
-
+        mAppRule.getMockedDI().setAuthorized()
         mAppRule.launch(AboutFragment::class.java)
 
         await().atMost(10, TimeUnit.SECONDS)
@@ -42,6 +43,7 @@ class AboutFragmentTest {
 
     @Test
     fun backClick() {
+        mAppRule.getMockedDI().setAuthorized()
         mAppRule.launch(AboutFragment::class.java)
 
         await().atMost(10, TimeUnit.SECONDS)

@@ -6,15 +6,16 @@ import android.support.test.espresso.UiController
 import android.support.test.espresso.ViewAction
 import android.support.test.espresso.action.ViewActions.actionWithAssertions
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.*
+import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
+import android.support.test.espresso.matcher.ViewMatchers.isChecked
+import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
+import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.widget.ProgressBar
 import com.riningan.frarg.processor.FilterFragmentArgs
-import com.riningan.wowmount.NAME
 import com.riningan.wowmount.R
-import com.riningan.wowmount.REALM
-import com.riningan.wowmount.REGION
 import com.riningan.wowmount.dispatcher.RequestDispatcher
 import com.riningan.wowmount.presentation.ui.filter.FilterFragment
 import com.riningan.wowmount.rule.AppRule
@@ -42,6 +43,8 @@ class FilterFragmentTest {
     fun setup() {
         mWebServer = MockWebServer()
         mWebServer.start(8080)
+
+        mAppRule.getMockedDI().setAuthorized()
     }
 
     @After
@@ -68,10 +71,6 @@ class FilterFragmentTest {
 
     @Test
     fun checkShow() {
-        mAppRule.getMockedLocalPreferences().isActivated = true
-        mAppRule.getMockedLocalPreferences().server = REGION
-        mAppRule.getMockedLocalPreferences().realmName = REALM
-        mAppRule.getMockedLocalPreferences().characterName = NAME
         mWebServer.setDispatcher(RequestDispatcher())
 
         mAppRule.launch(FilterFragment::class.java, FilterFragmentArgs(false))

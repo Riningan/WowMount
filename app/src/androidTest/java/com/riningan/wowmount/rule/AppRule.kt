@@ -30,5 +30,5 @@ class AppRule : TestRule {
 
     fun getActivity(): TestActivity = mActivityTestRule.activity
 
-    fun getMockedLocalPreferences() = mKodeinDIMockRule.localPreferences
+    fun getMockedDI() = mKodeinDIMockRule
 }

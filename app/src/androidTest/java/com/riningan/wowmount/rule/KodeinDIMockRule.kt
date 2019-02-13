@@ -2,6 +2,14 @@ package com.riningan.wowmount.rule
 
 import android.support.test.InstrumentationRegistry
 import com.riningan.retrofit2.converter.csv.CsvConverterFactory
+import com.riningan.wowmount.CHARACTER_ENTITY
+import com.riningan.wowmount.MOUNT_ENTITY_1
+import com.riningan.wowmount.MOUNT_ENTITY_2
+import com.riningan.wowmount.MOUNT_ENTITY_3
+import com.riningan.wowmount.MOUNT_ENTITY_4
+import com.riningan.wowmount.NAME
+import com.riningan.wowmount.REALM
+import com.riningan.wowmount.REGION
 import com.riningan.wowmount.app.WowMountApp
 import com.riningan.wowmount.app.di.getContextModule
 import com.riningan.wowmount.app.di.getDataModule
@@ -9,6 +17,8 @@ import com.riningan.wowmount.app.di.getInteractorsModule
 import com.riningan.wowmount.app.di.getPresentersModule
 import com.riningan.wowmount.app.di.getRouteModule
 import com.riningan.wowmount.data.db.DBHelper
+import com.riningan.wowmount.data.db.model.CharacterEntity
+import com.riningan.wowmount.data.db.model.MountEntity
 import com.riningan.wowmount.data.network.BlizzardApiClient
 import com.riningan.wowmount.data.network.TIMEOUT
 import com.riningan.wowmount.data.network.api.BlizzardApi
@@ -31,23 +41,6 @@ import java.util.concurrent.TimeUnit
 
 
 class KodeinDIMockRule : TestRule {
-    val localPreferences = object : LocalPreferences {
-        override var isActivated: Boolean = false
-        override var server: String = ""
-        override var realmName: String = ""
-        override var characterName: String = ""
-        override var accessToken: String = ""
-        override var showAll: Boolean = true
-
-
-        override fun clear() {
-            isActivated = false
-            server = ""
-            realmName = ""
-            characterName = ""
-        }
-    }
-
     private val mOkHttpClient = OkHttpClient().newBuilder()
             .readTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
             .connectTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
@@ -72,18 +65,6 @@ class KodeinDIMockRule : TestRule {
             .build()
             .create(SpreadsheetApi::class.java)
 
-    private val mDBHelper = object : DBHelper {
-        init {
-            Realm.init(InstrumentationRegistry.getInstrumentation().targetContext)
-            RealmConfiguration.Builder()
-                    .inMemory()
-                    .name("test-realm")
-                    .build()
-        }
-
-        override fun getDBInstance(): Realm = Realm.getDefaultInstance()
-    }
-
 
     override fun apply(base: Statement, description: Description?) = object : Statement() {
         override fun evaluate() {
@@ -92,7 +73,24 @@ class KodeinDIMockRule : TestRule {
                 clear()
                 addImport(getContextModule())
                 addImport(Kodein.Module("Preferences") {
-                    bind<LocalPreferences>() with singleton { localPreferences }
+                    bind<LocalPreferences>() with singleton {
+                        object : LocalPreferences {
+                            override var isActivated: Boolean = false
+                            override var server: String = ""
+                            override var realmName: String = ""
+                            override var characterName: String = ""
+                            override var accessToken: String = ""
+                            override var showAll: Boolean = true
+
+
+                            override fun clear() {
+                                isActivated = false
+                                server = ""
+                                realmName = ""
+                                characterName = ""
+                            }
+                        }
+                    }
                 })
                 addImport(Kodein.Module(name = "Network") {
                     bind<BlizzardApiClient>() with singleton { BlizzardApiClient(mOkHttpClient) }
@@ -100,7 +98,19 @@ class KodeinDIMockRule : TestRule {
                     bind<SpreadsheetApi>() with singleton { mSpreadsheetApi }
                 })
                 addImport(Kodein.Module(name = "DB") {
-                    bind<DBHelper>() with singleton { mDBHelper }
+                    bind<DBHelper>() with singleton {
+                        object : DBHelper {
+                            init {
+                                Realm.init(InstrumentationRegistry.getInstrumentation().targetContext)
+                                RealmConfiguration.Builder()
+                                        .inMemory()
+                                        .name("test-realm")
+                                        .build()
+                            }
+
+                            override fun getDBInstance(): Realm = Realm.getDefaultInstance()
+                        }
+                    }
                 })
                 addImport(getDataModule())
                 addImport(getInteractorsModule())
@@ -108,6 +118,30 @@ class KodeinDIMockRule : TestRule {
                 addImport(getPresentersModule())
             }
             base.evaluate()
+        }
+    }
+
+
+    fun setAuthorized() {
+        val app = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as WowMountApp
+        val localPreferences by app.kodein.instance<LocalPreferences>()
+        localPreferences.isActivated = true
+        localPreferences.server = REGION
+        localPreferences.realmName = REALM
+        localPreferences.characterName = NAME
+
+        val dbHelper by app.kodein.instance<DBHelper>()
+        dbHelper.getDBInstance().apply {
+            beginTransaction()
+            delete(CharacterEntity::class.java)
+            copyToRealm(CHARACTER_ENTITY)
+            delete(MountEntity::class.java)
+            copyToRealm(MOUNT_ENTITY_1)
+            copyToRealm(MOUNT_ENTITY_2)
+            copyToRealm(MOUNT_ENTITY_3)
+            copyToRealm(MOUNT_ENTITY_4)
+            commitTransaction()
+            close()
         }
     }
 

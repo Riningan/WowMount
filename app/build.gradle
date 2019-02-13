@@ -18,25 +18,25 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        multiDexEnabled false
+        multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "CLIENT_ID", "\"9dbd799cb01a4ce194705b6cbf652875\""
         buildConfigField "String", "CLIENT_SECRET", getClientSecret()
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        debug {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-            proguardFiles fileTree('proguard').asList().toArray()
-            testProguardFile 'proguard-test-rules.pro'
-        }
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-            proguardFiles fileTree('proguard').asList().toArray()
-            testProguardFile 'proguard-test-rules.pro'
-        }
+//        debug {
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+//            proguardFiles fileTree('proguard').asList().toArray()
+//            testProguardFile 'proguard-test-rules.pro'
+//        }
+//        release {
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+//            proguardFiles fileTree('proguard').asList().toArray()
+//            testProguardFile 'proguard-test-rules.pro'
+//        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -70,6 +70,7 @@ ext {
     powermock_version = "1.7.1"
     support_test_version = "1.0.2"
     mockk_version = "1.9"
+    espresso_version = "3.0.2"
 }
 
 dependencies {
@@ -147,6 +148,7 @@ dependencies {
     androidTestImplementation 'org.awaitility:awaitility:3.1.5'
     androidTestImplementation "com.android.support.test:rules:$support_test_version"
     androidTestImplementation "com.android.support.test:runner:$support_test_version"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:3.0.2"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espresso_version"
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:3.10.0"
 }

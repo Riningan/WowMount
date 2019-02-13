@@ -6,10 +6,7 @@ import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.runner.AndroidJUnit4
 import com.riningan.frarg.processor.SplashFragmentArgs
-import com.riningan.wowmount.NAME
 import com.riningan.wowmount.R
-import com.riningan.wowmount.REALM
-import com.riningan.wowmount.REGION
 import com.riningan.wowmount.dispatcher.Error401Dispatcher
 import com.riningan.wowmount.dispatcher.ErrorDispatcher
 import com.riningan.wowmount.dispatcher.RequestDispatcher
@@ -52,8 +49,6 @@ class SplashFragmentTest {
 
     @Test
     fun checkLayout() {
-        mAppRule.getMockedLocalPreferences().isActivated = false
-
         mAppRule.launch(SplashFragment::class.java)
 
         await().atMost(10, TimeUnit.SECONDS)
@@ -70,8 +65,6 @@ class SplashFragmentTest {
      */
     @Test
     fun routeToAuthorisation() {
-        mAppRule.getMockedLocalPreferences().isActivated = false
-
         mAppRule.launch(SplashFragment::class.java)
 
         await().atMost(10, TimeUnit.SECONDS)
@@ -88,10 +81,7 @@ class SplashFragmentTest {
      */
     @Test
     fun routeToMounts() {
-        mAppRule.getMockedLocalPreferences().isActivated = true
-        mAppRule.getMockedLocalPreferences().server = REGION
-        mAppRule.getMockedLocalPreferences().realmName = REALM
-        mAppRule.getMockedLocalPreferences().characterName = NAME
+        mAppRule.getMockedDI().setAuthorized()
         mWebServer.setDispatcher(RequestDispatcher())
 
         mAppRule.launch(SplashFragment::class.java)
@@ -111,10 +101,7 @@ class SplashFragmentTest {
      */
     @Test
     fun networkError() {
-        mAppRule.getMockedLocalPreferences().isActivated = true
-        mAppRule.getMockedLocalPreferences().server = REGION
-        mAppRule.getMockedLocalPreferences().realmName = REALM
-        mAppRule.getMockedLocalPreferences().characterName = NAME
+        mAppRule.getMockedDI().setAuthorized()
         mWebServer.setDispatcher(ErrorDispatcher())
 
         mAppRule.launch(SplashFragment::class.java)
@@ -137,10 +124,7 @@ class SplashFragmentTest {
      */
     @Test
     fun authorizationError() {
-        mAppRule.getMockedLocalPreferences().isActivated = true
-        mAppRule.getMockedLocalPreferences().server = REGION
-        mAppRule.getMockedLocalPreferences().realmName = REALM
-        mAppRule.getMockedLocalPreferences().characterName = NAME
+        mAppRule.getMockedDI().setAuthorized()
         mWebServer.setDispatcher(Error401Dispatcher())
 
         mAppRule.launch(SplashFragment::class.java)
@@ -161,10 +145,7 @@ class SplashFragmentTest {
      */
     @Test
     fun logout() {
-        mAppRule.getMockedLocalPreferences().isActivated = true
-        mAppRule.getMockedLocalPreferences().server = REGION
-        mAppRule.getMockedLocalPreferences().realmName = REALM
-        mAppRule.getMockedLocalPreferences().characterName = NAME
+        mAppRule.getMockedDI().setAuthorized()
 
         mAppRule.launch(SplashFragment::class.java, SplashFragmentArgs(true))
 
