@@ -96,7 +96,7 @@ class SplashFragmentTest {
 
         mAppRule.launch(SplashFragment::class.java)
 
-        await().atMost(10, TimeUnit.SECONDS)
+        await().atMost(15, TimeUnit.SECONDS)
                 .ignoreExceptions()
                 .untilAsserted {
                     onView(withId(R.id.crdlMounts)).check(matches(isDisplayed()))

@@ -17,7 +17,7 @@ class RequestDispatcher : Dispatcher() {
             request.path.contains("/spreadsheets/d") -> setResponseCode(200).setBody(readAsset("spreadsheet.csv"))
             else -> setResponseCode(404)
         }
-        throttleBody(1024 * 20, 1, TimeUnit.SECONDS)
+        throttleBody(1024 * 50, 1, TimeUnit.SECONDS)
     }
 
 

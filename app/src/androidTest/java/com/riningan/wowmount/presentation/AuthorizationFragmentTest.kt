@@ -143,7 +143,7 @@ class AuthorizationFragmentTest {
         onView(withId(R.id.pbAuthorization)).check(matches(isDisplayed()))
         onView(withId(R.id.btnAuthorizationShow)).check(matches(not(isDisplayed())))
 
-        await().atMost(10, TimeUnit.SECONDS)
+        await().atMost(15, TimeUnit.SECONDS)
                 .ignoreExceptions()
                 .untilAsserted {
                     onView(withId(R.id.crdlMounts)).check(matches(isDisplayed()))
