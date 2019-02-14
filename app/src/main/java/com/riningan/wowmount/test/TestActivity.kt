@@ -2,6 +2,9 @@ package com.riningan.wowmount.test
 
 import android.os.Bundle
 import android.support.annotation.RestrictTo
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.view.View
 import android.view.WindowManager
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.riningan.wowmount.R
@@ -35,6 +38,12 @@ class TestActivity : MvpAppCompatActivity(), KodeinAware {
                 WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON)
 
         mNavigator = Navigator(this, android.R.id.content)
+
+        supportFragmentManager.registerFragmentLifecycleCallbacks(object : FragmentManager.FragmentLifecycleCallbacks() {
+            override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
+                super.onFragmentViewCreated(fm, f, v, savedInstanceState)
+            }
+        }, true)
     }
 
     override fun onResume() {
