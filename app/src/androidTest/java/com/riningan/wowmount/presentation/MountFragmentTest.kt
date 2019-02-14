@@ -3,7 +3,9 @@ package com.riningan.wowmount.presentation
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.*
+import android.support.test.espresso.matcher.ViewMatchers.withContentDescription
+import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.runner.AndroidJUnit4
 import com.riningan.frarg.processor.MountFragmentArgs
 import com.riningan.wowmount.R
@@ -14,7 +16,6 @@ import com.riningan.wowmount.presentation.ui.mount.MountFragment
 import okhttp3.mockwebserver.MockWebServer
 import org.awaitility.Awaitility.await
 import org.junit.After
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,6 +24,7 @@ import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class MountFragmentTest : BaseTest() {
+    private val mountFragmentArgs = MountFragmentArgs("only for animation", "Ковер-самолет/44554/3")
     private lateinit var mWebServer: MockWebServer
 
 
@@ -44,7 +46,7 @@ class MountFragmentTest : BaseTest() {
     fun checkLayout() {
         mWebServer.setDispatcher(RequestDispatcher())
 
-        mAppRule.launch(MountFragment::class.java, MountFragmentArgs("only for animation", "Ковер-самолет/44554/3"))
+        mAppRule.launch(MountFragment::class.java, mountFragmentArgs)
 
         waitCheckFragmentIsDisplayed(R.id.llMount)
     }
@@ -53,7 +55,7 @@ class MountFragmentTest : BaseTest() {
     fun checkToolbar() {
         mWebServer.setDispatcher(RequestDispatcher())
 
-        mAppRule.launch(MountFragment::class.java, MountFragmentArgs("only for animation", "Ковер-самолет/44554/3"))
+        mAppRule.launch(MountFragment::class.java, mountFragmentArgs)
 
         waitCheckFragmentIsDisplayed(R.id.llMount)
         await().atMost(10, TimeUnit.SECONDS)
@@ -67,7 +69,7 @@ class MountFragmentTest : BaseTest() {
     fun error() {
         mWebServer.setDispatcher(ErrorDispatcher())
 
-        mAppRule.launch(MountFragment::class.java, MountFragmentArgs("only for animation", "Ковер-самолет/44554/3"))
+        mAppRule.launch(MountFragment::class.java, mountFragmentArgs)
 
         waitCheckFragmentIsDisplayed(R.id.llMount)
         waitCheckSnackbarIsDisplayed()
@@ -77,7 +79,7 @@ class MountFragmentTest : BaseTest() {
     fun error401() {
         mWebServer.setDispatcher(Error401Dispatcher())
 
-        mAppRule.launch(MountFragment::class.java, MountFragmentArgs("only for animation", "Ковер-самолет/44554/3"))
+        mAppRule.launch(MountFragment::class.java, mountFragmentArgs)
 
         waitCheckFragmentIsDisplayed(R.id.llMount)
         waitCheckSnackbarIsDisplayed()
@@ -88,14 +90,10 @@ class MountFragmentTest : BaseTest() {
     fun backClick() {
         mWebServer.setDispatcher(RequestDispatcher())
 
-        mAppRule.launch(MountFragment::class.java, MountFragmentArgs("only for animation", "Ковер-самолет/44554/3"))
+        mAppRule.launch(MountFragment::class.java, mountFragmentArgs)
 
         waitCheckFragmentIsDisplayed(R.id.llMount)
         onView(withContentDescription(R.string.mount_back)).perform(click())
-        await().atMost(15, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    assertTrue(mAppRule.getActivity().isDestroyed)
-                }
+        waitCheckExit()
     }
 }

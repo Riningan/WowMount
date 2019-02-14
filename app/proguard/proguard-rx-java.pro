@@ -1,5 +1,4 @@
 # RxJava 0.21
-
 -keep class rx.schedulers.Schedulers {
     public static <methods>;
 }

@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.support.annotation.RestrictTo
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import android.support.v4.content.ContextCompat
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ProgressBar
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.riningan.wowmount.R
 import com.riningan.wowmount.presentation.route.Navigator
@@ -42,6 +45,7 @@ class TestActivity : MvpAppCompatActivity(), KodeinAware {
         supportFragmentManager.registerFragmentLifecycleCallbacks(object : FragmentManager.FragmentLifecycleCallbacks() {
             override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
                 super.onFragmentViewCreated(fm, f, v, savedInstanceState)
+                disableAnimation(v)
             }
         }, true)
     }
@@ -65,6 +69,19 @@ class TestActivity : MvpAppCompatActivity(), KodeinAware {
     fun setFragment(fragmentClass: Class<out BaseFragment>, data: Any? = null) {
         runOnUiThread {
             mRouter.newRootScreen(fragmentClass.canonicalName, data)
+        }
+    }
+
+
+    private fun disableAnimation(view: View) {
+        if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                val child = view.getChildAt(i)
+                disableAnimation(child)
+            }
+        } else if (view is ProgressBar) {
+            val notAnimatedDrawable = ContextCompat.getDrawable(applicationContext, R.mipmap.ic_launcher)
+            view.indeterminateDrawable = notAnimatedDrawable
         }
     }
 }

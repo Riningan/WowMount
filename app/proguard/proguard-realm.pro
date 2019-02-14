@@ -13,3 +13,8 @@
 
 # for androidTest
 -keep class io.realm.RealmConfiguration$Builder { *; }
+-keep class io.realm.ImportFlag
+-keep class io.realm.RealmModel
+-keep class io.realm.Realm {
+    public io.realm.RealmModel copyToRealm(io.realm.RealmModel, io.realm.ImportFlag[]);
+}
