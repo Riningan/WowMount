@@ -11,22 +11,15 @@ import com.riningan.wowmount.dispatcher.Error401Dispatcher
 import com.riningan.wowmount.dispatcher.ErrorDispatcher
 import com.riningan.wowmount.dispatcher.RequestDispatcher
 import com.riningan.wowmount.presentation.ui.splash.SplashFragment
-import com.riningan.wowmount.rule.AppRule
 import okhttp3.mockwebserver.MockWebServer
-import org.awaitility.Awaitility.await
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.concurrent.TimeUnit
 
 
 @RunWith(AndroidJUnit4::class)
-class SplashFragmentTest {
-    @get: Rule
-    var mAppRule = AppRule()
-
+class SplashFragmentTest : BaseTest() {
     private lateinit var mWebServer: MockWebServer
 
 
@@ -43,19 +36,10 @@ class SplashFragmentTest {
 
 
     @Test
-    fun checkContainer() {
-        onView(withId(android.R.id.content)).check(matches(isDisplayed()))
-    }
-
-    @Test
     fun checkLayout() {
         mAppRule.launch(SplashFragment::class.java)
 
-        await().atMost(10, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.cnslSplash)).check(matches(isDisplayed()))
-                }
+        waitCheckFragmentIsDisplayed(R.id.cnslSplash)
     }
 
     /**
@@ -67,11 +51,8 @@ class SplashFragmentTest {
     fun routeToAuthorisation() {
         mAppRule.launch(SplashFragment::class.java)
 
-        await().atMost(10, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.cnslAuthorization)).check(matches(isDisplayed()))
-                }
+        waitCheckFragmentIsDisplayed(R.id.cnslSplash)
+        waitCheckFragmentIsDisplayed(R.id.cnslAuthorization)
     }
 
     /**
@@ -86,11 +67,8 @@ class SplashFragmentTest {
 
         mAppRule.launch(SplashFragment::class.java)
 
-        await().atMost(15, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.crdlMounts)).check(matches(isDisplayed()))
-                }
+        waitCheckFragmentIsDisplayed(R.id.cnslSplash)
+        waitCheckFragmentIsDisplayed(R.id.crdlMounts)
     }
 
     /**
@@ -106,12 +84,8 @@ class SplashFragmentTest {
 
         mAppRule.launch(SplashFragment::class.java)
 
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(android.support.design.R.id.snackbar_text)).check(matches(isDisplayed()))
-                }
-
+        waitCheckFragmentIsDisplayed(R.id.cnslSplash)
+        waitCheckSnackbarIsDisplayed()
         onView(withId(R.id.cnslSplash)).check(matches(isDisplayed()))
     }
 
@@ -129,11 +103,8 @@ class SplashFragmentTest {
 
         mAppRule.launch(SplashFragment::class.java)
 
-        await().atMost(15, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.cnslAuthorization)).check(matches(isDisplayed()))
-                }
+        waitCheckFragmentIsDisplayed(R.id.cnslSplash)
+        waitCheckFragmentIsDisplayed(R.id.cnslAuthorization)
     }
 
     /**
@@ -149,10 +120,7 @@ class SplashFragmentTest {
 
         mAppRule.launch(SplashFragment::class.java, SplashFragmentArgs(true))
 
-        await().atMost(10, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.cnslAuthorization)).check(matches(isDisplayed()))
-                }
+        waitCheckFragmentIsDisplayed(R.id.cnslSplash)
+        waitCheckFragmentIsDisplayed(R.id.cnslAuthorization)
     }
 }

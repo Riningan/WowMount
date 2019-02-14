@@ -5,7 +5,7 @@ import android.util.TypedValue
 import com.riningan.wowmount.app.WowMountApp
 
 
-fun Int.isZero() = this == 0
+//fun Int.isZero() = this == 0
 
 fun Int.isNotZero() = this != 0
 
@@ -23,11 +23,11 @@ inline fun <T> Iterable<T>.isContain(predicate: (T) -> Boolean): Boolean {
 inline fun ViewPager.onPageScrollStateChanged(crossinline action: (state: Int) -> Unit) =
         setOnPageChangeListener(onPageScrollStateChanged = action)
 
-inline fun ViewPager.onPageScrolled(crossinline action: (position: Int, positionOffset: Float, positionOffsetPixels: Int) -> Unit) =
-        setOnPageChangeListener(onPageScrolled = action)
-
-inline fun ViewPager.onPageSelected(crossinline action: (position: Int) -> Unit) =
-        setOnPageChangeListener(onPageSelected = action)
+//inline fun ViewPager.onPageScrolled(crossinline action: (position: Int, positionOffset: Float, positionOffsetPixels: Int) -> Unit) =
+//        setOnPageChangeListener(onPageScrolled = action)
+//
+//inline fun ViewPager.onPageSelected(crossinline action: (position: Int) -> Unit) =
+//        setOnPageChangeListener(onPageSelected = action)
 
 inline fun ViewPager.setOnPageChangeListener(
         crossinline onPageScrollStateChanged: (state: Int) -> Unit = {},

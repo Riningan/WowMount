@@ -5,7 +5,6 @@ import com.riningan.wowmount.domain.SchedulersProvider
 import com.riningan.wowmount.domain.WowMountExceptions.Companion.throwableCast
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.reactivex.Single
 
 
@@ -14,9 +13,9 @@ abstract class BaseInteractor(private val mSchedulersProvider: SchedulersProvide
             .subscribeOn(mSchedulersProvider.executorThread())
             .observeOn(mSchedulersProvider.postExecutionThread(), true)
 
-    protected fun <T> Observable<T>.execution(): Observable<T> = this
-            .subscribeOn(mSchedulersProvider.executorThread())
-            .observeOn(mSchedulersProvider.postExecutionThread(), true)
+//    protected fun <T> Observable<T>.execution(): Observable<T> = this
+//            .subscribeOn(mSchedulersProvider.executorThread())
+//            .observeOn(mSchedulersProvider.postExecutionThread(), true)
 
     protected fun <T> Single<T>.execution(): Single<T> = this
             .subscribeOn(mSchedulersProvider.executorThread())
@@ -33,11 +32,11 @@ abstract class BaseInteractor(private val mSchedulersProvider: SchedulersProvide
                 Flowable.error(throwableCast(it))
             }
 
-    protected fun <T> Observable<T>.errorCast(): Observable<T> = this
-            .onErrorResumeNext { it: Throwable ->
-                Logger.forThis(this@BaseInteractor).error(it)
-                Observable.error(throwableCast(it))
-            }
+//    protected fun <T> Observable<T>.errorCast(): Observable<T> = this
+//            .onErrorResumeNext { it: Throwable ->
+//                Logger.forThis(this@BaseInteractor).error(it)
+//                Observable.error(throwableCast(it))
+//            }
 
     protected fun <T> Single<T>.errorCast(): Single<T> = this
             .onErrorResumeNext { it: Throwable ->

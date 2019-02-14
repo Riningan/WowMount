@@ -6,11 +6,7 @@ import android.support.test.espresso.UiController
 import android.support.test.espresso.ViewAction
 import android.support.test.espresso.action.ViewActions.actionWithAssertions
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import android.support.test.espresso.matcher.ViewMatchers.isChecked
-import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.test.espresso.matcher.ViewMatchers.withText
+import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.widget.ProgressBar
@@ -18,24 +14,19 @@ import com.riningan.frarg.processor.FilterFragmentArgs
 import com.riningan.wowmount.R
 import com.riningan.wowmount.dispatcher.RequestDispatcher
 import com.riningan.wowmount.presentation.ui.filter.FilterFragment
-import com.riningan.wowmount.rule.AppRule
 import okhttp3.mockwebserver.MockWebServer
 import org.awaitility.Awaitility.await
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.TimeUnit
 
 
 @RunWith(AndroidJUnit4::class)
-class FilterFragmentTest {
-    @get: Rule
-    var mAppRule = AppRule()
-
+class FilterFragmentTest : BaseTest() {
     private lateinit var mWebServer: MockWebServer
 
 
@@ -54,19 +45,10 @@ class FilterFragmentTest {
 
 
     @Test
-    fun checkContainer() {
-        onView(withId(android.R.id.content)).check(matches(isDisplayed()))
-    }
-
-    @Test
     fun checkLayout() {
         mAppRule.launch(FilterFragment::class.java, FilterFragmentArgs(false))
 
-        await().atMost(10, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.cnslFilter)).check(matches(isDisplayed()))
-                }
+        waitCheckFragmentIsDisplayed(R.id.cnslFilter)
     }
 
     @Test
@@ -77,11 +59,7 @@ class FilterFragmentTest {
 
         onView(isAssignableFrom(ProgressBar::class.java)).perform(replaceProgressBarDrawable())
 
-        await().atMost(10, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.cnslFilter)).check(matches(isDisplayed()))
-                }
+        waitCheckFragmentIsDisplayed(R.id.cnslFilter)
 
         onView(withId(R.id.pbFilter)).check(matches(isDisplayed()))
         onView(withId(R.id.btnFilterShow)).check(matches(not(isDisplayed())))

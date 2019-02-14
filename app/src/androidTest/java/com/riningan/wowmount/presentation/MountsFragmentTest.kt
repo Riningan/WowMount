@@ -9,10 +9,7 @@ import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.test.espresso.contrib.ViewPagerActions.scrollLeft
 import android.support.test.espresso.contrib.ViewPagerActions.scrollRight
-import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.test.espresso.matcher.ViewMatchers.withText
+import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.runner.AndroidJUnit4
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.RecyclerView
@@ -22,9 +19,9 @@ import com.riningan.wowmount.R
 import com.riningan.wowmount.dispatcher.Error401Dispatcher
 import com.riningan.wowmount.dispatcher.ErrorDispatcher
 import com.riningan.wowmount.dispatcher.RequestDispatcher
+import com.riningan.wowmount.getPrivateField
 import com.riningan.wowmount.presentation.ui.mounts.ItemsAdapter
 import com.riningan.wowmount.presentation.ui.mounts.MountsFragment
-import com.riningan.wowmount.rule.AppRule
 import okhttp3.mockwebserver.MockWebServer
 import org.awaitility.Awaitility.await
 import org.hamcrest.Matcher
@@ -33,17 +30,13 @@ import org.hamcrest.Matchers.allOf
 import org.junit.After
 import org.junit.Assert.assertThat
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.TimeUnit
 
 
 @RunWith(AndroidJUnit4::class)
-class MountsFragmentTest {
-    @get: Rule
-    var mAppRule = AppRule()
-
+class MountsFragmentTest : BaseTest() {
     private lateinit var mWebServer: MockWebServer
 
 
@@ -62,21 +55,12 @@ class MountsFragmentTest {
 
 
     @Test
-    fun checkContainer() {
-        onView(withId(android.R.id.content)).check(matches(isDisplayed()))
-    }
-
-    @Test
     fun checkLayout() {
         mWebServer.setDispatcher(RequestDispatcher())
 
         mAppRule.launch(MountsFragment::class.java, MountsFragmentArgs(true))
 
-        await().atMost(10, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.crdlMounts)).check(matches(isDisplayed()))
-                }
+        waitCheckFragmentIsDisplayed(R.id.crdlMounts)
     }
 
     @Test
@@ -85,79 +69,21 @@ class MountsFragmentTest {
 
         mAppRule.launch(MountsFragment::class.java, MountsFragmentArgs(true))
 
-        await().atMost(10, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.crdlMounts)).check(matches(isDisplayed()))
-                }
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(4))
-                }
-
+        waitCheckFragmentIsDisplayed(R.id.crdlMounts)
+        waitCheckCurrentRecyclerViewItemCount(4)
         onView(withId(R.id.vpMounts)).perform(scrollRight())
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(3))
-                }
-
+        waitCheckCurrentRecyclerViewItemCount(3)
         onView(withId(R.id.vpMounts)).perform(scrollRight())
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(2))
-                }
-
+        waitCheckCurrentRecyclerViewItemCount(2)
         onView(withId(R.id.vpMounts)).perform(scrollRight())
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(3))
-                }
-
-        await().atMost(10, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(451))
-                }
-
+        waitCheckCurrentRecyclerViewItemCount(3)
+        waitCheckCurrentRecyclerViewItemCount(451)
         onView(withId(R.id.vpMounts)).perform(scrollLeft())
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(260))
-                }
-
+        waitCheckCurrentRecyclerViewItemCount(260)
         onView(withId(R.id.vpMounts)).perform(scrollLeft())
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(702))
-                }
-
+        waitCheckCurrentRecyclerViewItemCount(702)
         onView(withId(R.id.vpMounts)).perform(scrollLeft())
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(711))
-                }
+        waitCheckCurrentRecyclerViewItemCount(711)
     }
 
     @Test
@@ -166,79 +92,21 @@ class MountsFragmentTest {
 
         mAppRule.launch(MountsFragment::class.java, MountsFragmentArgs(false))
 
-        await().atMost(10, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.crdlMounts)).check(matches(isDisplayed()))
-                }
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(3))
-                }
-
+        waitCheckFragmentIsDisplayed(R.id.crdlMounts)
+        waitCheckCurrentRecyclerViewItemCount(3)
         onView(withId(R.id.vpMounts)).perform(scrollRight())
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(2))
-                }
-
+        waitCheckCurrentRecyclerViewItemCount(2)
         onView(withId(R.id.vpMounts)).perform(scrollRight())
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(2))
-                }
-
+        waitCheckCurrentRecyclerViewItemCount(2)
         onView(withId(R.id.vpMounts)).perform(scrollRight())
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(2))
-                }
-
-        await().atMost(10, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(176))
-                }
-
+        waitCheckCurrentRecyclerViewItemCount(2)
+        waitCheckCurrentRecyclerViewItemCount(176)
         onView(withId(R.id.vpMounts)).perform(scrollLeft())
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(101))
-                }
-
+        waitCheckCurrentRecyclerViewItemCount(101)
         onView(withId(R.id.vpMounts)).perform(scrollLeft())
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(275))
-                }
-
+        waitCheckCurrentRecyclerViewItemCount(275)
         onView(withId(R.id.vpMounts)).perform(scrollLeft())
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(277))
-                }
+        waitCheckCurrentRecyclerViewItemCount(277)
     }
 
     @Test
@@ -247,17 +115,8 @@ class MountsFragmentTest {
 
         mAppRule.launch(MountsFragment::class.java, MountsFragmentArgs(true))
 
-        await().atMost(10, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.crdlMounts)).check(matches(isDisplayed()))
-                }
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(android.support.design.R.id.snackbar_text)).check(matches(isDisplayed()))
-                }
+        waitCheckFragmentIsDisplayed(R.id.crdlMounts)
+        waitCheckSnackbarIsDisplayed()
     }
 
     @Test
@@ -266,23 +125,9 @@ class MountsFragmentTest {
 
         mAppRule.launch(MountsFragment::class.java, MountsFragmentArgs(true))
 
-        await().atMost(10, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.crdlMounts)).check(matches(isDisplayed()))
-                }
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(android.support.design.R.id.snackbar_text)).check(matches(isDisplayed()))
-                }
-
-        await().atMost(15, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.cnslSplash)).check(matches(isDisplayed()))
-                }
+        waitCheckFragmentIsDisplayed(R.id.crdlMounts)
+        waitCheckSnackbarIsDisplayed()
+        waitCheckFragmentIsDisplayed(R.id.cnslSplash)
     }
 
     @Test
@@ -291,19 +136,9 @@ class MountsFragmentTest {
 
         mAppRule.launch(MountsFragment::class.java, MountsFragmentArgs(true))
 
-        await().atMost(10, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.crdlMounts)).check(matches(isDisplayed()))
-                }
-
+        waitCheckFragmentIsDisplayed(R.id.crdlMounts)
         onView(withId(R.id.miAbout)).perform(click())
-
-        await().atMost(15, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.llAbout)).check(matches(isDisplayed()))
-                }
+        waitCheckFragmentIsDisplayed(R.id.llAbout)
     }
 
     @Test
@@ -312,19 +147,9 @@ class MountsFragmentTest {
 
         mAppRule.launch(MountsFragment::class.java, MountsFragmentArgs(true))
 
-        await().atMost(10, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.crdlMounts)).check(matches(isDisplayed()))
-                }
-
+        waitCheckFragmentIsDisplayed(R.id.crdlMounts)
         onView(withId(R.id.miFilter)).perform(click())
-
-        await().atMost(15, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.cnslFilter)).check(matches(isDisplayed()))
-                }
+        waitCheckFragmentIsDisplayed(R.id.cnslFilter)
     }
 
     @Test
@@ -333,19 +158,9 @@ class MountsFragmentTest {
 
         mAppRule.launch(MountsFragment::class.java, MountsFragmentArgs(true))
 
-        await().atMost(10, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.crdlMounts)).check(matches(isDisplayed()))
-                }
-
+        waitCheckFragmentIsDisplayed(R.id.crdlMounts)
         onView(withId(R.id.miLogout)).perform(click())
-
-        await().atMost(15, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.cnslAuthorization)).check(matches(isDisplayed()))
-                }
+        waitCheckFragmentIsDisplayed(R.id.cnslAuthorization)
     }
 
     @Test
@@ -354,28 +169,11 @@ class MountsFragmentTest {
 
         mAppRule.launch(MountsFragment::class.java, MountsFragmentArgs(true))
 
-        await().atMost(10, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.crdlMounts)).check(matches(isDisplayed()))
-                }
-
-        await().atMost(10, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(711))
-                }
-
+        waitCheckFragmentIsDisplayed(R.id.crdlMounts)
+        waitCheckCurrentRecyclerViewItemCount(711)
         onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
                 .perform(RecyclerViewActions.actionOnItemAtPosition<ItemsAdapter.ViewHolder>(0, click()))
-
-        await().atMost(15, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(R.id.llMount)).check(matches(isDisplayed()))
-                }
-
+        waitCheckFragmentIsDisplayed(R.id.llMount)
         await().atMost(10, TimeUnit.SECONDS)
                 .ignoreExceptions()
                 .untilAsserted {
@@ -389,44 +187,23 @@ class MountsFragmentTest {
 
         mAppRule.launch(MountsFragment::class.java, MountsFragmentArgs(true))
 
+        waitCheckFragmentIsDisplayed(R.id.crdlMounts)
+        waitCheckCurrentRecyclerViewItemCount(4)
+        waitCheckSnackbarIsDisplayed()
+        mWebServer.setDispatcher(RequestDispatcher())
+        onView(withId(R.id.srlMounts)).perform(setRefreshing())
+        waitCheckCurrentRecyclerViewItemCount(711)
+    }
+
+
+    private fun waitCheckCurrentRecyclerViewItemCount(expectedCount: Int) {
         await().atMost(10, TimeUnit.SECONDS)
                 .ignoreExceptions()
                 .untilAsserted {
-                    onView(withId(R.id.crdlMounts)).check(matches(isDisplayed()))
-                }
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
                     onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(4))
-                }
-
-        await().atMost(5, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(withId(android.support.design.R.id.snackbar_text)).check(matches(isDisplayed()))
-                }
-
-        mWebServer.setDispatcher(RequestDispatcher())
-
-        onView(withId(R.id.srlMounts)).perform(setRefreshing())
-        // onView(..).perform(..) does not work when views are animated.
-        // Therefore this is using a posted task to turn off refreshing.
-        val swipeRefreshLayout = mAppRule.getActivity().findViewById<SwipeRefreshLayout>(R.id.srlMounts)
-        swipeRefreshLayout.
-//        swipeRefreshLayout.handler.post {
-//            swipeRefreshLayout.isRefreshing = false
-//        }
-
-        await().atMost(150, TimeUnit.SECONDS)
-                .ignoreExceptions()
-                .untilAsserted {
-                    onView(allOf(isDisplayed(), withId(R.id.rvMounts)))
-                            .check(recyclerViewItemCountAssertion(711))
+                            .check(recyclerViewItemCountAssertion(expectedCount))
                 }
     }
-
 
     private fun recyclerViewItemCountAssertion(expectedCount: Int) =
             ViewAssertion { view, noViewFoundException ->
@@ -446,7 +223,9 @@ class MountsFragmentTest {
         override fun perform(uiController: UiController, view: View) {
             uiController.loopMainThreadUntilIdle()
             val swipeRefreshLayout = view as SwipeRefreshLayout
-            swipeRefreshLayout.isRefreshing = true
+            getPrivateField<SwipeRefreshLayout, SwipeRefreshLayout.OnRefreshListener>(SwipeRefreshLayout::class, "mListener", swipeRefreshLayout) {
+                it.onRefresh()
+            }
         }
     }
 }
